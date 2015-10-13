@@ -1,6 +1,6 @@
 angular.module('tracktr.controllers', [])
 
-.controller('HabitHomeController', function($scope) {})
+.controller('HomeController', function($scope) {})
 
 .controller('DashCtrl', function($scope) {})
 
