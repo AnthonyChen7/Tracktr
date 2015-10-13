@@ -71,17 +71,24 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services'])
     }
   })
   
-  // Non-tab views
-  .state('create', {
+  .state('tab.create', {
     url: '/create',
-    templateUrl: 'js/habit-create/habit-create.html',
-    controller: 'HabitCreateController'
+    views: {
+      'tab-home': {
+        templateUrl: 'js/habit-create/habit-create.html',
+        controller: 'HabitCreateController'  
+      }
+    }
   })
   
-  .state('edit', {
+  .state('tab.edit', {
     url: '/edit/:habitId',
-    templateUrl: 'js/habit-edit/habit-edit.html',
-    controller: 'HabitEditController'
+    views: {
+      'tab-home': {
+        templateUrl: 'js/habit-edit/habit-edit.html',
+        controller: 'HabitEditController'
+      } 
+    }
   });
 
   // if none of the above states are matched, use this as the fallback
