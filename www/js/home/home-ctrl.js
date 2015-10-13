@@ -1,5 +1,7 @@
 angular.module('tracktr.controllers', [])
 
+.controller('HabitHomeController', function($scope) {})
+
 .controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {

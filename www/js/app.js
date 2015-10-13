@@ -32,7 +32,7 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -75,6 +75,56 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services'])
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
         controller: 'AccountCtrl'
+      }
+    }
+  })
+    
+  .state('tab.all', {
+    url: '/all',
+    views: {
+      'tab-all': {
+        templateUrl: 'js/habit-all/habit-all.html',
+        controller: 'HabitAllController'
+      }
+    }
+  })
+  
+  .state('tab.charts', {
+    url: '/charts',
+    views: {
+      'tab-charts': {
+        templateUrl: 'js/habit-charts/habit-charts.html',
+        controller: 'HabitChartsController'
+      }
+    }
+  })
+    
+  .state('tab.create', {
+    url: '/create',
+    views: {
+      'tab-create': {
+        templateUrl: 'js/habit-create/habit-create.html',
+        controller: 'HabitCreateController'
+      }
+    }
+  })
+  
+  .state('tab.edit', {
+    url: '/edit',
+    views: {
+      'tab-edit': {
+        templateUrl: 'js/habit-edit/habit-edit.html',
+        controller: 'HabitEditController'
+      }
+    }
+  })
+  
+  .state('tab.home', {
+    url: '/home',
+    views: {
+      'tab-home': {
+        templateUrl: 'js/home/home.html',
+        controller: 'HabitHomeController'
       }
     }
   });
