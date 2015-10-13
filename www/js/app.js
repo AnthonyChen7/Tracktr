@@ -37,8 +37,10 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services'])
     abstract: true,
     templateUrl: '/tabs.html'
   })
-
+  
   // Each tab has its own nav history stack:
+  
+  // Tab views
   .state('tab.all', {
     url: '/all',
     views: {
@@ -58,26 +60,6 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services'])
       }
     }
   })
-    
-  .state('tab.create', {
-    url: '/create',
-    views: {
-      'tab-create': {
-        templateUrl: 'js/habit-create/habit-create.html',
-        controller: 'HabitCreateController'
-      }
-    }
-  })
-  
-  .state('tab.edit', {
-    url: '/edit/:habit-id',
-    views: {
-      'tab-edit': {
-        templateUrl: 'js/habit-edit/habit-edit.html',
-        controller: 'HabitEditController'
-      }
-    }
-  })
   
   .state('tab.home', {
     url: '/home',
@@ -87,6 +69,19 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services'])
         controller: 'HomeController'
       }
     }
+  })
+  
+  // Non-tab views
+  .state('create', {
+    url: '/create',
+    templateUrl: 'js/habit-create/habit-create.html',
+    controller: 'HabitCreateController'
+  })
+  
+  .state('edit', {
+    url: '/edit/:habitId',
+    templateUrl: 'js/habit-edit/habit-edit.html',
+    controller: 'HabitEditController'
   });
 
   // if none of the above states are matched, use this as the fallback
