@@ -1,10 +1,32 @@
+<html ng-app="tracktr.controllers">
+
+<body>
+
 <ion-view view-title="All Tasks">
   <ion-nav-buttons side="secondary">
     <button class="button button-clear button-icon" ng-click="navCreateClick()">
       <i class="ion-edit"></i>
     </button>
+    
   </ion-nav-buttons>
+  
   <ion-content>
 
-  </ion-content>
+<ion-list ng-controller="TasksAllController">
+
+<ion-item ng-repeat="item in items">
+  
+  Item {{item.id}}
+  
+</ion-item>
+
+</ion-list>  
+
+</ion-content>
+  
+  
 </ion-view>
+
+</body>
+
+</html>
