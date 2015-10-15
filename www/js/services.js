@@ -1,47 +1,55 @@
 angular.module('tracktr.services', [])
 
-.factory('Chats', function() {
+.factory('Tasks', function() {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
-  var chats = [{
+  var tasks = [{
     id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
+    name: 'Daily Everyday Not Active',
+    isActive: false,
+    frequency: 0, //daily
+    days: [0,1,2,3,4,5,6,7],
+    goal: 5,
+    record: [5]
   }, {
     id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
+    name: 'Daily Active Some days',
+    isActive: true,
+    frequency: 0, //daily
+    days: [0,1,3],
+    goal: 5,
+    record: [5]
+  }, {
+        id: 2,
+    name: 'Weekly Active Some days',
+    isActive: true,
+    frequency: 1, //weekly
+    days: [0,1,3],
+    goal: 5,
+    record: [5,5]
   }, {
     id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
-  }];
+    name: 'monthly Active Some days',
+    isActive: true,
+    frequency: 2, //monthly
+    days: [2,4],
+    goal: 5,
+    record: [5]
+  }
+  ];
 
   return {
     all: function() {
-      return chats;
+      return tasks;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    remove: function(task) {
+      tasks.splice(tasks.indexOf(task), 1);
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    get: function(taskId) {
+      for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(taskId)) {
+          return tasks[i];
         }
       }
       return null;
