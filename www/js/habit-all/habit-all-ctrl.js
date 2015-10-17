@@ -1,4 +1,4 @@
-angular.module('tracktr.controllers') // 'tasks' is causing error
+angular.module('tracktr.controllers')
 
 .controller("HabitAllController", function($scope, $state) {
   
@@ -37,14 +37,30 @@ angular.module('tracktr.controllers') // 'tasks' is causing error
       record: [5]
     }
   ];  
-
-
-
-  this.tasks = allTasks;
   
   $scope.items = allTasks;
-
-
+  
+  $scope.groups = [];
+  
+  for(var i = 0; i< $scope.items.length; i++){
+    $scope.groups[i]={
+      name: $scope.items[i],
+      options: ["Edit", "View Report", "Delete"]
+    };
+  }
+  
+  $scope.isGroupShown = function(group){
+    return $scope.shownGroup === group;
+  };
+  
+  $scope.toggleGroup = function(group){
+    if($scope.isGroupShown(group)){
+      $scope.shownGroup = null;
+    }else{
+      $scope.shownGroup = group;
+    }
+  };
+  
   /**
    * Click handler for new habit button
    */

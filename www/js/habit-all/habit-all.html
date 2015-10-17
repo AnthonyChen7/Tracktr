@@ -14,17 +14,27 @@
 
 <ion-list ng-controller="HabitAllController">
   
+  <div ng-repeat= "group in groups">
+    <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
+    <ion-toggle ng-model="group.name.isActive" ng-check="group.name.isActive">
+      <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
+    <h1>{{group.name.name}}</h1>
+    </ion-item>
+    
+    <ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)">
+      {{option}}
+      </ion-item>
+    
+    </ion-toggle>
+  </div>
+    
+<!--<ion-item >-->
   
-
-<!--<ion-item ng-repeat="item in items">-->
-  
-  <ion-toggle ng-repeat="item in items"  ng-model="item.isActive" ng-check="item.isActive">
-  
+  <!--<ion-toggle ng-repeat="item in items"  ng-model="item.isActive" ng-check="item.isActive">
   <h1>{{item.name}}</h1>
   <p>{{item.progress}}/{{item.goal}}</p>
   <p>{{item.isActive}} Note: Keep it here for now for testing purposes....</p>
-  
-  </ion-toggle>
+  </ion-toggle>-->
   
 <!--</ion-item>-->
 
