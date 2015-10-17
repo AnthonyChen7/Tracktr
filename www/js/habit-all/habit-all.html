@@ -13,14 +13,24 @@
   <ion-content>
 
 <ion-list ng-controller="HabitAllController">
-
-<ion-item ng-repeat="item in items">
   
-  Item {{item.id}}
   
-</ion-item>
 
-</ion-list>  
+<!--<ion-item ng-repeat="item in items">-->
+  
+  <ion-toggle ng-repeat="item in items"  ng-model="item.isActive" ng-check="item.isActive">
+  
+  <h1>{{item.name}}</h1>
+  <p>{{item.progress}}/{{item.goal}}</p>
+  <p>{{item.isActive}} Note: Keep it here for now for testing purposes....</p>
+  
+  </ion-toggle>
+  
+<!--</ion-item>-->
+
+
+
+</ion-list>
 
 </ion-content>
   
