@@ -14,29 +14,33 @@
 
 <ion-list ng-controller="HabitAllController">
   
+  <div class = "CurrentOrOther">
+    
+    <div class="item item-divider">
+      <h1>Current</h1>
+    </div>
+    
+    
+  
   <div ng-repeat= "group in groups">
     
     
     <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
       
       <ion-toggle ng-model="group.name.isActive" ng-check="group.name.isActive">
-        
-        
-      <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
+      
+     
+        <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
       &nbsp;
-      <h2>{{group.name.name}}</h2>
+        <h2>{{group.name.name}}</h2>
+        <p>TODO: Implement description</p>
         <p>{{group.name.isActive}} Note: Keep it here for now for testing purposes....</p>
         
         </ion-toggle>
         
     </ion-item>
-    
-    <!--<ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)">
-      
-      {{option}}
-     
-      </ion-item>-->
-      <ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)" ng-click="doSomething()">
+
+      <ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)" ng-click="buttonHandler(option, group.name)">
 
       {{option}}
       
@@ -44,19 +48,13 @@
     
     
   </div>
+  
+  <div class="item item-divider">
+      <h1>Other</h1>
+    </div>
     
-<!--<ion-item >-->
-  
-  <!--<ion-toggle ng-repeat="item in items"  ng-model="item.isActive" ng-check="item.isActive">
-  <h1>{{item.name}}</h1>
-  <p>{{item.progress}}/{{item.goal}}</p>
-  <p>{{item.isActive}} Note: Keep it here for now for testing purposes....</p>
-  </ion-toggle>-->
-  
-<!--</ion-item>-->
-
-
-
+  </div>
+    
 </ion-list>
 
 </ion-content>

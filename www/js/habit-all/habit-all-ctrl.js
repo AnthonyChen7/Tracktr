@@ -2,6 +2,10 @@ angular.module('tracktr.controllers')
 
 // .controller("HabitAllController", function($scope, $state) {
   .controller("HabitAllController", function($scope, $state, $ionicPopup) {
+    
+ var EDIT = "Edit";
+ var VIEW_REPORT = "View Report";
+ var DELETE = "Delete";
   
 
   var allTasks = [{
@@ -46,7 +50,7 @@ angular.module('tracktr.controllers')
   for(var i = 0; i< $scope.items.length; i++){
     $scope.groups[i]={
       name: $scope.items[i],
-      options: ["Edit", "View Report", "Delete"]
+      options: [EDIT, VIEW_REPORT, DELETE]
     };
   }
   
@@ -62,11 +66,33 @@ angular.module('tracktr.controllers')
     }
   };
   
-  $scope.doSomething = function(){
-    var popUp = $ionicPopup.alert({
+  $scope.buttonHandler = function(option, task){
+    var result = "";
+    if(option == EDIT){
+      $state.go('tab.edit');
+    }else if(option == VIEW_REPORT){
+      $state.go('tab.charts');
+    }else{
+      var popUp = $ionicPopup.alert({
       title: "Alert!",
       template: "To be implemented...."
     });
+    }
+    
+    
+    
+  };
+  
+  $scope.someFunction=function(group){
+    var result = "";
+    result += "Goal: " + group.name.goal;
+    return result;
+  };
+  
+  
+  
+  $scope.countProgress = function(progressArray){
+    //TODO needs to be implemented
   };
   
   
