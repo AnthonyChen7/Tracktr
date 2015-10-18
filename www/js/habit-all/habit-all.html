@@ -13,31 +13,29 @@
   </ion-nav-buttons>
   
   <ion-content>
-    
-<label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Search" ng-model="searchText">
-    </label>
            
 <ion-list ng-controller="HabitAllController">
+  
+        <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="searchText" ng-click="buttonHandler()">
+    </label>
+
   <div class = "CurrentOrOther">
-    
     <div class="item item-divider">
       <h1>Current</h1>
     </div>
     
   <div ng-repeat= "group in groups">
-    
-    
+        
     <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
       
       <ion-toggle ng-model="group.task.isActive" ng-check="group.task.isActive">
-      
-     
+           
         <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
       &nbsp;
         <h2>{{group.task.name}}</h2>
-        <p>TODO: Implement description</p>
+        <p>{{retrieveDescription(group)}}</p>
         <p>{{group.task.isActive}} Note: Keep it here for now for testing purposes....</p>
         
         </ion-toggle>
@@ -49,8 +47,6 @@
       {{option}}
       
       </ion-item>
-    
-    
   </div>
   
   <div class="item item-divider">

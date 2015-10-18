@@ -6,6 +6,17 @@ angular.module('tracktr.controllers')
  var EDIT = "Edit";
  var VIEW_REPORT = "View Report";
  var DELETE = "Delete";
+ var DAILY = "Daily";
+ var MONTHLY = "Monthly";
+ var WEEKLY = "Weekly";
+ var EVERYDAY = "Every day";
+ var MONDAY = "M";
+ var TUESDAY = "T";
+ var WEDNESDAY = "W";
+ var THURSDAY = "Th";
+ var FRIDAY = "F";
+ var SATURDAY = "Sa";
+ var SUNDAY = "Su";
   
 
   var allTasks = [{
@@ -13,7 +24,7 @@ angular.module('tracktr.controllers')
       name: 'Daily Everyday Not Active',
       isActive: false,
       frequency: 0, //daily
-      days: [0,1,2,3,4,5,6,7],
+      days: [0,1,2,3,4,5,6],
       goal: 5,
       record: [5]
     }, {
@@ -38,6 +49,24 @@ angular.module('tracktr.controllers')
       isActive: true,
       frequency: 2, //monthly
       days: [2,4],
+      goal: 5,
+      record: [5]
+    },
+    {
+      id: 4,
+      name: 'monthly Active no days',
+      isActive: true,
+      frequency: 2, //monthly
+      days: [],
+      goal: 5,
+      record: [5]
+    },
+    {
+      id: 5,
+      name: 'monthly Active one day',
+      isActive: true,
+      frequency: 2, //monthly
+      days: [4],
       goal: 5,
       record: [5]
     }
@@ -74,39 +103,64 @@ angular.module('tracktr.controllers')
       $state.go('tab.charts');
     }else{
       var popUp = $ionicPopup.alert({
-      title: "Alert!",
-      template: "To be implemented...."
+      title: "Warning!",
+      template: "This feature isn't implemented yet!"
     });
     }
-    
-    
-    
   };
   
-  $scope.someFunction=function(group){
+  $scope.retrieveDescription=function(group){
     var result = "";
-    result += "Goal: " + group.name.goal;
+    result += "Goal: " + group.task.goal + " | "+$scope.getFrequency(group.task.frequency);
+    
+    if(group.task.days.length != 0){
+      result += " |"+ $scope.getDaysOfOccurence(group.task.days);
+    }
+    
     return result;
   };
   
+  $scope.getFrequency = function(frequencyId){
+    if(frequencyId == 0){
+      return DAILY;
+    }
+    else if(frequencyId==1){
+      return WEEKLY;
+    }else{
+      return MONTHLY;
+    }
+  };
+  
+  $scope.getDaysOfOccurence= function(days){
+    var result = "";
+    if(days.length == 7){
+      return " "+EVERYDAY;
+    }else{
+      for(var i in days){
+        if(days[i] == 0){
+          result+= " "+SUNDAY;
+        }else if(days[i] == 1){
+          result += " "+MONDAY;
+        }else if(days[i] == 2){
+          result += " "+TUESDAY;
+        }else if(days[i] == 3){
+          result += " "+WEDNESDAY;
+        }else if(days[i] == 4){
+          result += " "+THURSDAY;
+        }else if(days[i] == 5){
+          result += " "+FRIDAY;
+        }else if(days[i] == 6){
+          result += " "+SATURDAY;
+        }
+      }
+      return result;
+    }
+  };
   
   
   $scope.countProgress = function(progressArray){
     //TODO needs to be implemented
   };
-  
-  
-  $scope.showFilterBar = function () {
-      var filterBarInstance = $ionicFilterBar.show({
-        items: $scope.groups.task,
-        update: function (filteredItems, filterText) {
-          $scope.groups.task = filteredItems;
-        },
-        
-      });
-      
-     
-    };
   
   /**
    * Click handler for new habit button
