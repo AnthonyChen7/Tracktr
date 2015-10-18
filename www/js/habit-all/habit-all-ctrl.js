@@ -1,8 +1,8 @@
 angular.module('tracktr.controllers')
 
 
-  // .controller("HabitAllController", function($scope, $state, $ionicPopup, $ionicFilterBar) {
-    .controller("HabitAllController", function($scope, $state, $ionicPopup) {
+   .controller("HabitAllController", function($scope, $state, $ionicPopup, $ionicFilterBar) {
+    // .controller("HabitAllController", function($scope, $state, $ionicPopup) {
     
  var EDIT = "Edit";
  var VIEW_REPORT = "View Report";
