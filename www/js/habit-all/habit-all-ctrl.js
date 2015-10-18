@@ -1,7 +1,8 @@
 angular.module('tracktr.controllers')
 
-// .controller("HabitAllController", function($scope, $state) {
-  .controller("HabitAllController", function($scope, $state, $ionicPopup) {
+
+  // .controller("HabitAllController", function($scope, $state, $ionicPopup, $ionicFilterBar) {
+    .controller("HabitAllController", function($scope, $state, $ionicPopup) {
     
  var EDIT = "Edit";
  var VIEW_REPORT = "View Report";
@@ -33,7 +34,7 @@ angular.module('tracktr.controllers')
       goal: 5,
       record: [5,5]
     }, {
-      id: 2,
+      id: 3,
       name: 'monthly Active Some days',
       isActive: true,
       frequency: 2, //monthly
@@ -49,7 +50,7 @@ angular.module('tracktr.controllers')
   
   for(var i = 0; i< $scope.items.length; i++){
     $scope.groups[i]={
-      name: $scope.items[i],
+      task: $scope.items[i],
       options: [EDIT, VIEW_REPORT, DELETE]
     };
   }
@@ -69,7 +70,7 @@ angular.module('tracktr.controllers')
   $scope.buttonHandler = function(option, task){
     var result = "";
     if(option == EDIT){
-      $state.go('tab.edit');
+      $state.go('tab.edit', {habitId:task.id});
     }else if(option == VIEW_REPORT){
       $state.go('tab.charts');
     }else{
