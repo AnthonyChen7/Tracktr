@@ -1,6 +1,7 @@
 angular.module('tracktr.controllers')
 
-.controller("HabitAllController", function($scope, $state) {
+// .controller("HabitAllController", function($scope, $state) {
+  .controller("HabitAllController", function($scope, $state, $ionicPopup) {
   
 
   var allTasks = [{
@@ -60,6 +61,14 @@ angular.module('tracktr.controllers')
       $scope.shownGroup = group;
     }
   };
+  
+  $scope.doSomething = function(){
+    var popUp = $ionicPopup.alert({
+      title: "Alert!",
+      template: "To be implemented...."
+    });
+  };
+  
   
   /**
    * Click handler for new habit button

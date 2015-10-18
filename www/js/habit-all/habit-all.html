@@ -31,10 +31,15 @@
         
     </ion-item>
     
-    <ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)">
+    <!--<ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)">
       
       {{option}}
      
+      </ion-item>-->
+      <ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)" ng-click="doSomething()">
+
+      {{option}}
+      
       </ion-item>
     
     
