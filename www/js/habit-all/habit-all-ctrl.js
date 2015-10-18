@@ -2,7 +2,6 @@ angular.module('tracktr.controllers')
 
 
    .controller("HabitAllController", function($scope, $state, $ionicPopup, $ionicFilterBar) {
-    // .controller("HabitAllController", function($scope, $state, $ionicPopup) {
     
  var EDIT = "Edit";
  var VIEW_REPORT = "View Report";
@@ -96,6 +95,18 @@ angular.module('tracktr.controllers')
     //TODO needs to be implemented
   };
   
+  
+  $scope.showFilterBar = function () {
+      var filterBarInstance = $ionicFilterBar.show({
+        items: $scope.groups.task,
+        update: function (filteredItems, filterText) {
+          $scope.groups.task = filteredItems;
+        },
+        
+      });
+      
+     
+    };
   
   /**
    * Click handler for new habit button

@@ -7,26 +7,19 @@
   <ion-nav-buttons side="secondary">
     <button class="button button-clear button-icon" ng-click="navCreateClick()">
       <i class="ion-edit"></i>
-      
-      <!--<button class="button button-icon ion-android-search">
-      </button>-->
-      <!-- Need to add button click event -->
+
     </button>
     
   </ion-nav-buttons>
   
   <ion-content>
-
-        <ion-header-bar class="bar-positive">
-    <h1 class="title">Search...</h1>
-    <div class="buttons">
-        <button class="button button-icon ion-android-search" 
-                ng-click="vm.showFilterBar()"></button>
-    </div>      
-  </ion-header-bar>
-      
+    
+<label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="searchText">
+    </label>
+           
 <ion-list ng-controller="HabitAllController">
-  
   <div class = "CurrentOrOther">
     
     <div class="item item-divider">
