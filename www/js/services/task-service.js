@@ -46,7 +46,7 @@ angular.module('tracktr.services')
   // PROGRESS PREPARED STATEMENTS      
   var SELECT_PROGRESS_PREPARED_STATEMENT = 
               'SELECT id, task_id, date, progress, timerLastStarted ' + 
-              'FROM task ' + 
+              'FROM progress ' + 
               'WHERE task_id=?';    
   var INSERT_PROGRESS_PREPARES_STATEMENT = 
               'INSERT INTO progress (task_id, date, progress, timerLastStarted) ' + 
@@ -168,17 +168,18 @@ angular.module('tracktr.services')
         DB.query(SELECT_DAYS_PREPARED_STATEMENT, [task.id])
           .then(function(result) {
             task.days = DB.fetch(result);
-           
-          
+            
+            
             DB.query(SELECT_PROGRESS_PREPARED_STATEMENT, [task.id])
               .then(function(result) {
-                task.progress = DB.fetchAll(result);
-              
+                task.progress = DB.fetchAll(result);  
                 populatedCount++;
+                
                 // Return the tasks when all of them have been populated.
                 if(populatedCount === totalTaskCount) {
                   // Construct new Tasks under the Task Prototypes
                   var newTasks = sqlTaskToTasks(allTasks);
+                  
                   callback(null, newTasks);  
                 }
               });
