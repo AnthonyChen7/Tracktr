@@ -1,7 +1,5 @@
 /**
- * Task Data Access Object which is responsible for all CRUD operations on the SQLite Database.
- * 
- * DO NOT USE THIS TO DIRECTLY FOR ACCESS TO THE DATABASE. INSTEAD USE TaskService.js which wraps this factory.
+ * Task Service  which is responsible for all CRUD operations on the SQLite Database.
  */
 angular.module('tracktr.services') 
 .factory('TaskService', function(DB) {

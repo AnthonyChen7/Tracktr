@@ -9,37 +9,38 @@ angular.module('tracktr.services', ['tracktr.config'])
    */
   self.init = function() {
     self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', 5*1024*1024);
+    //self.nuke(function(){
     
-    //self.nuke();
-    
-    var numTables = DB_CONFIG.tables.length;  // Total number of tables to be created
-    var numCreatedTables = 0;                 // Current number of tables created
-    
-    angular.forEach(DB_CONFIG.tables, function(table) {
-      var columns = [];
+      var numTables = DB_CONFIG.tables.length;  // Total number of tables to be created
+      var numCreatedTables = 0;                 // Current number of tables created
       
-      angular.forEach(table.columns, function(column) {
-        columns.push(column.name + ' ' + column.type);
-      });
-      
-      var createQuery = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
-      var taskQuery = 'SELECT * FROM task';
-      
-      // Create the tables
-      self.query(createQuery).then(function() {
+      angular.forEach(DB_CONFIG.tables, function(table) {
+        var columns = [];
         
-        numCreatedTables++;
-        if(numCreatedTables === numTables) {
-          // Get all tasks and seed the database if it is empty
-          self.query(taskQuery).then(function(data) {
-            var rows = self.fetchAll(data);
-            if(rows.length === 0) {
-              self.seed(DB_CONFIG.seed_data);  
-            }
-          });  
-        }
+        angular.forEach(table.columns, function(column) {
+          columns.push(column.name + ' ' + column.type);
+        });
+        
+        var createQuery = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
+        var taskQuery = 'SELECT * FROM task';
+        
+        // Create the tables
+        self.query(createQuery).then(function() {
+          
+          numCreatedTables++;
+          if(numCreatedTables === numTables) {
+            // Get all tasks and seed the database if it is empty
+            self.query(taskQuery).then(function(data) {
+              var rows = self.fetchAll(data);
+              if(rows.length === 0) {
+                //self.seed(DB_CONFIG.seed_data);  
+              }
+            });  
+          }
+        });
       });
-    });
+    
+    //});
     
     
   };
@@ -109,10 +110,20 @@ angular.module('tracktr.services', ['tracktr.config'])
    * - PRIVATE - 
    * Nuke the database, i.e. drop all tables
    */
-  self.nuke = function() {
+  self.nuke = function(callback) {
+    var tableCount = DB_CONFIG.tables.length;
+    var tableCnter = 0;
+    
     angular.forEach(DB_CONFIG.tables, function(table) {
       var query = 'DROP TABLE IF EXISTS ' + table.name;
-      self.query(query);
+      self.query(query)
+        .then(function() {
+          tableCnter++;
+
+          if(tableCount == tableCnter) {
+            callback();
+          }
+        });
     });
   };
   
@@ -135,14 +146,14 @@ angular.module('tracktr.services', ['tracktr.config'])
     var i = 0; // To add progress and days without knowing the parent task id 
     angular.forEach(seed_data, function(some_task) {
       self.query(INSERT_TASK_PREPARED_STATEMENT, [some_task.name, some_task.isActive, some_task.frequency, some_task.isTime,
-         some_task.isCount, some_task.goal, some_task.icon, some_task.isTimerRunning, some_task.creationDate.getTime()])
+         some_task.isCount, some_task.goal, some_task.icon, some_task.isTimerRunning, some_task.creationDate])
           .then(function(result){
             
             self.query(INSERT_DAYS_PREPARED_STATEMENT, [i, some_task.days.sunday, some_task.days.monday, some_task.days.tuesday, some_task.days.wednesday,
               some_task.days.thursday, some_task.days.friday, some_task.days.saturday])
               .then(function(result) {
                 angular.forEach(some_task.progress, function(progress) {
-                  self.query(INSERT_PROGRESS_PREPARES_STATEMENT, [i, progress.date, progress.progress, progress.timerLastStarted.getTime()]);
+                  self.query(INSERT_PROGRESS_PREPARES_STATEMENT, [i, progress.date, progress.progress, progress.timerLastStarted]);
                 });
               });
           });
