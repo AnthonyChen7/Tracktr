@@ -8,7 +8,7 @@
 var Progress = function(progress) {
 	this.id = progress.id;
 	this.task_id = progress.task_id;
-	this.day = new Date(progress.date);
-	this.progress = progress.integer;
-	this.timerLastStarted = new Date(progress.date);
+	this.date = new Date(parseInt(progress.date, 10));
+	this.progress = progress.progress;
+	this.timerLastStarted = new Date(parseInt(progress.timerLastStarted, 10));
 }

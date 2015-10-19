@@ -15,9 +15,9 @@ var Task = function(task) {
   this.goal = task.goal;
   this.icon = task.icon;
   this.isTimerRunning = task.isTimerRunning
-  this.creationDate = task.creationDate;
+  this.creationDate = new Date(parseInt(task.creationDate,10));
 
-  // Instantiate days
+  // Instantiate days 
   this.days = new Day(task.days);
   
   // Instantiate progress

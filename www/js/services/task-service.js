@@ -73,13 +73,25 @@ angular.module('tracktr.services')
    * 
    */
   self.createTask = function(task, callback) {
+    var progressCount = task.progress.length;
+    var progressCnter = 0;
+    
     DB.query(INSERT_TASK_PREPARED_STATEMENT, insertTaskQueryAttr(task))
       .then(function(task_result) { 
+        var task_id = task_result.insertId;
+        task.days.task_id = task_id; // assign the task's new id to it's days.
         DB.query(INSERT_DAYS_PREPARED_STATEMENT, insertDaysQueryAttr(task.days))
           .then(function(days_result) {
             angular.forEach(task.progress, function(progress) {
-              DB.query(INSERT_PROGRESS_PREPARES_STATEMENT, insertDaysQueryAttr(task.progress));
-              callback(null, days_result.insertId);
+              progress.task_id = task_id;
+              DB.query(INSERT_PROGRESS_PREPARES_STATEMENT, insertProgressQueryAttr(progress))
+                .then(function(){
+                  progressCnter++;
+                  if(progressCnter === progressCount) {
+                    callback(null, task_id);
+                  }    
+                });
+              
             });
           });
       });
@@ -179,8 +191,7 @@ angular.module('tracktr.services')
                 if(populatedCount === totalTaskCount) {
                   // Construct new Tasks under the Task Prototypes
                   var newTasks = sqlTaskToTasks(allTasks);
-                  
-                  callback(null, newTasks);  
+                  callback(null, newTasks);                
                 }
               });
             });
@@ -249,7 +260,7 @@ angular.module('tracktr.services')
       return [days.task_id,
               days.sunday,
               days.monday,
-              days.tueday,
+              days.tuesday,
               days.wednesday,
               days.thursday,
               days.friday,
@@ -263,7 +274,7 @@ angular.module('tracktr.services')
    */
   var insertProgressQueryAttr = function(progress) {
     return [progress.task_id,
-            progress.day,
+            progress.date.getTime(),
             progress.progress,
             progress.timerLastStarted.getTime()];
   };

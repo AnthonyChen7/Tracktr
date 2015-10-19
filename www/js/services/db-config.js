@@ -7,13 +7,13 @@ angular.module('tracktr.config', [])
       columns: [
         {name: 'id',             type: 'integer primary key'},
         {name: 'name',           type: 'text'},
-        {name: 'isActive',       type: 'boolean'},
+        {name: 'isActive',       type: 'integer'},
         {name: 'frequency',      type: 'integer'},
-        {name: 'isTime',         type: 'boolean'},
-        {name: 'isCount',        type: 'boolean'},
+        {name: 'isTime',         type: 'integer'},
+        {name: 'isCount',        type: 'integer'},
         {name: 'goal',           type: 'integer'},
         {name: 'icon',           type: 'integer'},
-        {name: 'isTimerRunning', type: 'boolean'},
+        {name: 'isTimerRunning', type: 'integer'},
         {name: 'creationDate',   type: 'text'}
       ]
     },
@@ -22,13 +22,13 @@ angular.module('tracktr.config', [])
       columns: [
         {name: 'id',             type: 'integer primary key'},
         {name: 'task_id',        type: 'integer'},
-        {name: 'sunday',         type: 'boolean'},
-        {name: 'monday',         type: 'boolean'},
-        {name: 'tuesday',        type: 'boolean'},
-        {name: 'wednesday',      type: 'boolean'},
-        {name: 'thursday',       type: 'boolean'},
-        {name: 'friday',         type: 'boolean'},
-        {name: 'saturday',       type: 'boolean'}
+        {name: 'sunday',         type: 'integer'},
+        {name: 'monday',         type: 'integer'},
+        {name: 'tuesday',        type: 'integer'},
+        {name: 'wednesday',      type: 'integer'},
+        {name: 'thursday',       type: 'integer'},
+        {name: 'friday',         type: 'integer'},
+        {name: 'saturday',       type: 'integer'}
       ]
     },
     {
@@ -47,32 +47,32 @@ angular.module('tracktr.config', [])
     {
      id: '1',
      name: 'TASK 1',
-     isActive: true,
+     isActive: 1,
      frequency: 1,
-     isTime: false,
-     isCount: true, 
+     isTime: 0,
+     isCount: 1, 
      goal: 10,
      icon: 0,
-     isTimerRunning: false,
-     creationDate: new Date(),
+     isTimerRunning: 0,
+     creationDate: '1435821133001',
      days: {
        id: '1',
        task_id: '1',
-       sunday: true,
-       monday: true,
-       tuesday: true,
-       wednesday: true,
-       thursday: true,
-       friday: true,
-       saturday: true
+       sunday: 1,
+       monday: 1,
+       tuesday: 1,
+       wednesday: 1,
+       thursday: 1,
+       friday: 1,
+       saturday: 1
      },
      progress: [
        {
          id: '1',
          task_id: '1',
-         date: new Date(),
+         date: '1435821133001',
          progress: 10,
-         timerLastStarted: new Date()
+         timerLastStarted: '1435821133001'
        }
      ]
     }
