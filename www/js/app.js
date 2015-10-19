@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services'])
+angular.module('tracktr', ['ionic', 'tracktr.config', 'tracktr.controllers', 'tracktr.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, DB) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,6 +20,9 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+    
+    // Initialize the Database
+    DB.init();
   });
 })
 
