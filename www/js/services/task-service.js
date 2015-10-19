@@ -37,7 +37,7 @@ angular.module('tracktr.services')
               'VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
   var UPDATE_DAYS_PREPARED_STATEMENT = 
               'UPDATE days_of_week ' +
-              'SET task_id=?, sunday=?, monday=?, tueday=?, wednesday=?, thursday=?, friday=?, saturday=? ' +
+              'SET task_id=?, sunday=?, monday=?, tuesday=?, wednesday=?, thursday=?, friday=?, saturday=? ' +
               'WHERE id=?';
   var DELETE_DAYS_PREPARED_STATEMENT = 
               'DELETE FROM days_of_week ' + 
@@ -106,19 +106,24 @@ angular.module('tracktr.services')
    *  - task: The updated task.
    */
   self.updateTask = function(task) {
-   
-    var updateTaskQueryAttrs = insertTaskQueryAttr(task).push(task.id); // add the task id for updating
-    var updateDaysQueryAttrs = insertDaysQueryAttr(task.days).push(task.days.id); // add the day id for updating
+   console.log(task);
+    var updateTaskQueryAttrs = insertTaskQueryAttr(task);
+    updateTaskQueryAttrs.push(parseInt(task.id, 10));      // add the task id for updating   
+        
+    var updateDaysQueryAttrs = insertDaysQueryAttr(task.days);
+    updateDaysQueryAttrs.push(parseInt(task.days.id, 10)); // add the day id for updating
     
     // Update the task
     DB.query(UPDATE_TASK_PREPARED_STATEMENT, updateTaskQueryAttrs)
       .then(function(task_result){      
-          // Delete all subtasks   
+          // Update Days
           DB.query(UPDATE_DAYS_PREPARED_STATEMENT, updateDaysQueryAttrs)
-            .then(function() {
-              // Re-insert all of the subtasks
+            .then(function(result) {
+              // Update progress
               angular.forEach(task.progress, function(progress){
-                var updateProgressQueryAttrs = insertProgressQueryAttr(progress).push(progress.id);
+                var updateProgressQueryAttrs = insertProgressQueryAttr(progress);
+                updateProgressQueryAttrs.push(progress.id);
+                
                 DB.query(UPDATE_PROGRESS_PREPARED_STATEMENT, updateProgressQueryAttrs);  
               });
           });                    
