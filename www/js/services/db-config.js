@@ -13,12 +13,12 @@ angular.module('tracktr.config', [])
         {name: 'isCount',        type: 'boolean'},
         {name: 'goal',           type: 'integer'},
         {name: 'icon',           type: 'integer'},
-        {name: 'isTimerRunning', type: 'boolean'}
-        
+        {name: 'isTimerRunning', type: 'boolean'},
+        {name: 'creationDate',   type: 'text'}
       ]
     },
     {
-      name: 'day_of_week',
+      name: 'days_of_week',
       columns: [
         {name: 'id',             type: 'integer primary key'},
         {name: 'task_id',        type: 'integer'},
@@ -35,6 +35,7 @@ angular.module('tracktr.config', [])
       name: 'progress',
       columns: [
         {name: 'id',               type: 'integer primary key'},
+        {name: 'task_id',          type: 'integer'},
         {name: 'date',             type: 'text'},
         {name: 'progress',         type: 'integer'},
         {name: 'timerLastStarted', type: 'text'}
@@ -42,7 +43,40 @@ angular.module('tracktr.config', [])
     },
   ],
     
-  seed_data: []    
+  seed_data: [
+    {
+     id: '1',
+     name: 'TASK 1',
+     isActive: true,
+     frequency: 1,
+     isTime: false,
+     isCount: true, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: false,
+     creationDate: new Date(),
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: true,
+       monday: true,
+       tuesday: true,
+       wednesday: true,
+       thursday: true,
+       friday: true,
+       saturday: true
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: new Date(),
+         progress: 10,
+         timerLastStarted: new Date()
+       }
+     ]
+    }
+  ]    
 
 });
 
