@@ -28,12 +28,12 @@
     
   <div ng-repeat= "group in groups">
         
-    <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
+    <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}" ng-show="doesTaskOccurToday(group.task.days)">
       
       <ion-toggle ng-model="group.task.isActive" ng-check="group.task.isActive">
            
         <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
-      &nbsp;
+        &nbsp;
         <h2>{{group.task.name}}</h2>
         <p>{{retrieveDescription(group)}}</p>
         <p>{{group.task.isActive}} Note: Keep it here for now for testing purposes....</p>
@@ -47,11 +47,38 @@
       {{option}}
       
       </ion-item>
-  </div>
   
+    </div>
+    
   <div class="item item-divider">
       <h1>Other</h1>
     </div>
+    
+    <div ng-repeat= "group in groups">
+        
+    <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}" ng-show="!doesTaskOccurToday(group.task.days)">
+      
+      <ion-toggle ng-model="group.task.isActive" ng-check="group.task.isActive">
+           
+        <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
+        &nbsp;
+        <h2>{{group.task.name}}</h2>
+        <p>{{retrieveDescription(group)}}</p>
+        <p>{{group.task.isActive}} Note: Keep it here for now for testing purposes....</p>
+        
+        </ion-toggle>
+        
+    </ion-item>
+
+      <ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)" ng-click="buttonHandler(option, group.task)">
+
+      {{option}}
+      
+      </ion-item>
+  
+    </div>
+    
+    
     
   </div>
     

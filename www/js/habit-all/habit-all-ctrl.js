@@ -97,9 +97,9 @@ angular.module('tracktr.controllers')
   
   $scope.buttonHandler = function(option, task){
     var result = "";
-    if(option == EDIT){
+    if(option === EDIT){
       $state.go('tab.edit', {habitId:task.id});
-    }else if(option == VIEW_REPORT){
+    }else if(option === VIEW_REPORT){
       $state.go('tab.charts');
     }else{
       var popUp = $ionicPopup.alert({
@@ -121,10 +121,10 @@ angular.module('tracktr.controllers')
   };
   
   $scope.getFrequency = function(frequencyId){
-    if(frequencyId == 0){
+    if(frequencyId === 0){
       return DAILY;
     }
-    else if(frequencyId==1){
+    else if(frequencyId===1){
       return WEEKLY;
     }else{
       return MONTHLY;
@@ -133,23 +133,23 @@ angular.module('tracktr.controllers')
   
   $scope.getDaysOfOccurence= function(days){
     var result = "";
-    if(days.length == 7){
+    if(days.length === 7){
       return " "+EVERYDAY;
     }else{
       for(var i in days){
-        if(days[i] == 0){
+        if(days[i] === 0){
           result+= " "+SUNDAY;
-        }else if(days[i] == 1){
+        }else if(days[i] === 1){
           result += " "+MONDAY;
-        }else if(days[i] == 2){
+        }else if(days[i] === 2){
           result += " "+TUESDAY;
-        }else if(days[i] == 3){
+        }else if(days[i] === 3){
           result += " "+WEDNESDAY;
-        }else if(days[i] == 4){
+        }else if(days[i] === 4){
           result += " "+THURSDAY;
-        }else if(days[i] == 5){
+        }else if(days[i] === 5){
           result += " "+FRIDAY;
-        }else if(days[i] == 6){
+        }else if(days[i] === 6){
           result += " "+SATURDAY;
         }
       }
@@ -160,6 +160,18 @@ angular.module('tracktr.controllers')
   
   $scope.countProgress = function(progressArray){
     //TODO needs to be implemented
+  };
+  
+  $scope.doesTaskOccurToday = function(days){
+    
+    var today =  new Date();
+    var dayOfWeek = today.getDay();
+    
+    if(days.indexOf(dayOfWeek) > -1){
+      return true;
+    }else{
+      return false;
+    }    
   };
   
   /**
