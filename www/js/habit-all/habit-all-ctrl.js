@@ -67,7 +67,7 @@ var allTasks = [{
     {
       id: 5,
       name: 'monthly Active one day',
-      isActive: true,
+      isActive: false,
       frequency: 2, //monthly
       days: [4],
       goal: 5,
