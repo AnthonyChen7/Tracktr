@@ -216,11 +216,11 @@ angular.module('tracktr.services')
       .then(function(result) {
         some_task = DB.fetch(result);
         
-        DB.query(SELECT_DAYS_PREPARED_STATEMENT, [task.id])
+        DB.query(SELECT_DAYS_PREPARED_STATEMENT, [id])
           .then(function(result) {
             some_task.days = DB.fetch(result);
             
-            DB.query(SELECT_PROGRESS_PREPARED_STATEMENT, [task.id])
+            DB.query(SELECT_PROGRESS_PREPARED_STATEMENT, [id])
               .then(function(result) {
                 some_task.progress = DB.fetchAll(result);
                 
