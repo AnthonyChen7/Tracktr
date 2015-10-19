@@ -133,7 +133,7 @@ angular.module('tracktr.services')
    * Parameters:
    *  - task: The task to delete
    */
-  self.deleteTask = function(task) {
+  self.deleteTask = function(task, callback) {
     // Delete the task
     DB.query(DELETE_TASK_PREPARED_STATEMENT, [task.id])
       .then(function() {
@@ -142,7 +142,10 @@ angular.module('tracktr.services')
           .then(function() {
             // Delete the progress associated to task
             angular.forEach(task.progress, function(progress) {
-              DB.query(DELETE_PROGRESS_PREPARED_STATEMENT, [progress.id]);
+              DB.query(DELETE_PROGRESS_PREPARED_STATEMENT, [progress.id])
+                .then(function() {
+                  callback();
+                });
             });
           });
       });
