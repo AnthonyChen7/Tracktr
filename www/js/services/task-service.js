@@ -39,7 +39,7 @@ angular.module('tracktr.services')
               'WHERE id=?';
   var DELETE_DAYS_PREPARED_STATEMENT = 
               'DELETE FROM days_of_week ' + 
-              'WHERE id=?'
+              'WHERE task_id=?'
 
   // PROGRESS PREPARED STATEMENTS      
   var SELECT_PROGRESS_PREPARED_STATEMENT = 
@@ -55,7 +55,7 @@ angular.module('tracktr.services')
               'WHERE id=?';
   var DELETE_PROGRESS_PREPARED_STATEMENT = 
               'DELETE FROM progress ' + 
-              'WHERE id=?'
+              'WHERE task_id=?'
 
   
                         
@@ -80,6 +80,13 @@ angular.module('tracktr.services')
         task.days.task_id = task_id; // assign the task's new id to it's days.
         DB.query(INSERT_DAYS_PREPARED_STATEMENT, insertDaysQueryAttr(task.days))
           .then(function(days_result) {
+            
+            // No progress
+            if(task.progress.length == 0) {
+              callback(null, task_id);
+              return;
+            }
+            
             angular.forEach(task.progress, function(progress) {
               progress.task_id = task_id;
               DB.query(INSERT_PROGRESS_PREPARES_STATEMENT, insertProgressQueryAttr(progress))
@@ -141,17 +148,17 @@ angular.module('tracktr.services')
     DB.query(DELETE_TASK_PREPARED_STATEMENT, [task.id])
       .then(function() {
         // Delete the days associated to task
-        DB.query(DELETE_DAYS_PREPARED_STATEMENT, [task.days.id])
+        DB.query(DELETE_DAYS_PREPARED_STATEMENT, [task.id])
           .then(function() {
-            // Delete the progress associated to task
-            angular.forEach(task.progress, function(progress) {
-              DB.query(DELETE_PROGRESS_PREPARED_STATEMENT, [progress.id])
-                .then(function() {
-                  callback();
-                });
-            });
+          
+            // Delete the progress associated to tasks      
+            DB.query(DELETE_PROGRESS_PREPARED_STATEMENT, [task.id])
+              .then(function() {
+                callback();
+              });
           });
-      });
+        });
+    
   };
 
 
