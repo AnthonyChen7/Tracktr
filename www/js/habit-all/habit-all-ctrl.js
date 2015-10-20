@@ -25,7 +25,7 @@ angular.module('tracktr.controllers')
  */
 var allTasks = [   
     {
-      id: 1,
+     
      name: 'Daily Everyday Not Active',
      isActive: 0,
      frequency: 0,
