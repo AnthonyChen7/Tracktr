@@ -230,8 +230,8 @@ var allTasks = [
   
   //Put in dummy data
   // for(var i = 0; i < allTasks.length; i++){
-  //    TaskService.createTask(allTasks[i], function(err,id){
-  //    });
+  //   TaskService.createTask(allTasks[i], function(err,id){
+  //   });
   // }
   
   //Retreive all tasks from db
@@ -287,7 +287,7 @@ var allTasks = [
           var index = $scope.tasks.indexOf(task);
           $scope.tasks.splice(index,1);
           $ionicPopup.alert({
-            title: 'Success',
+            title: 'Success!',
             template: 'Task successfully deleted.'
           });
           
