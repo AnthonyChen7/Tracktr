@@ -10,7 +10,6 @@ angular.module('tracktr.controllers')
  var DAILY = "Daily";
  var MONTHLY = "Monthly";
  var WEEKLY = "Weekly";
- var EVERYDAY = "Every day";
  var MONDAY = "M";
  var TUESDAY = "T";
  var WEDNESDAY = "W";
@@ -18,6 +17,7 @@ angular.module('tracktr.controllers')
  var FRIDAY = "F";
  var SATURDAY = "Sa";
  var SUNDAY = "Su";
+
  var someDate = new Date();
   
 /**
@@ -25,7 +25,7 @@ angular.module('tracktr.controllers')
  */
 var allTasks = [   
     {
-     id: '0',
+      id: 1,
      name: 'Daily Everyday Not Active',
      isActive: 0,
      frequency: 0,
@@ -58,7 +58,7 @@ var allTasks = [
     },
     
     {
-     id: '1',
+      id: 2,
      name: 'Daily Active Some days',
      isActive: 1,
      frequency: 0,
@@ -91,7 +91,7 @@ var allTasks = [
     },
     
      {
-     id: '2',
+       id: 3,
      name: 'Weekly Active Some days',
      isActive: 1,
      frequency: 1,
@@ -124,7 +124,7 @@ var allTasks = [
     },
     
     {
-     id: '3',
+      id: 4,
      name: 'monthly Active Some days',
      isActive: 1,
      frequency: 2,
@@ -157,7 +157,7 @@ var allTasks = [
     },
     
     {
-     id: '4',
+      id: 5,
      name: 'monthly Active no days',
      isActive: 1,
      frequency: 2,
@@ -190,7 +190,7 @@ var allTasks = [
     },
     
     {
-     id: '4',
+      id: 6,
      name: 'monthly not Active one day',
      isActive: 0,
      frequency: 2,
@@ -225,32 +225,22 @@ var allTasks = [
   ];  
   
   $scope.items = [];
-  $scope.groups = [];
+  $scope.options= [EDIT, VIEW_REPORT, DELETE];
   
   //Put in dummy data
   // for(var i = 0; i < allTasks.length; i++){
-  //   TaskService.createTask(allTasks[i], function(err,id){
-      
-  //   });
+  //    TaskService.createTask(allTasks[i], function(err,id){
+  //    });
   // }
   
   //Retreive all tasks from db
   TaskService.getAll(function(err,tasks){
     $scope.items = tasks;
- 
-   /**
-   * For each task, add option to
-   * edit, view, delete
-   */
-      for(var i = 0; i< $scope.items.length; i++){
-    $scope.groups[i]={
-      task: $scope.items[i],
-      options: [EDIT, VIEW_REPORT, DELETE]
-    }
-    
-  }
-  
+    // for(var i = 0; i< $scope.items.length; i++){
+    // TaskService.deleteTask($scope.items[i], function(err){});
+    // }
   });
+
     
   /**
    * Returns boolean to tell us
@@ -295,8 +285,6 @@ var allTasks = [
         TaskService.deleteTask(task, function(err){
           var index = $scope.items.indexOf(task);
           $scope.items.splice(index,1);
-          $scope.groups.splice(index,1);
-          
           $ionicPopup.alert({
             title: 'Success',
             template: 'Task successfully deleted.'
@@ -313,12 +301,13 @@ var allTasks = [
   /**
    * Retrieves the description of the task
    */
-  $scope.retrieveDescription=function(group){
+  $scope.retrieveDescription=function(item){
     var result = "";
-    result += "Goal: " + group.task.goal + " | "+$scope.getFrequency(group.task.frequency);
-    // if(group.task.days.length != 0){
-    //   result += " |"+ $scope.getDaysOfOccurence(group.task.days);
-    // }
+    result += $scope.countProgress(item.progress) +  "/" + item.goal + " | " + $scope.getFrequency(item.frequency);
+        
+    if($scope.getDaysOfOccurence(item.days) != ""){
+      result += " | "+ $scope.getDaysOfOccurence(item.days);
+    }
     return result;
   };
   
@@ -345,44 +334,47 @@ var allTasks = [
    */
   $scope.getDaysOfOccurence= function(days){
     var result = "";
-    if(days.length === 7){
-      return " "+EVERYDAY;
-    }else{
-      for(var i in days){
-        if(days[i] === 0){
-          result+= " "+SUNDAY;
-        }else if(days[i] === 1){
-          result += " "+MONDAY;
-        }else if(days[i] === 2){
-          result += " "+TUESDAY;
-        }else if(days[i] === 3){
-          result += " "+WEDNESDAY;
-        }else if(days[i] === 4){
-          result += " "+THURSDAY;
-        }else if(days[i] === 5){
-          result += " "+FRIDAY;
-        }else if(days[i] === 6){
-          result += " "+SATURDAY;
-        }
-      }
-      return result;
+    if(days.sunday === true){
+      result += SUNDAY + " ";
     }
-  };
-  
-  $scope.convertToBoolean = function(integer){
-    if(integer === 1){
-      return true;
-    }else{
-      return false;
+    
+    if(days.monday === true){
+      result += MONDAY+ " ";
     }
+    
+    if(days.tuesday === true){
+      result += TUESDAY+ " ";
+    }
+    
+    if(days.wednesday === true){
+      result += WEDNESDAY+ " ";
+    }
+    
+    if(days.thursday === true){
+      result += THURSDAY+ " ";
+    }
+    
+    if(days.friday === true){
+      result += FRIDAY+ " ";
+    }
+    
+    if(days.saturday === true){
+      result += SATURDAY+ " ";
+    }
+    
+    return result;
   };
-  
+    
   /**
    * Retreives the progress of a task.
    * Returns an integer.
    */
   $scope.countProgress = function(progressArray){
-    //TODO needs to be implemented
+    var result = 0;
+    for(var i = 0; i < progressArray.length; i++){
+      result += progressArray[i].progress;
+    }
+    return result;
   };
   
   /**
@@ -391,14 +383,32 @@ var allTasks = [
    * supposed to occur today.
    */
   $scope.doesTaskOccurToday = function(days){
-    // var today =  new Date();
-    // var dayOfWeek = today.getDay();
+    var today = new Date();
+    var dayIndex = today.getDay();
     
-    // if(days.indexOf(dayOfWeek) > -1){
-    //   return true;
-    // }else{
-    //   return false;
-    // }    
+    var  dayOfWeek = $scope.dayOfWeekAsString(dayIndex);
+      
+      for(field in days){
+        if(field === dayOfWeek){
+          if(days[field]===true){
+            return true;
+          }else{
+            return false;
+          }
+        }
+      }
+      return false;
+  };
+  
+  $scope.updateIsActive=function(item){
+    TaskService.updateTask(item, function(err){});
+  };
+  
+  /** 
+   * Converts a day number to a string
+  */
+  $scope.dayOfWeekAsString = function(dayIndex){
+    return ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dayIndex];
   };
   
   /**
