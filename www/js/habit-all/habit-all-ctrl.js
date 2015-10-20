@@ -38,20 +38,20 @@ var allTasks = [
      days: {
        id: '1',
        task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
+       sunday: 1,
+       monday: 1,
+       tuesday: 1,
+       wednesday: 1,
+       thursday: 1,
+       friday: 1,
+       saturday: 1
      },
      progress: [
        {
          id: '1',
          task_id: '1',
          date: someDate,
-         progress: 10,
+         progress: 11,
          timerLastStarted: someDate
        }
      ]
@@ -59,12 +59,12 @@ var allTasks = [
     
     {
       id: 2,
-     name: 'Daily Active Some days',
+     name: 'Daily Active Some days no progress',
      isActive: 1,
      frequency: 0,
      isTime: 0,
      isCount: 1, 
-     goal: 10,
+     goal: 2,
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
@@ -80,19 +80,13 @@ var allTasks = [
        saturday: 0
      },
      progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate,
-         progress: 10,
-         timerLastStarted: someDate
-       }
+       
      ]
     },
     
      {
        id: 3,
-     name: 'Weekly Active Some days',
+     name: 'Weekly Active Some days 2 progress',
      isActive: 1,
      frequency: 1,
      isTime: 0,
@@ -118,6 +112,13 @@ var allTasks = [
          task_id: '1',
          date: someDate,
          progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: someDate,
+         progress: 30,
          timerLastStarted: someDate
        }
      ]
@@ -224,7 +225,7 @@ var allTasks = [
     
   ];  
   
-  $scope.items = [];
+  $scope.tasks = [];
   $scope.options= [EDIT, VIEW_REPORT, DELETE];
   
   //Put in dummy data
@@ -235,29 +236,29 @@ var allTasks = [
   
   //Retreive all tasks from db
   TaskService.getAll(function(err,tasks){
-    $scope.items = tasks;
-    // for(var i = 0; i< $scope.items.length; i++){
-    // TaskService.deleteTask($scope.items[i], function(err){});
+    $scope.tasks = tasks;
+    // for(var i = 0; i< $scope.tasks.length; i++){
+    // TaskService.deleteTask($scope.tasks[i], function(err){});
     // }
   });
 
     
   /**
    * Returns boolean to tell us
-   * if options are shown
+   * if options for the specified task is shown
    */
-  $scope.isGroupShown = function(group){
-    return $scope.shownGroup === group;
+  $scope.isGroupShown = function(task){
+    return $scope.shownGroup === task;
   };
   
   /**
-   * Toggle tasks to show options
+   * Toggle task to show options
    */
-  $scope.toggleGroup = function(group){
-    if($scope.isGroupShown(group)){
+  $scope.toggleGroup = function(task){
+    if($scope.isGroupShown(task)){
       $scope.shownGroup = null;
     }else{
-      $scope.shownGroup = group;
+      $scope.shownGroup = task;
     }
   };
   
@@ -275,7 +276,7 @@ var allTasks = [
     }else{
     
     var confirmPopup = $ionicPopup.confirm({
-      title: 'Delete Task',
+      title: 'Delete Task?',
       template: 'Are you sure you want to delete this task?'
     });
     
@@ -283,8 +284,8 @@ var allTasks = [
       
       if(confirm){
         TaskService.deleteTask(task, function(err){
-          var index = $scope.items.indexOf(task);
-          $scope.items.splice(index,1);
+          var index = $scope.tasks.indexOf(task);
+          $scope.tasks.splice(index,1);
           $ionicPopup.alert({
             title: 'Success',
             template: 'Task successfully deleted.'
@@ -299,14 +300,14 @@ var allTasks = [
   };
   
   /**
-   * Retrieves the description of the task
+   * Retrieves the data of the task
    */
-  $scope.retrieveDescription=function(item){
+  $scope.retrieveData=function(task){
     var result = "";
-    result += $scope.countProgress(item.progress) +  "/" + item.goal + " | " + $scope.getFrequency(item.frequency);
+    result += $scope.countProgress(task.progress) +  "/" + task.goal + " | " + $scope.getFrequency(task.frequency);
         
-    if($scope.getDaysOfOccurence(item.days) != ""){
-      result += " | "+ $scope.getDaysOfOccurence(item.days);
+    if($scope.getDaysOfOccurence(task.days) != ""){
+      result += " | "+ $scope.getDaysOfOccurence(task.days);
     }
     return result;
   };
@@ -327,9 +328,9 @@ var allTasks = [
   };
   
   /**
-   * days is an array of integer
+   * days is an object
    * 
-   * Return the number of days of
+   * Return the days of
    * occurence of a task as a string
    */
   $scope.getDaysOfOccurence= function(days){
@@ -378,7 +379,7 @@ var allTasks = [
   };
   
   /**
-   * days is an array of integer
+   * days is an object
    * Checks if the selected task is
    * supposed to occur today.
    */
@@ -400,12 +401,17 @@ var allTasks = [
       return false;
   };
   
-  $scope.updateIsActive=function(item){
-    TaskService.updateTask(item, function(err){});
+  /**
+   * This method is called when
+   * the user switches the task
+   * to active/in-active
+   */
+  $scope.updateIsActive=function(task){
+    TaskService.updateTask(task, function(err){});
   };
   
   /** 
-   * Converts a day number to a string
+   * Converts a day of week number to a string
   */
   $scope.dayOfWeekAsString = function(dayIndex){
     return ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dayIndex];

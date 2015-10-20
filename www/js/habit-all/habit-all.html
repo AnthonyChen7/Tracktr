@@ -15,7 +15,7 @@
     <!-- Search Button -->
     <label class="item item-input">
     <i class="icon ion-search placeholder-icon"></i>
-    <input type="search" placeholder="Search" ng-model="searchText" ng-click="buttonHandler()">
+    <input type="search" placeholder="The search function isn't working yet...'" ng-model="searchText">
     </label>
 
 <div class = "CurrentOrOther">
@@ -24,56 +24,18 @@
       <h1>Current</h1>
     </div>
     
-    <div ng-repeat= "item in items" ng-show="doesTaskOccurToday(item.days)">
+    <div ng-repeat= "task in tasks" ng-show="doesTaskOccurToday(task.days)">
     <task-info></task-info>
     </div>
-    
-      <!--<div ng-repeat= "group in groups">
-        
-      <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}" ng-show="doesTaskOccurToday(group.task.days)">-->
-      
-        <!-- Displays task information -->
-        <!--<ion-toggle ng-model="group.task.isActive" ng-check="group.task.isActive">
-        <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
-        &nbsp;
-        <h2>{{group.task.name}}</h2>
-        <p>{{retrieveDescription(group)}}</p>
-        <p>{{group.task.isActive}} Note: Keep it here for now for testing purposes....</p>
-        </ion-toggle>
-        
-      </ion-item>-->
-      
-      <!-- Displays options -->
-      <!--<ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)" ng-click="buttonHandler(option, group.task)">
-      {{option}}
-      </ion-item>
-  
-      </div>-->
     
     <div class="item item-divider">
       <h1>Other</h1>
     </div>
     
-    <div ng-repeat= "item in items" ng-show="!doesTaskOccurToday(item.days)">
+    <div ng-repeat= "task in tasks" ng-show="!doesTaskOccurToday(task.days)">
     <task-info></task-info>
     </div>
-      <!--<div ng-repeat= "group in groups">
-        
-      <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}" ng-show="!doesTaskOccurToday(group.task.days)"> 
-        <ion-toggle ng-model="group.task.isActive" ng-check="group.task.isActive">   
-          <i class="icon" ng-class="isGroupShown(group)? 'ion-minus' : 'ion-plus'"></i>
-            &nbsp;
-            <h2>{{group.task.name}}</h2>
-            <p>{{retrieveDescription(group)}}</p>
-            <p>{{group.task.isActive}} Note: Keep it here for now for testing purposes....</p>
-        </ion-toggle>
-      </ion-item>
 
-      <ion-item class="item-accordion" ng-repeat="option in group.options" ng-show="isGroupShown(group)" ng-click="buttonHandler(option, group.task)">
-      {{option}}
-      </ion-item>
-  
-      </div>-->
 </div>
     
 </ion-list>
