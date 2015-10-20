@@ -1,5 +1,5 @@
 angular.module('tracktr.controllers')
-.controller("HabitAllController", function($scope, $state, $ionicPopup, $ionicFilterBar) {
+.controller("HabitAllController", function($scope, $state, $ionicPopup, $ionicFilterBar, TaskService) {
 
 /**
  * Constants  
@@ -18,77 +18,240 @@ angular.module('tracktr.controllers')
  var FRIDAY = "F";
  var SATURDAY = "Sa";
  var SUNDAY = "Su";
+ var someDate = new Date();
   
 /**
  * Temporary list of tasks
  */
-var allTasks = [{
-      id: 0,
-      name: 'Daily Everyday Not Active',
-      isActive: false,
-      frequency: 0, //daily
-      days: [0,1,2,3,4,5,6],
-      goal: 5,
-      record: [5]
-    }, {
-      id: 1,
-      name: 'Daily Active Some days',
-      isActive: true,
-      frequency: 0, //daily
-      days: [0,1,3],
-      goal: 5,
-      record: [5]
-    }, {
-          id: 2,
-      name: 'Weekly Active Some days',
-      isActive: true,
-      frequency: 1, //weekly
-      days: [0,1,3],
-      goal: 5,
-      record: [5,5]
-    }, {
-      id: 3,
-      name: 'monthly Active Some days',
-      isActive: true,
-      frequency: 2, //monthly
-      days: [2,4],
-      goal: 5,
-      record: [5]
-    },
+var allTasks = [   
     {
-      id: 4,
-      name: 'monthly Active no days',
-      isActive: true,
-      frequency: 2, //monthly
-      days: [],
-      goal: 5,
-      record: [5]
+     id: '0',
+     name: 'Daily Everyday Not Active',
+     isActive: 0,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
     },
+    
     {
-      id: 5,
-      name: 'monthly Active one day',
-      isActive: false,
-      frequency: 2, //monthly
-      days: [4],
-      goal: 5,
-      record: [5]
+     id: '1',
+     name: 'Daily Active Some days',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 0,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+     {
+     id: '2',
+     name: 'Weekly Active Some days',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 1,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 1
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {
+     id: '3',
+     name: 'monthly Active Some days',
+     isActive: 1,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 1
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {
+     id: '4',
+     name: 'monthly Active no days',
+     isActive: 1,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {
+     id: '4',
+     name: 'monthly not Active one day',
+     isActive: 0,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 1,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
     }
+    
   ];  
   
-  $scope.items = allTasks;
+  $scope.items = [];
   $scope.groups = [];
   
-  /**
+  //Put in dummy data
+  // for(var i = 0; i < allTasks.length; i++){
+  //   TaskService.createTask(allTasks[i], function(err,id){
+      
+  //   });
+  // }
+  
+  //Retreive all tasks from db
+  TaskService.getAll(function(err,tasks){
+    $scope.items = tasks;
+ 
+   /**
    * For each task, add option to
    * edit, view, delete
    */
-  for(var i = 0; i< $scope.items.length; i++){
+      for(var i = 0; i< $scope.items.length; i++){
     $scope.groups[i]={
       task: $scope.items[i],
       options: [EDIT, VIEW_REPORT, DELETE]
-    };
+    }
+    
   }
   
+  });
+    
   /**
    * Returns boolean to tell us
    * if options are shown
@@ -120,10 +283,30 @@ var allTasks = [{
     }else if(option === VIEW_REPORT){
       $state.go('tab.charts');
     }else{
-      var popUp = $ionicPopup.alert({
-      title: "Warning!",
-      template: "This feature isn't implemented yet!"
+    
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Delete Task',
+      template: 'Are you sure you want to delete this task?'
     });
+    
+    confirmPopup.then(function(confirm){
+      
+      if(confirm){
+        TaskService.deleteTask(task, function(err){
+          var index = $scope.items.indexOf(task);
+          $scope.items.splice(index,1);
+          $scope.groups.splice(index,1);
+          
+          $ionicPopup.alert({
+            title: 'Success',
+            template: 'Task successfully deleted.'
+          });
+          
+        });
+      }
+      
+    });
+     
     }
   };
   
@@ -133,9 +316,9 @@ var allTasks = [{
   $scope.retrieveDescription=function(group){
     var result = "";
     result += "Goal: " + group.task.goal + " | "+$scope.getFrequency(group.task.frequency);
-    if(group.task.days.length != 0){
-      result += " |"+ $scope.getDaysOfOccurence(group.task.days);
-    }
+    // if(group.task.days.length != 0){
+    //   result += " |"+ $scope.getDaysOfOccurence(group.task.days);
+    // }
     return result;
   };
   
@@ -186,6 +369,14 @@ var allTasks = [{
     }
   };
   
+  $scope.convertToBoolean = function(integer){
+    if(integer === 1){
+      return true;
+    }else{
+      return false;
+    }
+  };
+  
   /**
    * Retreives the progress of a task.
    * Returns an integer.
@@ -200,14 +391,14 @@ var allTasks = [{
    * supposed to occur today.
    */
   $scope.doesTaskOccurToday = function(days){
-    var today =  new Date();
-    var dayOfWeek = today.getDay();
+    // var today =  new Date();
+    // var dayOfWeek = today.getDay();
     
-    if(days.indexOf(dayOfWeek) > -1){
-      return true;
-    }else{
-      return false;
-    }    
+    // if(days.indexOf(dayOfWeek) > -1){
+    //   return true;
+    // }else{
+    //   return false;
+    // }    
   };
   
   /**
