@@ -246,13 +246,13 @@ angular.module('tracktr.services')
   var insertTaskQueryAttr = function(task) {
     
     return [task.name, 
-            task.isActive, 
+            (task.isActive) ? 1 : 0, 
             task.frequency, 
-            task.isTime, 
-            task.isCount,
+            (task.isTime) ? 1 : 0, 
+            (task.isCount) ? 1 : 0,
             task.goal, 
             task.icon, 
-            task.isTimerRunning, 
+            (task.isTimerRunning) ? 1 : 0, 
             task.creationDate.getTime() 
             ];
   };
@@ -264,13 +264,13 @@ angular.module('tracktr.services')
    */
   var insertDaysQueryAttr = function(days) {
       return [days.task_id,
-              days.sunday,
-              days.monday,
-              days.tuesday,
-              days.wednesday,
-              days.thursday,
-              days.friday,
-              days.saturday];
+              (days.sunday) ? 1 : 0,
+              (days.monday) ? 1 : 0,
+              (days.tuesday) ? 1 : 0,
+              (days.wednesday) ? 1 : 0,
+              (days.thursday) ? 1 : 0,
+              (days.friday) ? 1 : 0,
+              (days.saturday) ? 1 : 0];
   };
   
   /**
