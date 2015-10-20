@@ -1,5 +1,86 @@
 <ion-view view-title="Habit Create">
   <ion-content>
-    
+    <div>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Title</span>
+          <input ng-model="habit-title" type="text" />
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">Type</div>
+          <select>
+            <option selected>Time</option>
+            <option>Count</option>
+          </select>
+        </label>
+        <div class="item item-divider">Goal</div>
+        <label class="item item-input">
+          <span class="input-label">Hours</span>
+          <input ng-model="goal-hours" type="number" min="0" max="744" />
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Minutes</span>
+          <input ng-model="goal-minutes" type="number" min="0" max="59" />
+        </label>
+        <div class="item item-divider"></div>
+        <label class="item item-input item-select">
+          <div class="input-label">Frequency</div>
+          <select>
+            <option selected>Daily</option>
+            <option>Weekly</option>
+            <option>Monthly</option>
+          </select>
+        </label>
+        <ul class="list">
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Sunday
+          </li>
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Monday
+          </li>
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Tuesday
+          </li>
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Wednesday
+          </li>
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Thursday
+          </li>
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Friday
+          </li>
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Saturday
+          </li>
+        </ul>
+      </div>
+      <div class="padding-left padding-right">
+        <div class="button-bar">
+          <a class="button" ng-click="shorten(longUrl)">Create</a>
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
