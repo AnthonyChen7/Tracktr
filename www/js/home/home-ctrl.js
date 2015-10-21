@@ -21,13 +21,13 @@ angular.module('tracktr.controllers', [])
      count:0,
      isTimerRunning: false,
      creationDate: currentDate,
-     progress: {
+     progress: [{
         id: 1,
         task_id: 1,
         date: currentDate,
         progress: 0,
         timerLastStarted: currentDate
-      },
+      }],
 		 days: { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
 		thursday: 0, friday: 1, saturday: 0 }
     },
@@ -42,49 +42,39 @@ angular.module('tracktr.controllers', [])
       count:0,
       isTimerRunning: false,
       creationDate: currentDate,
-      progress: {
+      progress: [{
         id: 2,
         task_id: 2,
         date: currentDate,
         progress: 5,
         timerLastStarted: currentDate
-      },
+      }],
 		  days: { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
 		thursday: 0, friday: 1, saturday: 0 } 
     }
   ];
   
-  // var progress = [
-  //   [
-  //     {
-  //       id: 1,
-  //       task_id: 1,
-  //       date: currentDate,
-  //       progress: 0,
-  //       timerLastStarted: currentDate
-  //     },
-  //     {
-  //       id: 2,
-  //       task_id: 2,
-  //       date: currentDate,
-  //       progress: 5,
-  //       timerLastStarted: currentDate
-  //     }
-  //   ]
-  // ];
+  $scope.allTasks;
+  
   
   //  $scope.allTasks; 
         
-	// TaskService.createTask(aTask);
   
   //Get all tasks from the DB
-  TaskService.getAll(function(err, tasks) {
- 
+ TaskService.getAll(function(err,tasks){
+    $scope.allTasks = tasks;
+    // for(var i = 0; i< $scope.tasks.length; i++){
+    // TaskService.deleteTask($scope.tasks[i], function(err){});
+    // }
   });
   
- 
+ //Put in dummy data
+  for(var i = 0; i < tasks.length; i++){
+    // TaskService.createTask(tasks[i], function(err,id){
+    // });
+  }
   
-  $scope.currentTasks = tasks;
+  // $scope.currentTasks = tasks;
   
   //Get the current tasks, from fitering the results from TaskService.getAll
   $scope.getCurrentTasks = function() {
@@ -102,7 +92,8 @@ angular.module('tracktr.controllers', [])
   
   //Increment the count of count tasks
   $scope.incCount = function(task) {
-    task.progress.progress+=1;
+    task.progress[0].progress+=1;
+    TaskService.updateTask(task, function(err){});
   };
   
   $scope.navCreateClick = function() {
@@ -110,23 +101,21 @@ angular.module('tracktr.controllers', [])
   };
   
   //Determine if the task is active for the current day
-  $scope.doesTaskOccurToday = function(days){
+  $scope.isTaskActiveToday = function(task){
     var today = new Date();
     var dayIndex = today.getDay();
-    
+    var days = task.days;
     var  dayOfWeek = $scope.dayOfWeekAsString(dayIndex);
-      
+    var isActive = task.isActive;  
       for(field in days){
         if(field === dayOfWeek){
-          if(days[field]===true){
+          if(days[field]===true && isActive===true){
             return true;
           }else{
             return false;
           }
         }
       }
-      
-      
       return false;
   };
   
@@ -136,5 +125,12 @@ angular.module('tracktr.controllers', [])
   $scope.dayOfWeekAsString = function(dayIndex){
     return ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dayIndex];
   };
+  
+  
+  
+  
+  /*
+  
+  */
   
 });
