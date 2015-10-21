@@ -229,10 +229,10 @@ var allTasks = [
   $scope.options= [EDIT, VIEW_REPORT, DELETE];
   
   //Put in dummy data
-  // for(var i = 0; i < allTasks.length; i++){
-  //   TaskService.createTask(allTasks[i], function(err,id){
-  //   });
-  // }
+  for(var i = 0; i < allTasks.length; i++){
+    // TaskService.createTask(allTasks[i], function(err,id){
+    // });
+  }
   
   //Retreive all tasks from db
   TaskService.getAll(function(err,tasks){
