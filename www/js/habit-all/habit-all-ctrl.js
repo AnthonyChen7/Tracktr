@@ -223,8 +223,10 @@ var allTasks = [
      ]
     }
     
-  ];  
+  ];
   
+  
+    
   $scope.tasks = [];
   $scope.options= [EDIT, VIEW_REPORT, DELETE];
   
@@ -234,15 +236,14 @@ var allTasks = [
   //   });
   // }
   
-  //Retreive all tasks from db
+  //Get all tasks from DB
   TaskService.getAll(function(err,tasks){
     $scope.tasks = tasks;
     // for(var i = 0; i< $scope.tasks.length; i++){
     // TaskService.deleteTask($scope.tasks[i], function(err){});
     // }
-  });
-
-    
+  }); 
+   
   /**
    * Returns boolean to tell us
    * if options for the specified task is shown
