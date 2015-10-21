@@ -46,6 +46,7 @@ angular.module('tracktr', ['ionic','jett.ionic.filter.bar', 'tracktr.controllers
   
   // Tab views
   .state('tab.all', {
+    cache: false,
     url: '/all',
     views: {
       'tab-all': {
