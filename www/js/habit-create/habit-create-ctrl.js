@@ -22,10 +22,6 @@ angular.module('tracktr.controllers')
 		{name: "Saturday", value: false}
 		];
 		
-	// document.getElementById("aa").onchange=function() {
-	// 	alert(this.value);
-	// }
-		
 	$scope.createTask = function(habitTitle,habitType,hours,minutes,frequency, days) {
 		// Create Task		
 		// Type
@@ -66,7 +62,7 @@ angular.module('tracktr.controllers')
 		// Generate Task and make call to TaskService
 		var aTask = { name: habitTitle, isActive: true, 
 		    frequency: frequency, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: 0, isTimerRunning: false, creationDate: currentDate, progress: emptyProgress };
-		TaskService.createTask(aTask);
+		TaskService.createTask(aTask, function(err, id) { });
 		
 		// Delete Task
 		// var bTask = { id: 1, days: { id: 1 } };
