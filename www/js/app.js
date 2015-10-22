@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('tracktr', ['ionic', 'tracktr.config', 'tracktr.controllers', 'tracktr.services'])
+
+angular.module('tracktr', ['ionic','jett.ionic.filter.bar', 'tracktr.controllers', 'tracktr.services','tracktr.directives'])
 
 .run(function($ionicPlatform, DB) {
   $ionicPlatform.ready(function() {

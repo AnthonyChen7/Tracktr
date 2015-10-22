@@ -1,0 +1,19 @@
+<!--Displays the information of a task along with options to view,edit, delete.-->
+
+      <ion-item class="item-stable" ng-click="toggleGroup(task)" ng-class="{active: isGroupShown(task)}">
+        <ion-toggle ng-model="task.isActive" ng-check="task.isActive" ng-change="updateIsActive(task)">
+        <i class="icon" ng-class="isGroupShown(task)? 'ion-minus' : 'ion-plus'"></i>
+        &nbsp;
+        <h2>{{task.name}}</h2>
+        <p>{{retrieveData(task)}}<p>
+        <p></p> <!--Note: This needs to be here or else the options won't work.' -->
+        </ion-toggle>
+        
+      </ion-item>
+      
+      <!-- Displays options -->
+      
+      <ion-item class="item-accordion" ng-repeat="option in options" ng-show="isGroupShown(task)" ng-click="buttonHandler(option, task)">
+      {{option}}
+      </ion-item> 
+ 
