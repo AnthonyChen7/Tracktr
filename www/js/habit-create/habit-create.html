@@ -1,86 +1,94 @@
 <ion-view view-title="Habit Create">
   <ion-content>
-    <div>
-      <div class="list">
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Title</span>
-          <input ng-model="habit-title" type="text" />
-        </label>
-        <label class="item item-input item-select">
-          <div class="input-label">Type</div>
-          <select>
-            <option selected>Time</option>
-            <option>Count</option>
-          </select>
-        </label>
-        <div class="item item-divider">Goal</div>
-        <label class="item item-input">
-          <span class="input-label">Hours</span>
-          <input ng-model="goal-hours" type="number" min="0" max="744" />
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Minutes</span>
-          <input ng-model="goal-minutes" type="number" min="0" max="59" />
-        </label>
-        <div class="item item-divider"></div>
-        <label class="item item-input item-select">
-          <div class="input-label">Frequency</div>
-          <select>
-            <option selected>Daily</option>
-            <option>Weekly</option>
-            <option>Monthly</option>
-          </select>
-        </label>
-        <ul class="list">
-          <li class="item item-checkbox">
-            <label class="checkbox">
-              <input type="checkbox">
-            </label>
-            Sunday
-          </li>
-          <li class="item item-checkbox">
-            <label class="checkbox">
-              <input type="checkbox">
-            </label>
-            Monday
-          </li>
-          <li class="item item-checkbox">
-            <label class="checkbox">
-              <input type="checkbox">
-            </label>
-            Tuesday
-          </li>
-          <li class="item item-checkbox">
-            <label class="checkbox">
-              <input type="checkbox">
-            </label>
-            Wednesday
-          </li>
-          <li class="item item-checkbox">
-            <label class="checkbox">
-              <input type="checkbox">
-            </label>
-            Thursday
-          </li>
-          <li class="item item-checkbox">
-            <label class="checkbox">
-              <input type="checkbox">
-            </label>
-            Friday
-          </li>
-          <li class="item item-checkbox">
-            <label class="checkbox">
-              <input type="checkbox">
-            </label>
-            Saturday
-          </li>
-        </ul>
-      </div>
-      <div class="padding-left padding-right">
-        <div class="button-bar">
-          <a class="button" ng-click="shorten(longUrl)">Create</a>
+    <form>
+      <div>
+        <div class="list">
+          <!-- Title -->
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Title</span>
+            <input ng-model="habitTitle" type="text" />
+          </label> 
+          
+          <!-- Type -->
+          <label class="item item-input item-select">
+            <div class="input-label">Type</div>
+            <select ng-options="habitType.code as habitType.name for habitType in habitTypes" ng-model="habitType">
+              <option style="display:none" value=habitType.code></option>
+            </select>
+          </label>
+          
+          <div class="item item-divider"></div>
+          
+          <!-- Goal -->
+          <label class="item item-input">
+            <span class="input-label">Hours</span>
+            <input ng-model="hours" type="tel" min="0" max="744" />
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Minutes</span>
+            <input ng-model="minutes" type="tel" min="0" max="59" />
+          </label>
+          
+          <div class="item item-divider"></div>
+          
+          <!-- Frequency -->
+          <label class="item item-input item-select">
+            <div class="input-label">Frequency</div>
+            <select ng-options="frequency.code as frequency.name for frequency in frequencies" ng-model="frequency"></select>
+          </label>
+          <!--<label class="item item-input item-select">
+            <div class="input-label">Days</div>
+            <select multiple="multiple" ng-options="day.code as day.name for day in days" ng-model="days"></select>
+          </label>-->
+          <ul class="list">
+            <li class="item item-checkbox" ng-repeat="day in days">
+              <label class="checkbox">
+                <input type="checkbox" ng-model="day.selected" value={{day.value}}>
+              </label>
+              {{day.name}}
+            </li>
+          </ul>
+          
+          <div class="item item-divider"></div>
+                
+          <!--<div class="row">
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+          </div>
+          <div class="row">
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+          </div>
+          <div class="row">
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+          </div>
+          <div class="row">
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+          </div>
+          <div class="row">
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+          </div>-->
+          <!--<div class="item item-divider"></div>-->
+        </div>
+        <div class="padding-left padding-right padding-bottom">
+          <div class="button-bar">
+            <a class="button" ng-click="createTask(habitTitle,habitType,hours,minutes,frequency,days)">Create</a>
+          </div>
         </div>
       </div>
-    </div>
+    <form>
   </ion-content>
 </ion-view>
