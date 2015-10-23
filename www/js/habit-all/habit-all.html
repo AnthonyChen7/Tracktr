@@ -1,9 +1,9 @@
 
-<ion-view view-title="All Tasks">
+<ion-view view-title="Habit All">
   <!-- Create new task button -->
   <ion-nav-buttons side="secondary">
     <button class="button button-clear button-icon" ng-click="navCreateClick()">
-      <i class="ion-edit"></i>
+      <!-- <i class="ion-edit"></i> -->
     </button>
   </ion-nav-buttons>
   
@@ -14,7 +14,7 @@
     <!-- Search Button -->
     <label class="item item-input">
     <i class="icon ion-search placeholder-icon"></i>
-    <input type="search" placeholder="The search function isn't working yet...'" ng-model="searchText">
+    <input type="search" placeholder="Search...'" ng-model="searchText">
     </label>
 
 <div class = "CurrentOrOther">
@@ -23,7 +23,7 @@
       <h1>Current</h1>
     </div>
     
-    <div ng-repeat= "task in tasks" ng-show="doesTaskOccurToday(task.days)">
+    <div ng-repeat= "task in tasks | filter:searchText" ng-show="doesTaskOccurToday(task.days)">
     <task-info></task-info>
     </div>
     
@@ -31,7 +31,7 @@
       <h1>Other</h1>
     </div>
     
-    <div ng-repeat= "task in tasks" ng-show="!doesTaskOccurToday(task.days)">
+    <div ng-repeat= "task in tasks | filter:searchText" ng-show="!doesTaskOccurToday(task.days)">
     <task-info></task-info>
     </div>
 

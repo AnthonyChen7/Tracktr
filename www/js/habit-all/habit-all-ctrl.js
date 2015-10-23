@@ -224,25 +224,26 @@ var allTasks = [
     }
     
   ];
-  
-  
     
   $scope.tasks = [];
   $scope.options= [EDIT, VIEW_REPORT, DELETE];
+  
+
+  //Get all tasks from DB everytime this view is entered
+  $scope.$on("$ionicView.enter", function(){
+    TaskService.getAll(function(err,tasks){
+    $scope.tasks = tasks;
+    // for(var i = 0; i< $scope.tasks.length; i++){
+    // TaskService.deleteTask($scope.tasks[i], function(err){});
+    // }
+  }); 
+  });
   
   //Put in dummy data
   // for(var i = 0; i < allTasks.length; i++){
   //   TaskService.createTask(allTasks[i], function(err,id){
   //   });
   // }
-  
-  //Get all tasks from DB
-  TaskService.getAll(function(err,tasks){
-    $scope.tasks = tasks;
-    // for(var i = 0; i< $scope.tasks.length; i++){
-    // TaskService.deleteTask($scope.tasks[i], function(err){});
-    // }
-  }); 
    
   /**
    * Returns boolean to tell us
