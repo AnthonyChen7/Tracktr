@@ -228,6 +228,7 @@ var allTasks = [
   $scope.tasks = [];
   $scope.options= [EDIT, VIEW_REPORT, DELETE];
   
+
   //Get all tasks from DB everytime this view is entered
   $scope.$on("$ionicView.enter", function(){
     TaskService.getAll(function(err,tasks){
