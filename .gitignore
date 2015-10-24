@@ -10,3 +10,5 @@ plugins
 *.log
 *.DS_Storewww/lib/*
 www/lib/*
+ionic.project
+.io-config.json
