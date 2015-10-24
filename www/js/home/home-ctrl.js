@@ -55,17 +55,11 @@ angular.module('tracktr.controllers', [])
   ];
   
   $scope.allTasks;
-  
-  
-  //  $scope.allTasks; 
         
   
   //Get all tasks from the DB
  TaskService.getAll(function(err,tasks){
     $scope.allTasks = tasks;
-    // for(var i = 0; i< $scope.tasks.length; i++){
-    // TaskService.deleteTask($scope.tasks[i], function(err){});
-    // }
   });
   
  //Put in dummy data
@@ -74,30 +68,30 @@ angular.module('tracktr.controllers', [])
     // });
   }
   
-  // $scope.currentTasks = tasks;
   
   //Get the current tasks, from fitering the results from TaskService.getAll
   $scope.getCurrentTasks = function() {
     return $scope.currentTasks;
   };
-  
-  // $scope.getProgress = function(id) {
-  //   for(i = 0; i < $scope.progress; i++) {
-  //     if(id === $scope.progress[i].id) {
-  //       return $scope.progress[i].progress;
-  //     }
-  //   }
-  // };
-  
-  
+ 
   //Increment the count of count tasks
   $scope.incCount = function(task) {
+    if(task.progress.length === 0) {
+      $scope.startProgress(task);
+    }
     task.progress[0].progress+=1;
     TaskService.updateTask(task, function(err){});
   };
   
+  
   $scope.navCreateClick = function() {
     $state.go('tab.create'); 
+  };
+  
+  
+  ///Start a new progress, if the task has an empty progress array
+  $scope.startProgress = function(task) {
+    
   };
   
   //Determine if the task is active for the current day
@@ -127,10 +121,29 @@ angular.module('tracktr.controllers', [])
   };
   
   
-  
-  
   /*
-  
+  * update all the tasks
   */
+  
+  $scope.updateAll = function(allTasks) {
+    for(i = 0; i < allTasks.lenth; i++) {
+      TaskService.updateTask(allTasks[i]);
+    }
+  };
+  
+  /*TODO
+  * calculate the time passed in timer task
+  */
+  $scope.processTimer = function() {
+    var currentDate = new Date();
+  };
+  
+  /*Reload tasks every time home tab is entered
+  */
+  $scope.$on("$ionicView.enter", function(){
+    TaskService.getAll(function(err,tasks){
+      $scope.allTasks = tasks;
+    }); 
+  });
   
 });
