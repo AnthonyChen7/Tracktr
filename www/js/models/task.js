@@ -27,3 +27,11 @@ var Task = function(task) {
   }, this);
   
 }
+
+function countProgress(aTask){
+  var result = 0;
+  
+  
+  
+  return result;
+}

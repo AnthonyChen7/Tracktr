@@ -306,8 +306,10 @@ var allTasks = [
    */
   $scope.retrieveData=function(task){
     var result = "";
-    result += $scope.countProgress(task.progress) +  "/" + task.goal + " | " + $scope.getFrequency(task.frequency);
-        
+    // result += $scope.countProgress(task.progress) +  "/" + task.goal + " | " + $scope.getFrequency(task.frequency);
+    
+    result += countProgress(task) +  "/" + task.goal + " | " + $scope.getFrequency(task.frequency);
+      
     if($scope.getDaysOfOccurence(task.days) != ""){
       result += " | "+ $scope.getDaysOfOccurence(task.days);
     }
