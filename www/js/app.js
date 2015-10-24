@@ -22,9 +22,10 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
       StatusBar.styleLightContent();
     }
     
-    // Initialize the Database
-    DB.init();
+    
   });
+  // Initialize the Database
+  DB.init();
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
