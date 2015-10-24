@@ -1,5 +1,5 @@
 angular.module('tracktr.controllers')
-.controller("HabitAllController", function($scope, $state, $ionicPopup, $ionicFilterBar, TaskService) {
+.controller("HabitAllController", function($scope, $state, $ionicPopup, TaskService) {
 
 /**
  * Constants  
