@@ -40,7 +40,7 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
   .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: '/tabs.html'
+    templateUrl: 'tabs.html'
   })
   
   // Each tab has its own nav history stack:
