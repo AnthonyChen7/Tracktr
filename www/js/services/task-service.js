@@ -46,7 +46,7 @@ angular.module('tracktr.services')
               'SELECT id, task_id, date, progress, timerLastStarted ' + 
               'FROM progress ' + 
               'WHERE task_id=?';    
-  var INSERT_PROGRESS_PREPARES_STATEMENT = 
+  var INSERT_PROGRESS_PREPARED_STATEMENT = 
               'INSERT INTO progress (task_id, date, progress, timerLastStarted) ' + 
               'VALUES (?, ?, ?, ?)'; 
   var UPDATE_PROGRESS_PREPARED_STATEMENT = 
@@ -111,7 +111,7 @@ angular.module('tracktr.services')
    *  - task: The updated task.
    */
   self.updateTask = function(task) {
-   console.log(task);
+   
     var updateTaskQueryAttrs = insertTaskQueryAttr(task);
     updateTaskQueryAttrs.push(parseInt(task.id, 10));      // add the task id for updating   
         
@@ -125,12 +125,17 @@ angular.module('tracktr.services')
           DB.query(UPDATE_DAYS_PREPARED_STATEMENT, updateDaysQueryAttrs)
             .then(function(result) {
               // Update progress
-              angular.forEach(task.progress, function(progress){
-                var updateProgressQueryAttrs = insertProgressQueryAttr(progress);
-                updateProgressQueryAttrs.push(progress.id);
-                
-                DB.query(UPDATE_PROGRESS_PREPARED_STATEMENT, updateProgressQueryAttrs);  
-              });
+
+              // 1. Delete all progress
+              DB.query(DELETE_PROGRESS_PREPARED_STATEMENT, [task.id])
+                .then(function(result) {
+                  
+                  angular.forEach(task.progress, function(progress){
+                    // 2. Re add all progress
+                    var insertProgressQueryAttrs = insertProgressQueryAttr(progress);
+                    DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs);  
+                  });
+                }) 
           });                    
     });
   };
