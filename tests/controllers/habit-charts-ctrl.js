@@ -10,7 +10,7 @@ describe('Habit Charts Controller Tests', function(){
     }));
 
     // tests start here
-    it('should have enabled friends to be true', function(){
+    it('should have initialized with testBoolean as true', function(){
         expect(scope.testBoolean).toEqual(true);
     });
 });
