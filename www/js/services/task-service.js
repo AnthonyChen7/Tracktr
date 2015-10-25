@@ -89,7 +89,7 @@ angular.module('tracktr.services')
             
             angular.forEach(task.progress, function(progress) {
               progress.task_id = task_id;
-              DB.query(INSERT_PROGRESS_PREPARES_STATEMENT, insertProgressQueryAttr(progress))
+              DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttr(progress))
                 .then(function(){
                   progressCnter++;
                   if(progressCnter === progressCount) {

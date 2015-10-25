@@ -31,7 +31,12 @@ var Task = function(task) {
 function countProgress(aTask){
   var result = 0;
   
-  
+  if(aTask.frequency === 0){
+    //Daily
+    for(var i = 0; i < aTask.progress.length ; i++){
+      result += aTask.progress[i].progress;
+    }
+  }
   
   return result;
 }
