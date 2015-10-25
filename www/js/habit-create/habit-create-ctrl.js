@@ -1,6 +1,10 @@
 angular.module('tracktr.controllers')
 
-.controller("HabitCreateController", function($scope, $ionicHistory,TaskService) {
+.controller("HabitCreateController", function($scope, $ionicHistory, TaskService) {
+	$scope.back = function() {
+        $ionicHistory.goBack();
+    }
+	
 	$scope.habitTypes = [
 		{name: "Time", code: 0},
 		{name: "Count", code: 1}
@@ -63,10 +67,6 @@ angular.module('tracktr.controllers')
 		var aTask = { name: habitTitle, isActive: true, 
 		    frequency: frequency, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: 0, isTimerRunning: false, creationDate: currentDate, progress: emptyProgress };
 		TaskService.createTask(aTask, function(err, id) { });
-		
-		// Delete Task
-		// var bTask = { id: 1, days: { id: 1 } };
-		// TaskService.deleteTask(bTask);
 		
 		// Return to Home View
 		$ionicHistory.goBack();

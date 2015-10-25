@@ -9,7 +9,7 @@ angular.module('tracktr.services', ['tracktr.config'])
    */
   self.init = function() {
     self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', 5*1024*1024);
-    //self.nuke(function(){
+    // self.nuke(function(){
     
       var numTables = DB_CONFIG.tables.length;  // Total number of tables to be created
       var numCreatedTables = 0;                 // Current number of tables created
@@ -40,7 +40,7 @@ angular.module('tracktr.services', ['tracktr.config'])
         });
       });
     
-    //});
+    // });
     
     
   };
