@@ -28,6 +28,10 @@ var Task = function(task) {
   
 }
 
+/**
+ * aTask is a task object
+ * Returns the progress (integer) based on the frequency
+ */
 function countProgress(aTask){
   var result = 0;
   
@@ -53,10 +57,20 @@ function countProgress(aTask){
       if(lastSunday.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= nextSunday.getTime()){
       result += aTask.progress[i].progress;
       }
-      
-    
     }
+  }
+  else if(aTask.frequency == 2){
+    //monthly
+    var today = new Date();
+    var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
+    var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1,0);
     
+    for(var i = 0; i < aTask.progress.length ; i++){
+      
+      if(firstDayOfMonth.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastDayOfMonth.getTime()){
+      result += aTask.progress[i].progress;
+      } 
+    }
   }
   
   return result;
