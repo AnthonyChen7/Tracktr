@@ -5,54 +5,54 @@ angular.module('tracktr.controllers', [])
   
   var emptyArray = [];
 	var currentDate = new Date();
-	var aDays = { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
-		thursday: 0, friday: 1, saturday: 0 };
-	var tasks = 
-  [
-    { 
-     id: 1,
-     name: "Read for 5 minutes",
-     isActive: true,
-     frequency: 0, 
-     isCount: 1,
-     isTime: 0,
-     goal: 5,
-     icon: 0, 
-     count:0,
-     isTimerRunning: false,
-     creationDate: currentDate,
-     progress: [{
-        id: 1,
-        task_id: 1,
-        date: currentDate,
-        progress: 0,
-        timerLastStarted: currentDate
-      }],
-		 days: { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
-		thursday: 0, friday: 1, saturday: 0 }
-    },
-    { id:2,
-      name: "Watch a Cosmos episode",
-      isActive: true, 
-      frequency: 0,
-      isCount: 1,
-      isTime: 0,
-      goal: 60,
-      icon: 0,
-      count:0,
-      isTimerRunning: false,
-      creationDate: currentDate,
-      progress: [{
-        id: 2,
-        task_id: 2,
-        date: currentDate,
-        progress: 5,
-        timerLastStarted: currentDate
-      }],
-		  days: { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
-		thursday: 0, friday: 1, saturday: 0 } 
-    }
-  ];
+	// var aDays = { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
+	// 	thursday: 0, friday: 1, saturday: 0 };
+	// var tasks = 
+  // [
+  //   { 
+  //    id: 1,
+  //    name: "Read for 5 minutes",
+  //    isActive: true,
+  //    frequency: 0, 
+  //    isCount: 1,
+  //    isTime: 0,
+  //    goal: 5,
+  //    icon: 0, 
+  //    count:0,
+  //    isTimerRunning: false,
+  //    creationDate: currentDate,
+  //    progress: [{
+  //       id: 1,
+  //       task_id: 1,
+  //       date: currentDate,
+  //       progress: 0,
+  //       timerLastStarted: currentDate
+  //     }],
+	// 	 days: { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
+	// 	thursday: 0, friday: 1, saturday: 0 }
+  //   },
+  //   { id:2,
+  //     name: "Watch a Cosmos episode",
+  //     isActive: true, 
+  //     frequency: 0,
+  //     isCount: 1,
+  //     isTime: 0,
+  //     goal: 60,
+  //     icon: 0,
+  //     count:0,
+  //     isTimerRunning: false,
+  //     creationDate: currentDate,
+  //     progress: [{
+  //       id: 2,
+  //       task_id: 2,
+  //       date: currentDate,
+  //       progress: 5,
+  //       timerLastStarted: currentDate
+  //     }],
+	// 	  days: { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
+	// 	thursday: 0, friday: 1, saturday: 0 } 
+  //   }
+  // ];
   
   $scope.allTasks;
         
@@ -62,18 +62,13 @@ angular.module('tracktr.controllers', [])
     $scope.allTasks = tasks;
   });
   
- //Put in dummy data
-  for(var i = 0; i < tasks.length; i++){
-    // TaskService.createTask(tasks[i], function(err,id){
-    // });
-  }
-  
   
   //Get the current tasks, from fitering the results from TaskService.getAll
   $scope.getCurrentTasks = function() {
     return $scope.currentTasks;
   };
  
+  
   //Increment the count of count tasks
   $scope.incCount = function(task) {
     if(task.progress.length === 0) {
@@ -84,15 +79,18 @@ angular.module('tracktr.controllers', [])
   };
   
   
-  $scope.navCreateClick = function() {
-    $state.go('tab.create'); 
-  };
-  
-  
-  ///Start a new progress, if the task has an empty progress array
+  /*Start a new progress, if the task has an empty progress array
+  * TODO: DB update progress in task does not work for now, come back and test!!
+  */
   $scope.startProgress = function(task) {
-    
+    var progress = {
+      task_id: task.id,
+      progress: 0
+    };
+      task.progress.push(progress);
+      TaskService.updateTask(task);
   };
+  
   
   //Determine if the task is active for the current day
   $scope.isTaskActiveToday = function(task){
@@ -113,6 +111,7 @@ angular.module('tracktr.controllers', [])
       return false;
   };
   
+  
   /** 
    * Converts a day of week number to a string
   */
@@ -131,12 +130,14 @@ angular.module('tracktr.controllers', [])
     }
   };
   
+  
   /*TODO
   * calculate the time passed in timer task
   */
   $scope.processTimer = function() {
-    var currentDate = new Date();
+    var current_date = new Date();
   };
+  
   
   /*Reload tasks every time home tab is entered
   */
@@ -146,4 +147,62 @@ angular.module('tracktr.controllers', [])
     }); 
   });
   
+  
+  /*Navigation for create button
+  */
+  $scope.navCreateClick = function() {
+    $state.go('tab.create'); 
+  };
+  
+})
+
+
+/*Controller for timer
+*TODO: does not handle hours for now, need to figure out how to not trigger incCount
+*/
+.controller('TimerCtrl', function($scope, $timeout) {
+    $scope.counter = 0;
+ 
+    var mytimeout = null; // the current timeoutID
+    $scope.minutes = 0;
+    $scope.seconds = 0;
+ 
+    // actual timer method, counts down every second, stops on zero
+    $scope.onTimeout = function() {
+
+        $scope.counter++;
+        var div = Math.floor($scope.counter/60);
+        var rem = $scope.counter % 60;
+        $scope.minutes = div;
+        $scope.seconds = rem;
+        mytimeout = $timeout($scope.onTimeout, 1000);
+    };
+    
+ 
+    $scope.startTimer = function() {
+        mytimeout = $timeout($scope.onTimeout, 1000);
+    };
+ 
+ 
+    // stops and resets the current timer
+    $scope.stopTimer = function() {
+        $scope.$broadcast('timer-stopped', $scope.counter);
+        $scope.seconds = 0;
+        $scope.minutes = 0;
+        $scope.counter = 0;
+        
+        $timeout.cancel(mytimeout);
+    };
+    
+ 
+    // triggered, when the timer stops, you can do something here, maybe show a visual indicator or vibrate the device
+    $scope.$on('timer-stopped', function(event, remaining) {
+            console.log('You stopped!!');
+    });
+    
+    
+    //Disable button after it is tapped
+    $scope.isDisabled = function() {
+      
+    };
 });
