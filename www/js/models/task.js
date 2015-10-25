@@ -36,6 +36,27 @@ function countProgress(aTask){
     for(var i = 0; i < aTask.progress.length ; i++){
       result += aTask.progress[i].progress;
     }
+  }else if(aTask.frequency === 1){
+    //weekly
+    
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    
+    var lastSunday = new Date(today);
+    lastSunday.setDate(lastSunday.getDate() - lastSunday.getDay());
+    
+    var nextSunday = new Date(today);
+    nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
+    
+    for(var i = 0; i < aTask.progress.length ; i++){
+      
+      if(lastSunday.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= nextSunday.getTime()){
+      result += aTask.progress[i].progress;
+      }
+      
+    
+    }
+    
   }
   
   return result;

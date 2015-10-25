@@ -19,6 +19,15 @@ angular.module('tracktr.controllers')
  var SUNDAY = "Su";
 
  var someDate = new Date();
+ someDate.setDate(someDate.getDate() + 3);
+ var anotherDate = new Date();
+ anotherDate.setDate(anotherDate.getDate() + 10);
+ 
+ var prevSunday = new Date();
+ prevSunday.setDate(prevSunday.getDate() - prevSunday.getDay());
+ 
+ var nextSunday = new Date();
+ nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
   
 /**
  * Temporary list of tasks
@@ -86,7 +95,7 @@ var allTasks = [
     
      {
        id: 3,
-     name: 'Weekly Active Some days 2 progress',
+     name: 'Weekly Active Some days 2 progress in date range',
      isActive: 1,
      frequency: 1,
      isTime: 0,
@@ -221,7 +230,168 @@ var allTasks = [
          timerLastStarted: someDate
        }
      ]
+    },
+    
+    {
+       id: 3,
+     name: 'Weekly Active Some days 2 progress out of date range',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 1,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 1
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: anotherDate,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: anotherDate,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {
+       id: 3,
+     name: 'Weekly Active Some days 2 progress 1 out of date range & 1 in range',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 1,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 1
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: anotherDate,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: someDate,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {
+       id: 3,
+     name: 'Weekly Active Some days 2 progress both at prev Sunday',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 1,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 1
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: prevSunday,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: prevSunday,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {
+       id: 3,
+     name: 'Weekly Active Some days 2 progress both at next Sunday',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 1,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 1
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: nextSunday,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: nextSunday,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
     }
+    
     
   ];
     
