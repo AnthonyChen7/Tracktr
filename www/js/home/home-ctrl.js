@@ -5,6 +5,7 @@ angular.module('tracktr.controllers', [])
   
   var emptyArray = [];
 	var currentDate = new Date();
+  $scope.testTimeDifference = 0;
 	// var aDays = { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
 	// 	thursday: 0, friday: 1, saturday: 0 };
 	// var tasks = 
@@ -134,8 +135,11 @@ angular.module('tracktr.controllers', [])
   /*TODO
   * calculate the time passed in timer task
   */
-  $scope.processTimer = function() {
-    var current_date = new Date();
+  $scope.processTimer = function(task) {
+     var current_date = new Date();
+     var difference = current_date - task.creationDate;
+     task.timeDiff = difference;
+    // $scope.testTimeDifference = difference;
   };
   
   
