@@ -89,7 +89,7 @@ angular.module('tracktr.services')
             
             angular.forEach(task.progress, function(progress) {
               progress.task_id = task_id;
-              DB.query(INSERT_PROGRESS_PREPARES_STATEMENT, insertProgressQueryAttr(progress))
+              DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttr(progress))
                 .then(function(){
                   progressCnter++;
                   if(progressCnter === progressCount) {
@@ -110,7 +110,9 @@ angular.module('tracktr.services')
    * Paramaters:
    *  - task: The updated task.
    */
-  self.updateTask = function(task) {
+  self.updateTask = function(task, callback) {
+   var progressSize = task.progress.length;
+   var progressUpdatedCount = 0;
    
     var updateTaskQueryAttrs = insertTaskQueryAttr(task);
     updateTaskQueryAttrs.push(parseInt(task.id, 10));      // add the task id for updating   
@@ -130,10 +132,21 @@ angular.module('tracktr.services')
               DB.query(DELETE_PROGRESS_PREPARED_STATEMENT, [task.id])
                 .then(function(result) {
                   
+                  if(progressSize == 0) {
+                    callback(null);
+                  }
+                  
                   angular.forEach(task.progress, function(progress){
                     // 2. Re add all progress
                     var insertProgressQueryAttrs = insertProgressQueryAttr(progress);
-                    DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs);  
+                    DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
+                      .then(function() {
+                        progressUpdatedCount++;
+                         
+                        if(progressUpdatedCount == progressSize) {
+                          callback(null);
+                        }
+                      });  
                   });
                 }) 
           });                    
