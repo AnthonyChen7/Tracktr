@@ -133,7 +133,7 @@ angular.module('tracktr.services')
                 .then(function(result) {
                   
                   if(progressSize == 0) {
-                    callback(null);
+                    if(callback) callback(null);
                   }
                   
                   angular.forEach(task.progress, function(progress){
@@ -144,7 +144,7 @@ angular.module('tracktr.services')
                         progressUpdatedCount++;
                          
                         if(progressUpdatedCount == progressSize) {
-                          callback(null);
+                          if(callback) callback(null);
                         }
                       });  
                   });
@@ -307,7 +307,7 @@ angular.module('tracktr.services')
     return [progress.task_id,
             progress.date.getTime(),
             progress.progress,
-            progress.timerLastStarted.getTime()];
+            progress.timerLastStarted ? progress.timerLastStarted.getTime() : 0 ];
   };
   
   /**  
