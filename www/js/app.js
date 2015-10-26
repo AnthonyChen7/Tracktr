@@ -24,8 +24,10 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
     
     
   });
+    
   // Initialize the Database
-  DB.init();
+  DB.init(function() {
+  });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

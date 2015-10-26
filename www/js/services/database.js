@@ -1,5 +1,5 @@
 angular.module('tracktr.services', ['tracktr.config'])
-.factory('DB', function($q, DB_CONFIG) {
+.factory('DB', function($q, DB_CONFIG, $rootScope) {
   var self = this;
   self.db = null;
   
@@ -7,7 +7,7 @@ angular.module('tracktr.services', ['tracktr.config'])
    * Initialize the Database by nuking all tables, create the database tables, and seeding them.
    * 
    */
-  self.init = function() {
+  self.init = function(callback) {
     self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', 5*1024*1024);
     //self.nuke(function(){
     
@@ -26,16 +26,17 @@ angular.module('tracktr.services', ['tracktr.config'])
         
         // Create the tables
         self.query(createQuery).then(function() {
-          
           numCreatedTables++;
           if(numCreatedTables === numTables) {
-            // Get all tasks and seed the database if it is empty
-            self.query(taskQuery).then(function(data) {
-              var rows = self.fetchAll(data);
-              if(rows.length === 0) {
-                //self.seed(DB_CONFIG.seed_data);  
-              }
-            });  
+            callback(); 
+            // // Get all tasks and seed the database if it is empty
+            // self.query(taskQuery).then(function(data) {
+            //   var rows = self.fetchAll(data);
+            //   if(rows.length === 0) {
+            //     //self.seed(DB_CONFIG.seed_data);  
+            //     callback();
+            //   }
+            // });  
           }
         });
       });
@@ -61,6 +62,7 @@ angular.module('tracktr.services', ['tracktr.config'])
     self.db.transaction(function(transaction) {
       transaction.executeSql(query, bindings, function(transaction, result) {
         deferred.resolve(result);
+        $rootScope.$apply();
       }, function(transaction, error) {
         deferred.reject(error);
       });

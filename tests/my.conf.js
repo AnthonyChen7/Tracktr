@@ -29,7 +29,7 @@ module.exports = function(config) {
       '../www/js/views/habit-create/*.js',
       
       // Directives
-      '../www/js/directives/*.js',
+      //'../www/js/directives/*.js',
       
       // Models
       '../www/js/models/*.js',
