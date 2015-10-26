@@ -9,40 +9,28 @@ angular.module('tracktr.services', ['tracktr.config'])
    */
   self.init = function(callback) {
     self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', 5*1024*1024);
-    //self.nuke(function(){
+  
+    var numTables = DB_CONFIG.tables.length;  // Total number of tables to be created
+    var numCreatedTables = 0;                 // Current number of tables created
     
-      var numTables = DB_CONFIG.tables.length;  // Total number of tables to be created
-      var numCreatedTables = 0;                 // Current number of tables created
+    angular.forEach(DB_CONFIG.tables, function(table) {
+      var columns = [];
       
-      angular.forEach(DB_CONFIG.tables, function(table) {
-        var columns = [];
-        
-        angular.forEach(table.columns, function(column) {
-          columns.push(column.name + ' ' + column.type);
-        });
-        
-        var createQuery = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
-        var taskQuery = 'SELECT * FROM task';
-        
-        // Create the tables
-        self.query(createQuery).then(function() {
-          numCreatedTables++;
-          if(numCreatedTables === numTables) {
-            callback(); 
-            // // Get all tasks and seed the database if it is empty
-            // self.query(taskQuery).then(function(data) {
-            //   var rows = self.fetchAll(data);
-            //   if(rows.length === 0) {
-            //     //self.seed(DB_CONFIG.seed_data);  
-            //     callback();
-            //   }
-            // });  
-          }
-        });
+      angular.forEach(table.columns, function(column) {
+        columns.push(column.name + ' ' + column.type);
       });
-    
-    //});
-    
+      
+      var createQuery = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
+      var taskQuery = 'SELECT * FROM task';
+      
+      // Create the tables
+      self.query(createQuery).then(function() {
+        numCreatedTables++;
+        if(numCreatedTables === numTables) {
+          callback();   
+        }
+      });
+    });
     
   };
   
