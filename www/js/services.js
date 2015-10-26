@@ -1,4 +1,4 @@
-angular.module('tracktr.servicese', [])
+angular.module('tracktr.services', [])
 
 .factory('Tasks', function() {
   // Might use a resource here that returns a JSON array

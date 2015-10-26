@@ -24,10 +24,8 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
     
     
   });
-    
   // Initialize the Database
-  DB.init(function() {
-  });
+  DB.init();
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -52,7 +50,7 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
     url: '/all',
     views: {
       'tab-all': {
-        templateUrl: 'js/views/habit-all/habit-all.html',
+        templateUrl: 'js/habit-all/habit-all.html',
         controller: 'HabitAllController'
       }
     }
@@ -62,7 +60,7 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
     url: '/charts',
     views: {
       'tab-charts': {
-        templateUrl: 'js/views/habit-charts/habit-charts.html',
+        templateUrl: 'js/habit-charts/habit-charts.html',
         controller: 'HabitChartsController'
       }
     }
@@ -72,7 +70,7 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
     url: '/home',
     views: {
       'tab-home': {
-        templateUrl: 'js/views/home/home.html',
+        templateUrl: 'js/home/home.html',
         controller: 'HomeController'
       }
     }
@@ -82,7 +80,7 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
     url: '/create',
     views: {
       'tab-home': {
-        templateUrl: 'js/views/habit-create/habit-create.html',
+        templateUrl: 'js/habit-create/habit-create.html',
         controller: 'HabitCreateController'  
       }
     }
@@ -92,7 +90,7 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
     url: '/edit/:habitId',
     views: {
       'tab-home': {
-        templateUrl: 'js/views/habit-edit/habit-edit.html',
+        templateUrl: 'js/habit-edit/habit-edit.html',
         controller: 'HabitEditController'
       } 
     }

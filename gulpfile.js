@@ -7,7 +7,6 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var jshint = require('gulp-jshint');
-var karma = require('karma').server;
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -57,14 +56,4 @@ gulp.task('lint', function() {
     return gulp.src('./www/js/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'));
-});
-
-
-gulp.task('test', function(done) {
-  karma.start({
-        configFile: __dirname + '/tests/my.conf.js',
-        singleRun: true
-    }, function() {
-        done();
-    });
 });

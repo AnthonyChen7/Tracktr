@@ -16,12 +16,6 @@
                Count: {{task.progress[0].progress}}
                <br>
                Date Created: {{task.creationDate}}
-               <br>
-               <div  ng-controller="TimerCtrl">
-                 {{minutes}} Minutes {{seconds}} Seconds
-                  <button class="button button-stable" ng-click="startTimer(); $event.stopPropagation();"> Start </button>
-                  <button class="button button-stable" ng-click="stopTimer(); $event.stopPropagation();"> Stop </button>
-               </div>
             </ion-item>
          </ion-list>
        </div>
