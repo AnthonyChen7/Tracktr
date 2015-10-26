@@ -86,7 +86,9 @@ angular.module('tracktr.controllers', [])
   $scope.startProgress = function(task) {
     var progress = {
       task_id: task.id,
-      progress: 0
+      date: new Date(),
+      progress: 0,
+      timerLastStarted: null
     };
       task.progress.push(progress);
       TaskService.updateTask(task);
