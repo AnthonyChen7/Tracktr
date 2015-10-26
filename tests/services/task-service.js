@@ -37,14 +37,27 @@ describe('Task Service Unit Tests', function(){
     
     
     
-    it('can insert an inactive every day daily task', inject(function(TaskService) {
+    it('can insert an inactive every day daily task', function(done) {
       TaskService.createTask(allTasks[0], function(err, id) {
         TaskService.getTaskById(id, function(err, task) {
           expect(id).toEqual(task.id);
             done();
           });
       });
-    }));
+    });
+    
+    it('can update a task with no progress', function(done) {
+      // create a task with no progress
+      TaskService.createTask(allTasks[1], function(err, id) {
+        // Retrieve the task from the database
+        TaskService.getTaskById(id, function(err, task) {
+          // Update the task
+          TaskService.updateTask(task, function() {
+            done();
+          });
+        });
+      });
+    });
 
 
 });
