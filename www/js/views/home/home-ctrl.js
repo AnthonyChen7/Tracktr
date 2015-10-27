@@ -72,10 +72,10 @@ angular.module('tracktr.controllers', [])
   
   //Increment the count of count tasks
   $scope.incCount = function(task) {
-    if(task.progress.length === 0) {
+    // if(task.progress.length === 0) {
       $scope.startProgress(task);
-    }
-    task.progress[0].progress+=1;
+    // }
+    task.progress[task.progress.length - 1].progress+=1;
     TaskService.updateTask(task, function(err){});
   };
   
@@ -91,9 +91,20 @@ angular.module('tracktr.controllers', [])
       timerLastStarted: null
     };
       task.progress.push(progress);
-      TaskService.updateTask(task);
+      // TaskService.updateTask(task);
   };
   
+  
+  /*
+   * Count the total progress of the task 
+   */
+  $scope.countProgress = function(progressArray){
+    var result = 0;
+    for(var i = 0; i < progressArray.length; i++){
+      result += progressArray[i].progress;
+    }
+    return result;
+  };
   
   //Determine if the task is active for the current day
   $scope.isTaskActiveToday = function(task){
