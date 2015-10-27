@@ -166,9 +166,13 @@ angular.module('tracktr.controllers', [])
   };
   
   $scope.progressTimer = function(task) {
-    var current = new Date();
-    var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
-    return Math.floor(difference / 1000);
+    if(task.isTimerRunning) {
+      var current = new Date();
+      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+      return Math.floor(difference / 1000);  
+    } else {
+      return 0;
+    }
   };
   
   
@@ -211,6 +215,11 @@ angular.module('tracktr.controllers', [])
         mytimeout = $timeout($scope.onTimeout, 1000);
     };
     
+    $scope.initMethod = function(task) {
+      if(task.isTimerRunning) {
+        $scope.startTimer(task);
+      }
+    }
  
     $scope.startTimer = function(task) {
        var progress = {
@@ -220,6 +229,7 @@ angular.module('tracktr.controllers', [])
           timerLastStarted: new Date()
        };
        task.progress.push(progress);
+       task.isTimerRunning = true;
        TaskService.updateTask(task);
        mytimeout = $timeout($scope.onTimeout, 1000);
     };
@@ -230,6 +240,7 @@ angular.module('tracktr.controllers', [])
         var current_time = new Date(); 
         var last_started = task.progress[task.progress.length - 1].timerLastStarted;
         task.progress[task.progress.length - 1].progress = current_time - last_started;
+        task.isTimerRunning = false;
         TaskService.updateTask(task);
         
         $scope.$broadcast('timer-stopped', $scope.counter);

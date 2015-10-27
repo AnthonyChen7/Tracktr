@@ -15,12 +15,12 @@
                <br>
                Count: {{countProgress(task)}}
                <br>
-               <div  ng-controller="TimerCtrl">
+               <div  ng-controller="TimerCtrl" ng-init="initMethod(task)">
                  {{minutes}} Minutes {{seconds}} Seconds
                  <br>
                     Real time: {{progressTimer(task)}}
                  <br>
-                  <button class="button button-stable" ng-click="startTimer(task); $event.stopPropagation(); testTimer(task); progressTimer(task); $event.stopPropagation();"> Start </button>
+                  <button class="button button-stable" ng-click="startTimer(task); $event.stopPropagation(); testTimer(task); $event.stopPropagation();"> Start </button>
                   <button class="button button-stable" ng-click="stopTimer(task); $event.stopPropagation();"> Stop </button>
                </div>
             </ion-item>
