@@ -254,7 +254,7 @@ angular.module('tracktr.controllers')
 		
 		// Generate Task and make call to TaskService
 		var aTask = { name: habitTitle, isActive: true, 
-		    frequency: frequency, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon, isTimerRunning: false, creationDate: creationDate, progress: progress };
+		    frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon, isTimerRunning: false, creationDate: creationDate, progress: progress };
 		TaskService.createTask(aTask, function(err, id) { });
 		
 		// Return to Home View
