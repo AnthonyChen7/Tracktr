@@ -1,94 +1,135 @@
 <ion-view view-title="Habit Create">
   <ion-content>
-    <form>
+    <form name="createTask" novalidate>
       <div>
         <div class="list">
           <!-- Title -->
-          <label class="item item-input item-stacked-label">
+          <label class="item item-input">
             <span class="input-label">Title</span>
-            <input ng-model="habitTitle" type="text" />
+            <input name="habitTitle" ng-model="habitTitle" type="text" ng-maxlength="20" placeholder="Required" required />
           </label> 
           
           <!-- Type -->
-          <label class="item item-input item-select">
-            <div class="input-label">Type</div>
-            <select ng-options="habitType.code as habitType.name for habitType in habitTypes" ng-model="habitType">
-              <option style="display:none" value=habitType.code></option>
-            </select>
-          </label>
+          <label class="item item-input icon-right" ng-click="showTypePopup(habitType)">
+              <span class="input-label">Type</span>
+              <p name="habitType" ng-model="habitType" required>{{habitType.name}}</p>
+          </label> 
           
           <div class="item item-divider"></div>
           
           <!-- Goal -->
-          <label class="item item-input">
-            <span class="input-label">Hours</span>
-            <input ng-model="hours" type="tel" min="0" max="744" />
+          <label id="hoursField" class="item item-input item-select">
+            <div class="input-label">Hours</div>
+            <select ng-model="hours" ng-options="hours for hours in range(1, 744)"></select>
           </label>
-          <label class="item item-input">
-            <span class="input-label">Minutes</span>
-            <input ng-model="minutes" type="tel" min="0" max="59" />
+          <label id="minutesField" class="item item-input item-select">
+            <div class="input-label">Minutes</div>
+            <select ng-model="minutes" ng-options="minutes for minutes in range(1, 59)"></select>
+          </label>
+          <label id="goalField" class="item item-input item-select" style="display: none;">
+            <div class="input-label">Goal</div>
+            <select ng-model="goal" ng-options="goal for goal in range(1, 999)"></select>
           </label>
           
           <div class="item item-divider"></div>
           
           <!-- Frequency -->
-          <label class="item item-input item-select">
-            <div class="input-label">Frequency</div>
-            <select ng-options="frequency.code as frequency.name for frequency in frequencies" ng-model="frequency"></select>
+          <label class="item item-input" ng-click="showFrequencyPopup(frequency)">
+              <span class="input-label">Frequency</span>
+              <p name="frequency" ng-model="frequency" required>{{frequency.name}}</p>
+              <i class="icon ion-alert col col-10" ng-show="createTask.frequency.$error.required"></i>
           </label>
-          <!--<label class="item item-input item-select">
-            <div class="input-label">Days</div>
-            <select multiple="multiple" ng-options="day.code as day.name for day in days" ng-model="days"></select>
-          </label>-->
-          <ul class="list">
-            <li class="item item-checkbox" ng-repeat="day in days">
-              <label class="checkbox">
-                <input type="checkbox" ng-model="day.selected" value={{day.value}}>
-              </label>
-              {{day.name}}
-            </li>
-          </ul>
+          <label id="daysField" class="item item-input" ng-click="openDaysModal()">
+              <span class="input-label">Days</span>
+              <p name="days" ng-model="days">{{daysString}}</p>         
+          </label>       
+         <script id="daysModal.html" type="text/ng-template">
+            <ion-modal-view>
+              <ion-header-bar class="bar bar-header bar-dark">
+                <h1 class="title">Select days</h1>
+                <button class="button button-clear" ng-click="closeDaysModal()">Cancel</button>
+              </ion-header-bar>
+              <ion-content>
+                <ul class="list">
+                  <li class="item item-checkbox" ng-repeat="day in days">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="day.value">
+                    </label>
+                    {{day.name}}
+                   </li>
+                </ul>
+                <div class="row">
+                  <div class="col col-50 col-offset-25">
+                    <button class="button button-full button-dark" ng-click="saveDays(days)">Save</button>
+                  </div>
+                </div>
+              </ion-content>
+            </ion-modal-view>
+          </script>
           
           <div class="item item-divider"></div>
-                
-          <!--<div class="row">
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
+          
+          <!-- Icon -->
+          <div class="list">
+              <a class="item item-icon-right" ng-click="openIconModal()">
+                Icon
+                <i name="icon" class="icon {{icon}}" ng-model="icon"></i>
+              </a>
           </div>
-          <div class="row">
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-          </div>
-          <div class="row">
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-          </div>
-          <div class="row">
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-          </div>
-          <div class="row">
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-            <div class="col"><a href="#"><i class="icon ion-star"></i></a></div>
-          </div>-->
-          <!--<div class="item item-divider"></div>-->
+         <script id="iconModal.html" type="text/ng-template">
+            <ion-modal-view>
+              <ion-header-bar class="bar bar-header bar-dark">
+                <h1 class="title">Select icon</h1>
+                <button class="button button-clear" ng-click="closeIconModal()">Cancel</button>
+              </ion-header-bar>
+              <ion-content>  
+                <div class="item item-divider"></div>
+                <div class="row icon-row">
+                  <div class="col col-25 icon-col" ng-repeat="icon in icons" ng-if="icon.code < 4">
+                    <i class={{icon.class}} ng-click="saveIcon(icon)"></i>
+                  </div>
+                </div>
+                <div class="item item-divider"></div>
+                <div class="row icon-row">
+                  <div class="col col-25 icon-col" ng-repeat="icon in icons" ng-if="icon.code > 3 && icon.code < 8">
+                    <i class={{icon.class}} ng-click="saveIcon(icon)"></i>
+                  </div>
+                </div>
+                <div class="item item-divider"></div>
+                <div class="row icon-row">
+                  <div class="col col-25 icon-col" ng-repeat="icon in icons" ng-if="icon.code > 7 && icon.code < 12">
+                    <i class={{icon.class}} ng-click="saveIcon(icon)"></i>
+                  </div>
+                </div>
+                <div class="item item-divider"></div>
+                <div class="row icon-row">
+                  <div class="col col-25 icon-col" ng-repeat="icon in icons" ng-if="icon.code > 11 && icon.code < 16">
+                    <i class={{icon.class}} ng-click="saveIcon(icon)"></i>
+                  </div>
+                </div>
+                <div class="item item-divider"></div>
+                <div class="row icon-row">
+                  <div class="col col-25 icon-col" ng-repeat="icon in icons" ng-if="icon.code > 15">
+                    <i class={{icon.class}} ng-click="saveIcon(icon)"></i>
+                  </div>
+                </div>
+                <div class="item item-divider"></div>
+              </ion-content>
+            </ion-modal-view>
+          </script>
+              
         </div>
+        
+        <div class="padding">
+            <p ng-show="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
+        </div>
+        
         <div class="padding-left padding-right padding-bottom">
-          <div class="button-bar">
-            <a class="button" ng-click="createTask(habitTitle,habitType,hours,minutes,frequency,days)">Create</a>
-          </div>
+          <button class="button button-block button-dark" ng-click="create(habitTitle,habitType,hours,minutes,goal,frequency,days,icon)" ng-disabled="createTask.$invalid">
+            Create
+          </button>
         </div>
       </div>
-    <form>
+    </form>
   </ion-content>
 </ion-view>
