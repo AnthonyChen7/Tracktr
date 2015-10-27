@@ -140,7 +140,6 @@ angular.module('tracktr.controllers', [])
   /*
   * update all the tasks
   */
-  
   $scope.updateAll = function(allTasks) {
     for(i = 0; i < allTasks.lenth; i++) {
       TaskService.updateTask(allTasks[i]);
@@ -148,23 +147,10 @@ angular.module('tracktr.controllers', [])
   };
   
   
-  /*TODO
-  * calculate the time passed in timer task
-  */
-  $scope.processTimer = function(task) {
-     var current_date = new Date();
-     var difference = current_date - task.creationDate;
-     task.timeDiff = difference;
-     return task.timeDiff;
-    // $scope.testTimeDifference = difference;
-  };
-  
-  $scope.testTimer = function(task) {
-    var current = new Date();
-    var difference = current - task.creationDate;
-    return Math.floor(difference / 1000);
-  };
-  
+  /*
+   * Calculate the progress between current time and last started time. This is used to 
+   * display to the UI as if it is an actual timer
+   */
   $scope.progressTimer = function(task) {
     var current = new Date();
     var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
@@ -200,7 +186,9 @@ angular.module('tracktr.controllers', [])
     $scope.minutes = 0;
     $scope.seconds = 0;
  
-    // actual timer method, counts down every second, stops on zero
+   /*
+    * ontimeout method
+    */
     $scope.onTimeout = function() {
 
         $scope.counter++;
@@ -211,7 +199,9 @@ angular.module('tracktr.controllers', [])
         mytimeout = $timeout($scope.onTimeout, 1000);
     };
     
- 
+    /*
+     * Start the timer, create new progress entry and start counting 
+     */
     $scope.startTimer = function(task) {
        var progress = {
           task_id: task.id,
@@ -225,7 +215,9 @@ angular.module('tracktr.controllers', [])
     };
  
  
-    // stops and resets the current timer
+    /*
+     * Stop the timer, and update the database 
+     */
     $scope.stopTimer = function(task) {
         var current_time = new Date(); 
         var last_started = task.progress[task.progress.length - 1].timerLastStarted;
@@ -240,7 +232,7 @@ angular.module('tracktr.controllers', [])
     };
     
  
-    // triggered, when the timer stops, you can do something here, maybe show a visual indicator or vibrate the device
+    // triggered, when the timer stops
     $scope.$on('timer-stopped', function(event, remaining) {
             console.log('You stopped!!');
     });
