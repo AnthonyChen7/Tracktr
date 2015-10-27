@@ -152,7 +152,14 @@ angular.module('tracktr.controllers', [])
      var current_date = new Date();
      var difference = current_date - task.creationDate;
      task.timeDiff = difference;
+     return task.timeDiff;
     // $scope.testTimeDifference = difference;
+  };
+  
+  $scope.testTimer = function(task) {
+    var current = new Date();
+    var difference = current - task.creationDate;
+    return Math.floor(difference / 1000);
   };
   
   
