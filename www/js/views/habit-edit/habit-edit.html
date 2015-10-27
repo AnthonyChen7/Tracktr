@@ -1,5 +1,16 @@
-<ion-view view-title="Habit Edit">
+<ion-view view-title="Habit Edit" ng-init="init()">
   <ion-content>
-    <p>habit id is {{habitID}}</p>
+    <p>HabitID: {{habitID}}</p>
+    <p>HabitTitle: {{habitTitle}}</p>
+    <p>IsActive: {{isActive}}</p>
+	  <p>Frequency: {{frequency.name}}</p>
+    <p>HabitType: {{habitType.name}}</p>
+    <p>Hours: {{hours}}</p>
+    <p>Minutes: {{minutes}}</p>
+    <p>Goal: {{goal}}</p>
+    <p>IconClass: {{icon.class}}</p>
+    <p>CreationDate: {{creationDate}}</p>
+    <p>IsTimerRunning: {{isTimerRunning}}</p>
+    <p>Progress: {{progress}}</p>
   </ion-content>
 </ion-view>

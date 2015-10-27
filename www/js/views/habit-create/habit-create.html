@@ -20,15 +20,15 @@
           <!-- Goal -->
           <label id="hoursField" class="item item-input item-select">
             <div class="input-label">Hours</div>
-            <select ng-model="hours" ng-options="hours for hours in range(1, 744)"></select>
+            <select ng-model="hours" ng-options="hours for hours in range(0, 744)"></select>
           </label>
           <label id="minutesField" class="item item-input item-select">
             <div class="input-label">Minutes</div>
-            <select ng-model="minutes" ng-options="minutes for minutes in range(1, 59)"></select>
+            <select ng-model="minutes" ng-options="minutes for minutes in range(0, 59)"></select>
           </label>
           <label id="goalField" class="item item-input item-select" style="display: none;">
             <div class="input-label">Goal</div>
-            <select ng-model="goal" ng-options="goal for goal in range(1, 999)"></select>
+            <select ng-model="goal" ng-options="goal for goal in range(0, 999)"></select>
           </label>
           
           <div class="item item-divider"></div>
