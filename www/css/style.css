@@ -1,1 +1,25 @@
 /* Empty. Add your own CSS if you like */
+.popup-vertical-buttons button
+{
+     min-width: 100%;
+     margin-bottom: 5px;
+}
+.popup-vertical-buttons .popup-buttons
+{
+     display: block;
+}
+
+ .icon-custom {
+     font-size: 40px;
+     padding: 2px;
+ }
+ 
+ .icon-custom-selected {
+     color: rgb(14, 122, 254);
+     font-size: 40px;
+ }
+ 
+ .icon-col,
+ .icon-row {
+     text-align: center;
+ }
