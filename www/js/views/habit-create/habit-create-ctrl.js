@@ -218,50 +218,44 @@ angular.module('tracktr.controllers')
 	});
 	
 	// Create Task	
-	$scope.createTask = function(habitTitle,habitType,hours,minutes,frequency, days,icon) {	
-		// Type
+	$scope.create = function(habitTitle,habitType,hours,minutes,goal,frequency, days,icon) {	
+		
+		// Habit Type
 		var aTime = false;
 		var aCount = false;
-		switch (habitType) {
-			case 0:
-				aTime = true;
-				break;
-			case 1:
-				aCount = true;
-				break;
-			default:
-				// None chosen.
+		if (habitType.name == 'Time') {
+			aTime == true;
+		} else {
+			aCount == true;
 		}
 		
 		// Goal
-		var aGoal = (parseInt(hours)*60) + parseInt(minutes);
-		
-		// Frequency
-		var booleanDays = [];
-		angular.forEach($scope.days, function(day) {
-			if (day.selected) {
-				day.value = true;
+		var aGoal;
+		if (habitType.name == 'Time') { 
+			if (hours == null) {
+				hours = 0;
 			}
-			booleanDays.push(day.value);
-		});
+			if (minutes == null) {
+				minutes = 0;
+			}			
+			aGoal = (parseInt(hours)*60) + parseInt(minutes);
+		} else if (habitType.name == 'Count' && goal != null) {
+			aGoal = (parseInt(goal));
+		}
 		
 		// Days
-		var aDays = { sunday: booleanDays[0], monday: booleanDays[1], tuesday: booleanDays[2], wednesday: booleanDays[3], thursday: booleanDays[4], friday: booleanDays[5], saturday: booleanDays[6] }
+		var aDays = { sunday: days[0].value, monday: days[1].value, tuesday: days[2].value, wednesday: days[3].value, thursday: days[4].value, friday: days[5].value, saturday: days[6].value }
 		
 		// Creation Date
-		var currentDate = new Date();
+		var creationDate = new Date();
 		
 		// Progress
-		var emptyProgress = [];
+		var progress = [];
 		
 		// Generate Task and make call to TaskService
 		var aTask = { name: habitTitle, isActive: true, 
-		    frequency: frequency, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: 0, isTimerRunning: false, creationDate: currentDate, progress: emptyProgress };
+		    frequency: frequency, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon, isTimerRunning: false, creationDate: creationDate, progress: progress };
 		TaskService.createTask(aTask, function(err, id) { });
-		
-		// Delete Task
-		// var bTask = { id: 1, days: { id: 1 } };
-		// TaskService.deleteTask(bTask);
 		
 		// Return to Home View
 		$ionicHistory.goBack();
