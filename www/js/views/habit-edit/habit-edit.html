@@ -124,8 +124,8 @@
             <p ng-show="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
         </div>
         
-        <div class="padding-left padding-right padding-bottom">
-          <button class="button button-block button-dark" ng-click="save(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,creationDate,isTimerRunning,progress)" ng-disabled="createTask.$invalid">
+        <div class="padding-left padding-right">
+          <button class="button button-block button-dark" ng-click="save(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress)" ng-disabled="createTask.$invalid">
             Save
           </button>
         </div>

@@ -13,6 +13,16 @@ angular.module('tracktr.controllers')
 		{name: "Weekly", code: 1},
 		{name: "Monthly", code: 2}
 		];
+	
+	$scope.days = [
+		{name: "Sunday", short: "Sun", value: false},
+		{name: "Monday", short: "Mon", value: false},
+		{name: "Tuesday", short: "Tue", value: false},
+		{name: "Wednesday", short: "Wed", value: false},
+		{name: "Thursday", short: "Thu", value: false},
+		{name: "Friday", short: "Fri", value: false},
+		{name: "Saturday", short: "Sat", value: false}
+		];
 		 
 	$scope.icons = [
 		{class: "icon ion-star icon-custom", code: 0, value: false},
@@ -231,14 +241,24 @@ angular.module('tracktr.controllers')
 			$scope.daysId = task.days.id;
 			$scope.taskId = task.days.task_id;
 			$scope.days = [
-				{name: "Sunday", value: task.days.sunday},
-				{name: "Monday", value: task.days.monday},
-				{name: "Tuesday", value: task.days.tuesday},
-				{name: "Wednesday", value: task.days.wednesday},
-				{name: "Thursday", value: task.days.thursday},
-				{name: "Friday", value: task.days.friday},
-				{name: "Saturday", value: task.days.saturday}
-				];
+				{name: "Sunday", short: "Sun", value: task.days.sunday},
+				{name: "Monday", short: "Mon", value: task.days.monday},
+				{name: "Tuesday", short: "Tue", value: task.days.tuesday},
+				{name: "Wednesday", short: "Wed", value: task.days.wednesday},
+				{name: "Thursday", short: "Thu", value: task.days.thursday},
+				{name: "Friday", short: "Fri", value: task.days.friday},
+				{name: "Saturday", short: "Sat", value: task.days.saturday}
+			];
+			
+			var daysString = '';
+			for (var i = 0; i < $scope.days.length; i++) {
+				if ($scope.days[i].value == true && daysString == '') {
+					daysString += $scope.days[i].short;
+				} else if ($scope.days[i].value == true) {
+					daysString += ", " + $scope.days[i].short;
+				}
+			}
+			$scope.daysString = daysString;
 			
 			$scope.icon = $scope.icons[task.icon];
 			$scope.isTimerRunning = task.isTimerRunning;
@@ -247,8 +267,39 @@ angular.module('tracktr.controllers')
 		});
 	};
 	
-	$scope.save = function(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,creationDate,isTimerRunning,progress) {
+	$scope.save = function(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress) {
+		// Habit Type
+		var aTime = 0;
+		var aCount = 0;
+		if (habitType.name == 'Time') {
+			aTime = 1;
+		} else {
+			aCount = 1;
+		}
 		
+		// Goal
+		var aGoal;
+		if (habitType.name == 'Time') { 
+			if (hours == null) {
+				hours = 0;
+			}
+			if (minutes == null) {
+				minutes = 0;
+			}			
+			aGoal = (parseInt(hours)*60) + parseInt(minutes);
+		} else if (habitType.name == 'Count' && goal != null) {
+			aGoal = (parseInt(goal));
+		}
+		
+		// Days
+		var aDays = { id: habitId, task_id: daysId, sunday: days[0].value, monday: days[1].value, tuesday: days[2].value, wednesday: days[3].value, thursday: days[4].value, friday: days[5].value, saturday: days[6].value }
+		
+		// Generate Task and make call to TaskService
+		var aTask = { id: habitId, name: habitTitle, isActive: isActive, 
+			frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: isTimerRunning, creationDate: creationDate, progress: progress };
+		TaskService.updateTask(aTask, function(err, id) { });
+		// Return to Home View
+		$ionicHistory.goBack();
 	}
 	
 	$scope.delete = function(habitId,daysId) {
