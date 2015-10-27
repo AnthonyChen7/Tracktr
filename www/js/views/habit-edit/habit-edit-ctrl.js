@@ -1,7 +1,7 @@
 angular.module('tracktr.controllers')
 
 .controller("HabitEditController", function($scope,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
-	$scope.habitID = $stateParams.habitId;
+	$scope.habitId = $stateParams.habitId;
 	
 	$scope.habitTypes = [
 		{name: "Time", code: 0},
@@ -12,16 +12,6 @@ angular.module('tracktr.controllers')
 		{name: "Daily", code: 0},
 		{name: "Weekly", code: 1},
 		{name: "Monthly", code: 2}
-		];
-	
-	$scope.days = [
-		{name: "Sunday", short: "Sun", value: false},
-		{name: "Monday", short: "Mon", value: false},
-		{name: "Tuesday", short: "Tue", value: false},
-		{name: "Wednesday", short: "Wed", value: false},
-		{name: "Thursday", short: "Thu", value: false},
-		{name: "Friday", short: "Fri", value: false},
-		{name: "Saturday", short: "Sat", value: false}
 		];
 		 
 	$scope.icons = [
@@ -55,14 +45,178 @@ angular.module('tracktr.controllers')
 		return result;
 	};
 	
+	// Type Popup
+	$scope.showTypePopup = function(habitType) {
+		if (habitType != null) {
+			if (habitType.name == 'Time') {
+				var buttonType0 = 'button-dark';
+			} else if (habitType == 'Count') {
+				var buttonType1 = 'button-dark';
+			}
+		}
+			
+		var typePopup = $ionicPopup.show({
+     		title: 'Select a habit type:',
+			buttons: [
+				 { text: 'Time',
+				   type: buttonType0,
+				   onTap: function(e) {
+					   return {name: "Time", code: 0};
+				   }
+				 }, { text: 'Count',
+				   type: buttonType1,
+				   onTap: function(e) {
+					   return {name: "Count", code: 1};
+				   }
+				 }
+			]
+		});
+		
+		typePopup.then(function(res) {
+			$scope.habitType = res;
+			if (res.name == "Time") {
+				// document.getElementById('goalField').style.display = 'none';
+				// document.getElementById('minutesField').style.display = '';
+				// document.getElementById('hoursField').style.display = '';
+			} else {
+				// document.getElementById('goalField').style.display = '';
+				// document.getElementById('minutesField').style.display = 'none';
+				// document.getElementById('hoursField').style.display = 'none';
+			}
+		});
+	};
+	
+	// Frequency Popup
+	$scope.showFrequencyPopup = function(frequency) {
+		if (frequency != null) {
+			if (frequency.name == 'Daily') {
+				var buttonType0 = 'button-dark';
+			} else if (frequency == 'Weekly') {
+				var buttonType1 = 'button-dark';
+			} else if (frequency == 'Monthly') {
+				var buttonType2 = 'button-dark';
+			}
+		}
+			
+		var frequencyPopup = $ionicPopup.show({
+			cssClass: "popup-vertical-buttons",
+     		title: 'Select a habit type:',
+			buttons: [
+				 { text: 'Daily',
+				   type: buttonType0,
+				   onTap: function(e) {
+					   return {name: "Daily", code: 0};
+				   }
+				 }, { text: 'Weekly',
+				   type: buttonType1,
+				   onTap: function(e) {
+					   return {name: "Weekly", code: 1};
+				   }
+				 }, { text: 'Monthly',
+				   type: buttonType2,
+				   onTap: function(e) {
+					   return {name: "Monthly", code: 2};
+				   }
+				 }
+			]
+		});
+		
+		frequencyPopup.then(function(res) {
+			$scope.frequency = res;
+			if (res.name == "Daily") {
+				// document.getElementById('daysField').style.display = '';
+			} else {
+				// document.getElementById('daysField').style.display = 'none';
+			}
+		});
+	};
+	
+	// Days Modal
+	$ionicModal.fromTemplateUrl('daysModal.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(daysModal) {
+		$scope.daysModal = daysModal;
+	});
+	
+	$scope.saveDays = function(days) {
+		var daysString = '';
+		for (var i = 0; i < days.length; i++) {
+			if (days[i].value == true && daysString == '') {
+				daysString += days[i].short;
+			} else if (days[i].value == true) {
+				daysString += ", " + days[i].short;
+			}
+		}
+		$scope.daysString = daysString;
+		$scope.days = days;
+		$scope.closeDaysModal();
+	};
+	
+	// Icon Modal
+	$ionicModal.fromTemplateUrl('iconModal.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(iconModal) {
+		$scope.iconModal = iconModal;
+	});
+	
+	$scope.saveIcon = function(icon) {
+		$scope.icon = icon;
+		$scope.closeIconModal();
+	};
+	
+	// Modal Helpers - Days
+	$scope.openDaysModal = function() {
+		$scope.daysModal.show();
+	};
+	$scope.closeDaysModal = function() {
+		$scope.daysModal.hide();
+	};
+	// Cleanup the modal when we're done with it!
+	$scope.$on('$destroy', function() {
+		$scope.daysModal.remove();
+	});
+	// Execute action on hide modal
+	$scope.$on('daysModal.hidden', function() {
+		// Execute action
+	});
+	// Execute action on remove modal
+	$scope.$on('daysModal.removed', function() {
+		// Execute action
+	});
+	
+	// Modal Helpers - Icon
+	$scope.openIconModal = function() {
+		$scope.iconModal.show();
+	};
+	$scope.closeIconModal = function() {
+		$scope.iconModal.hide();
+	};
+	// Cleanup the modal when we're done with it!
+	$scope.$on('$destroy', function() {
+		$scope.iconModal.remove();
+	});
+	// Execute action on hide modal
+	$scope.$on('iconModal.hidden', function() {
+		// Execute action
+	});
+	// Execute action on remove modal
+	$scope.$on('iconModal.removed', function() {
+		// Execute action
+	});
+	
 	$scope.init = function() {
-		TaskService.getTaskById($scope.habitID, function(err, task) { 
+		TaskService.getTaskById($scope.habitId, function(err, task) { 
 			$scope.task = task;
 			
 			$scope.habitTitle = task.name;
 			$scope.isActive = task.isActive;
 			
 			$scope.frequency = $scope.frequencies[task.frequency];
+			if ($scope.frequency.code == 0) {
+				document.getElementById('daysField').style.display = '';
+			}
 			
 			if (task.isTime == 1) {
 				$scope.habitType = $scope.habitTypes[0];
@@ -74,10 +228,35 @@ angular.module('tracktr.controllers')
 				$scope.goal = task.goal;
 			}
 			
+			$scope.daysId = task.days.id;
+			$scope.taskId = task.days.task_id;
+			$scope.days = [
+				{name: "Sunday", value: task.days.sunday},
+				{name: "Monday", value: task.days.monday},
+				{name: "Tuesday", value: task.days.tuesday},
+				{name: "Wednesday", value: task.days.wednesday},
+				{name: "Thursday", value: task.days.thursday},
+				{name: "Friday", value: task.days.friday},
+				{name: "Saturday", value: task.days.saturday}
+				];
+			
 			$scope.icon = $scope.icons[task.icon];
 			$scope.isTimerRunning = task.isTimerRunning;
 			$scope.creationDate = task.creationDate;
 			$scope.progress = task.progress;
 		});
 	};
+	
+	$scope.save = function(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,creationDate,isTimerRunning,progress) {
+		
+	}
+	
+	$scope.delete = function(habitId,daysId) {
+		// Delete Task
+		var taskToDelete = { id: $scope.habitId, days: { id: daysId } };
+		TaskService.deleteTask(taskToDelete, function(err, id) { });
+		
+		// Return to Home View
+		$ionicHistory.goBack();
+	}
 });
