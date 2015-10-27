@@ -2,6 +2,6 @@ angular.module('tracktr.directives',[])
 .directive('taskInfo',function(){
 	return{
 		restrict: 'E',
-		templateUrl: 'js/directives/anthony\'s-widget/task-info.html'
+		templateUrl: 'js/directives/task-info/task-info.html'
 	};
 });
