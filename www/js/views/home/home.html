@@ -13,7 +13,6 @@
             <ion-item ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task)" ng-click="incCount(task); processTimer(task);">
                {{task.name}}
                <br>
-               Count: {{task.progress[0].progress}}
                Count: {{countProgress(task.progress)}}
                <br>
                Date Created: {{task.creationDate}}
