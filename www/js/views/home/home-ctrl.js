@@ -75,9 +75,8 @@ angular.module('tracktr.controllers', [])
     if(task.isTime) {
       return;
       }
-    // if(task.progress.length === 0) {
-      $scope.startProgress(task);
-    // }
+    console.log("I am a count");  
+    $scope.startProgress(task);
     task.progress[task.progress.length - 1].progress+=1;
     TaskService.updateTask(task, function(err){});
   };
@@ -104,10 +103,10 @@ angular.module('tracktr.controllers', [])
   $scope.countProgress = function(task){
     var result = 0;
     
-    if(task.isCount === 1) {
-    for(var i = 0; i < task.progress.length; i++){
-      result += task.progress[i].progress;
-    }
+    if(task.isCount) {
+       for(var i = 0; i < task.progress.length; i++){
+         result += task.progress[i].progress;
+       }
     }
     return result;
   };
@@ -155,9 +154,11 @@ angular.module('tracktr.controllers', [])
    * display to the UI as if it is an actual timer
    */
   $scope.progressTimer = function(task) {
-    var current = new Date();
-    var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
-    return Math.floor(difference / 1000);
+    if(task.isTime) {
+       var current = new Date();
+       var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+       return Math.floor(difference / 1000);
+    }
   };
   
   

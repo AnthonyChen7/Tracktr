@@ -10,12 +10,12 @@
        <div class="item item-divider">
          Tasks
          <ion-list>
-            <ion-item ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task)" ng-click="incCount(task); ">
+            <ion-item ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task)" ng-click="incCount(task); $event.stopPropagation();">
                {{task.name}}
                <br>
                Count: {{countProgress(task)}}
                <br>
-               <div  ng-controller="TimerCtrl">
+               <div  ng-controller="TimerCtrl" ng-show="task.isTime">
                  {{minutes}} Minutes {{seconds}} Seconds
                  <br>
                     Real time: {{progressTimer(task)}}
