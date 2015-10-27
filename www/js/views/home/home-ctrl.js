@@ -98,10 +98,13 @@ angular.module('tracktr.controllers', [])
   /*
    * Count the total progress of the task 
    */
-  $scope.countProgress = function(progressArray){
+  $scope.countProgress = function(task){
     var result = 0;
-    for(var i = 0; i < progressArray.length; i++){
-      result += progressArray[i].progress;
+    
+    if(task.isCount === 1) {
+    for(var i = 0; i < task.progress.length; i++){
+      result += task.progress[i].progress;
+    }
     }
     return result;
   };
@@ -162,6 +165,12 @@ angular.module('tracktr.controllers', [])
     return Math.floor(difference / 1000);
   };
   
+  $scope.progressTimer = function(task) {
+    var current = new Date();
+    var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+    return Math.floor(difference / 1000);
+  };
+  
   
   /*Reload tasks every time home tab is entered
   */
@@ -184,7 +193,7 @@ angular.module('tracktr.controllers', [])
 /*Controller for timer
 *TODO: does not handle hours for now, need to figure out how to not trigger incCount
 */
-.controller('TimerCtrl', function($scope, $timeout) {
+.controller('TimerCtrl', function($scope, $timeout, TaskService) {
     $scope.counter = 0;
  
     var mytimeout = null; // the current timeoutID
@@ -203,18 +212,30 @@ angular.module('tracktr.controllers', [])
     };
     
  
-    $scope.startTimer = function() {
-        mytimeout = $timeout($scope.onTimeout, 1000);
+    $scope.startTimer = function(task) {
+       var progress = {
+          task_id: task.id,
+          date: new Date(),
+          progress: 0,
+          timerLastStarted: new Date()
+       };
+       task.progress.push(progress);
+       TaskService.updateTask(task);
+       mytimeout = $timeout($scope.onTimeout, 1000);
     };
  
  
     // stops and resets the current timer
-    $scope.stopTimer = function() {
+    $scope.stopTimer = function(task) {
+        var current_time = new Date(); 
+        var last_started = task.progress[task.progress.length - 1].timerLastStarted;
+        task.progress[task.progress.length - 1].progress = current_time - last_started;
+        TaskService.updateTask(task);
+        
         $scope.$broadcast('timer-stopped', $scope.counter);
         $scope.seconds = 0;
         $scope.minutes = 0;
         $scope.counter = 0;
-        
         $timeout.cancel(mytimeout);
     };
     

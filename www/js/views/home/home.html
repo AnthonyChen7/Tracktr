@@ -13,18 +13,15 @@
             <ion-item ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task)" ng-click="incCount(task); ">
                {{task.name}}
                <br>
-               Count: {{countProgress(task.progress)}}
-               <br>
-               Date Created: {{task.creationDate}}
-               <br>
-               Testing time difference: {{testTimer(task)}}
-               <br>
-               Time passed: {{processTimer(task)}}
+               Count: {{countProgress(task)}}
                <br>
                <div  ng-controller="TimerCtrl">
                  {{minutes}} Minutes {{seconds}} Seconds
-                  <button class="button button-stable" ng-click="startTimer(); $event.stopPropagation(); testTimer(task);"> Start </button>
-                  <button class="button button-stable" ng-click="stopTimer(); $event.stopPropagation();"> Stop </button>
+                 <br>
+                    Real time: {{progressTimer(task)}}
+                 <br>
+                  <button class="button button-stable" ng-click="startTimer(task); $event.stopPropagation(); testTimer(task); progressTimer(task); $event.stopPropagation();"> Start </button>
+                  <button class="button button-stable" ng-click="stopTimer(task); $event.stopPropagation();"> Stop </button>
                </div>
             </ion-item>
          </ion-list>
