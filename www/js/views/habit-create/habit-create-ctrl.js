@@ -221,12 +221,12 @@ angular.module('tracktr.controllers')
 	$scope.create = function(habitTitle,habitType,hours,minutes,goal,frequency, days,icon) {	
 		
 		// Habit Type
-		var aTime = false;
-		var aCount = false;
+		var aTime = 0;
+		var aCount = 0;
 		if (habitType.name == 'Time') {
-			aTime == true;
+			aTime = 1;
 		} else {
-			aCount == true;
+			aCount = 1;
 		}
 		
 		// Goal
@@ -254,7 +254,7 @@ angular.module('tracktr.controllers')
 		
 		// Generate Task and make call to TaskService
 		var aTask = { name: habitTitle, isActive: true, 
-		    frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon, isTimerRunning: false, creationDate: creationDate, progress: progress };
+		    frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: 0, creationDate: creationDate, progress: progress };
 		TaskService.createTask(aTask, function(err, id) { });
 		
 		// Return to Home View
