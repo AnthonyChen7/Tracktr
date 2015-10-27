@@ -72,6 +72,9 @@ angular.module('tracktr.controllers', [])
   
   //Increment the count of count tasks
   $scope.incCount = function(task) {
+    if(task.isTime) {
+      return;
+      }
     // if(task.progress.length === 0) {
       $scope.startProgress(task);
     // }
