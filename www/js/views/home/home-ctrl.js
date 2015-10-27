@@ -5,6 +5,7 @@ angular.module('tracktr.controllers', [])
   
   var emptyArray = [];
 	var currentDate = new Date();
+  $scope.testTimeDifference = 0;
 	// var aDays = { id:1, sunday: 0, monday: 1, tuesday: 1, wednesday: 1, 
 	// 	thursday: 0, friday: 1, saturday: 0 };
 	// var tasks = 
@@ -71,10 +72,12 @@ angular.module('tracktr.controllers', [])
   
   //Increment the count of count tasks
   $scope.incCount = function(task) {
-    if(task.progress.length === 0) {
-      $scope.startProgress(task);
-    }
-    task.progress[0].progress+=1;
+    if(task.isTime) {
+      return;
+      }
+    console.log("I am a count");  
+    $scope.startProgress(task);
+    task.progress[task.progress.length - 1].progress+=1;
     TaskService.updateTask(task, function(err){});
   };
   
@@ -90,9 +93,23 @@ angular.module('tracktr.controllers', [])
       timerLastStarted: null
     };
       task.progress.push(progress);
-      TaskService.updateTask(task);
+      // TaskService.updateTask(task);
   };
   
+  
+  /*
+   * Count the total progress of the task 
+   */
+  $scope.countProgress = function(task){
+    var result = 0;
+    
+    if(task.isCount) {
+       for(var i = 0; i < task.progress.length; i++){
+         result += task.progress[i].progress;
+       }
+    }
+    return result;
+  };
   
   //Determine if the task is active for the current day
   $scope.isTaskActiveToday = function(task){
@@ -125,7 +142,6 @@ angular.module('tracktr.controllers', [])
   /*
   * update all the tasks
   */
-  
   $scope.updateAll = function(allTasks) {
     for(i = 0; i < allTasks.lenth; i++) {
       TaskService.updateTask(allTasks[i]);
@@ -133,11 +149,16 @@ angular.module('tracktr.controllers', [])
   };
   
   
-  /*TODO
-  * calculate the time passed in timer task
-  */
-  $scope.processTimer = function() {
-    var current_date = new Date();
+  /*
+   * Calculate the progress between current time and last started time. This is used to 
+   * display to the UI as if it is an actual timer
+   */
+  $scope.progressTimer = function(task) {
+    if(task.isTime) {
+       var current = new Date();
+       var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+       return Math.floor(difference / 1000);
+    }
   };
   
   
@@ -162,14 +183,16 @@ angular.module('tracktr.controllers', [])
 /*Controller for timer
 *TODO: does not handle hours for now, need to figure out how to not trigger incCount
 */
-.controller('TimerCtrl', function($scope, $timeout) {
+.controller('TimerCtrl', function($scope, $timeout, TaskService) {
     $scope.counter = 0;
  
     var mytimeout = null; // the current timeoutID
     $scope.minutes = 0;
     $scope.seconds = 0;
  
-    // actual timer method, counts down every second, stops on zero
+   /*
+    * ontimeout method
+    */
     $scope.onTimeout = function() {
 
         $scope.counter++;
@@ -180,24 +203,40 @@ angular.module('tracktr.controllers', [])
         mytimeout = $timeout($scope.onTimeout, 1000);
     };
     
- 
-    $scope.startTimer = function() {
-        mytimeout = $timeout($scope.onTimeout, 1000);
+    /*
+     * Start the timer, create new progress entry and start counting 
+     */
+    $scope.startTimer = function(task) {
+       var progress = {
+          task_id: task.id,
+          date: new Date(),
+          progress: 0,
+          timerLastStarted: new Date()
+       };
+       task.progress.push(progress);
+       TaskService.updateTask(task);
+       mytimeout = $timeout($scope.onTimeout, 1000);
     };
  
  
-    // stops and resets the current timer
-    $scope.stopTimer = function() {
+    /*
+     * Stop the timer, and update the database 
+     */
+    $scope.stopTimer = function(task) {
+        var current_time = new Date(); 
+        var last_started = task.progress[task.progress.length - 1].timerLastStarted;
+        task.progress[task.progress.length - 1].progress = current_time - last_started;
+        TaskService.updateTask(task);
+        
         $scope.$broadcast('timer-stopped', $scope.counter);
         $scope.seconds = 0;
         $scope.minutes = 0;
         $scope.counter = 0;
-        
         $timeout.cancel(mytimeout);
     };
     
  
-    // triggered, when the timer stops, you can do something here, maybe show a visual indicator or vibrate the device
+    // triggered, when the timer stops
     $scope.$on('timer-stopped', function(event, remaining) {
             console.log('You stopped!!');
     });
