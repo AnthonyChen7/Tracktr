@@ -17,7 +17,9 @@
                </div>
                <div  ng-controller="TimerCtrl" ng-show="task.isTime">
                  <div></div>
-                    Time: {{progressTimerInHours(task)}} Hours {{progressTimerInMinutes(task)}} Minutes {{progressTimerInSeconds(task)}} Seconds
+                 Total time: {{countTime(task,3)}} Hours {{countTime(task,2)}} Minutes {{countTime(task,1)}} Seconds
+                 <br>
+                    Time: {{progressTimer(task,3)}} Hours {{progressTimer(task,2)}} Minutes {{progressTimer(task,1)}} Seconds
                  <br>
                   <button class="button button-stable" ng-click="startTimer(task); $event.stopPropagation();" ng-disabled="task.isTimerRunning"> Start </button>
                   <button class="button button-stable" ng-click="stopTimer(task); $event.stopPropagation();" ng-disabled="!task.isTimerRunning"> Stop </button>

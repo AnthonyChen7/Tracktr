@@ -2,7 +2,6 @@ angular.module('tracktr.controllers', [])
 
 .controller('HomeController', function($scope, $state, TaskService) {
   
-  
   $scope.allTasks;
         
   
@@ -18,20 +17,21 @@ angular.module('tracktr.controllers', [])
    * Increment the count for count tasks
    */
   $scope.incCount = function(task) {
-    $scope.startProgress(task);
-    task.progress[task.progress.length - 1].progress+=1;
-    TaskService.updateTask(task, function(err){});
+    if(task.isCount) {
+      $scope.startProgress(task);
+      TaskService.updateTask(task, function(err){});
+    }
   };
   
   
   /*
-   * Start a new progress, if the task has an empty progress array
+   * Start a new progress for every count 
    */
   $scope.startProgress = function(task) {
     var progress = {
       task_id: task.id,
       date: new Date(),
-      progress: 0,
+      progress: 1,
       timerLastStarted: null
     };
       task.progress.push(progress);
@@ -51,6 +51,57 @@ angular.module('tracktr.controllers', [])
        }
     }
     return result;
+  };
+  
+  
+  /*
+   * Count the amount time spent on the task
+   * @Param option is the output format, 1:seconds, 2:minutes, 3:hours
+   */
+  $scope.countTime = function(task,option) {
+    var result = 0;
+    if(task.isTime) {
+      for(var i = 0; i < task.progress.length; i++) {
+        result += task.progress[i].progress;
+      }
+    }
+    if(option === 1) {
+       result = $scope.toSeconds(result);
+    }
+    if(option === 2) {
+      result = $scope.toMinutes(result);
+    }
+    if(option === 3) {
+      result = $scope.toHours(result);
+    }
+    return result;
+  };
+  
+  
+  /*
+   * Convert milliseconds into seconds
+   */
+  $scope.toSeconds = function(num) {
+    num = Math.floor(num / 1000);
+    return num % 60;
+  };
+  
+  
+  /*
+   * Convert milliseconds into minutes
+   */
+  $scope.toMinutes = function(num) {
+    num = Math.floor(num / 60000);
+    return num % 60;
+  };
+  
+  
+  /*
+   * Convert milliseconds into hours
+   */
+  $scope.toHours = function(num) {
+    num = Math.floor(num / 3600000);
+    return num;
   };
   
   
@@ -94,6 +145,31 @@ angular.module('tracktr.controllers', [])
   };
  
   
+  /*
+   * Count the current progress, and express it in seconds
+   * @Param option is the output format, 1:seconds, 2:minutes, 3:hours
+   */
+  $scope.progressTimer = function(task,option) {
+    if(task.isTimerRunning) {
+      var current = new Date();
+      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+      if(option === 1) {
+       difference = $scope.toSeconds(difference);
+      }
+      if(option === 2) {
+        difference = $scope.toMinutes(difference);
+      }
+      if(option === 3) {
+        difference = $scope.toHours(difference);
+      }
+      return difference;  
+    }
+    else{
+    return 0;
+    }
+  };
+
+
   /*
    * Count the current progress, and express it in seconds
    */
@@ -156,9 +232,9 @@ angular.module('tracktr.controllers', [])
 })
 
 
-/*Controller for timer
-*TODO: does not handle hours for now, need to figure out how to not trigger incCount
-*/
+/*
+ * Controller for timer
+ */
 .controller('TimerCtrl', function($scope, $timeout, TaskService) {
     $scope.counter = 0;
  
@@ -185,8 +261,11 @@ angular.module('tracktr.controllers', [])
        TaskService.updateTask(task);
        mytimeout = $timeout($scope.onTimeout, 1000);
     };
-        
-
+ 
+ 
+    /*
+     * Stop and reset the current timer
+     */ 
     $scope.stopTimer = function(task) {
         var current_time = new Date(); 
         var last_started = task.progress[task.progress.length - 1].timerLastStarted;
@@ -195,12 +274,13 @@ angular.module('tracktr.controllers', [])
         TaskService.updateTask(task);
         
         $scope.$broadcast('timer-stopped', $scope.counter);
-
         $timeout.cancel(mytimeout);
     };
     
  
-    // triggered, when the timer stops, you can do something here, maybe show a visual indicator or vibrate the device
+    /*
+     * Triggered when the timer stops
+     */ 
     $scope.$on('timer-stopped', function(event, remaining) {
             console.log('You stopped!!');
     });
