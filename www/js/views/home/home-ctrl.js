@@ -53,6 +53,57 @@ angular.module('tracktr.controllers', [])
   
   
   /*
+   * Count the amount time spent on the task
+   * @Param option is the output format, 1:seconds, 2:minutes, 3:hours
+   */
+  $scope.countTime = function(task,option) {
+    var result = 0;
+    if(task.isTime) {
+      for(var i = 0; i < task.progress.length; i++) {
+        result += task.progress[i].progress;
+      }
+    }
+    if(option === 1) {
+       result = $scope.toSeconds(result);
+    }
+    if(option === 2) {
+      result = $scope.toMinutes(result);
+    }
+    if(option === 3) {
+      result = $scope.toHours(result);
+    }
+    return result;
+  };
+  
+  
+  /*
+   * Convert milliseconds into seconds
+   */
+  $scope.toSeconds = function(num) {
+    num = Math.floor(num / 1000);
+    return num % 60;
+  };
+  
+  
+  /*
+   * Convert milliseconds into minutes
+   */
+  $scope.toMinutes = function(num) {
+    num = Math.floor(num / 60000);
+    return num % 60;
+  };
+  
+  
+  /*
+   * Convert milliseconds into hours
+   */
+  $scope.toHours = function(num) {
+    num = Math.floor(num / 3600000);
+    return num;
+  };
+  
+  
+  /*
    * Determine if the task is active for the current day
    */
   $scope.isTaskActiveToday = function(task){
@@ -90,44 +141,25 @@ angular.module('tracktr.controllers', [])
       TaskService.updateTask(allTasks[i]);
     }
   };
- 
+  
   
   /*
    * Count the current progress, and express it in seconds
    */
-  $scope.progressTimerInSeconds = function(task) {
+  $scope.progressTimer = function(task,option) {
     if(task.isTimerRunning) {
       var current = new Date();
       var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
-      return Math.floor(difference / 1000) % 60;  
-    } else {
-      return 0;
-    }
-  };
-  
-  
-  /*
-   * Count the current progress, and express it in minutes
-   */
-  $scope.progressTimerInMinutes = function(task) {
-    if(task.isTimerRunning) {
-      var current = new Date();
-      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
-      return Math.floor(difference / 60000) % 60;  
-    } else {
-      return 0;
-    }
-  };
-  
-  
-  /*
-   * Count the current progress, and express it in hours
-   */
-  $scope.progressTimerInHours = function(task) {
-    if(task.isTimerRunning) {
-      var current = new Date();
-      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
-      return Math.floor(difference / 3600000);  
+      if(option === 1) {
+       difference = $scope.toSeconds(difference);
+      }
+      if(option === 2) {
+        difference = $scope.toMinutes(difference);
+      }
+      if(option === 3) {
+        difference = $scope.toHours(difference);
+      }
+      return difference;  
     } else {
       return 0;
     }
