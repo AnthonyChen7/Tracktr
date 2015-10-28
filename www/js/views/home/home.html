@@ -10,7 +10,7 @@
        <div class="item item-divider">
          Tasks
          <ion-list>
-            <ion-item ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task)" ng-click="incCount(task); ">
+            <ion-item ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task)" ng-click="incCount(task)">
                {{task.name}}
                <div ng-show="task.isCount">
                Count: {{countProgress(task)}}

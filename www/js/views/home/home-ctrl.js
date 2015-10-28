@@ -19,7 +19,6 @@ angular.module('tracktr.controllers', [])
   $scope.incCount = function(task) {
     if(task.isCount) {
       $scope.startProgress(task);
-      // task.progress[task.progress.length - 1].progress = 1;
       TaskService.updateTask(task, function(err){});
     }
   };
@@ -36,10 +35,11 @@ angular.module('tracktr.controllers', [])
       timerLastStarted: null
     };
       task.progress.push(progress);
-      // TaskService.updateTask(task);
+      TaskService.updateTask(task);
   };
   
   
+
   /*
    * Count the total progress of the task 
    */
@@ -143,7 +143,7 @@ angular.module('tracktr.controllers', [])
       TaskService.updateTask(allTasks[i]);
     }
   };
-  
+ 
   
   /*
    * Count the current progress, and express it in seconds
@@ -163,6 +163,49 @@ angular.module('tracktr.controllers', [])
         difference = $scope.toHours(difference);
       }
       return difference;  
+    }
+    else{
+    return 0;
+    }
+  };
+
+
+  /*
+   * Count the current progress, and express it in seconds
+   */
+  $scope.progressTimerInSeconds = function(task) {
+    if(task.isTimerRunning) {
+      var current = new Date();
+      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+      return Math.floor(difference / 1000) % 60;  
+    } else {
+      return 0;
+    }
+  };
+  
+  
+  /*
+   * Count the current progress, and express it in minutes
+   */
+  $scope.progressTimerInMinutes = function(task) {
+    if(task.isTimerRunning) {
+      var current = new Date();
+      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+      return Math.floor(difference / 60000) % 60;  
+    } else {
+      return 0;
+    }
+  };
+  
+  
+  /*
+   * Count the current progress, and express it in hours
+   */
+  $scope.progressTimerInHours = function(task) {
+    if(task.isTimerRunning) {
+      var current = new Date();
+      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+      return Math.floor(difference / 3600000);  
     } else {
       return 0;
     }
