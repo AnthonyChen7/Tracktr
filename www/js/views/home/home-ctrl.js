@@ -145,6 +145,7 @@ angular.module('tracktr.controllers', [])
   
   /*
    * Count the current progress, and express it in seconds
+   * @Param option is the output format, 1:seconds, 2:minutes, 3:hours
    */
   $scope.progressTimer = function(task,option) {
     if(task.isTimerRunning) {
@@ -186,9 +187,9 @@ angular.module('tracktr.controllers', [])
 })
 
 
-/*Controller for timer
-*TODO: does not handle hours for now, need to figure out how to not trigger incCount
-*/
+/*
+ * Controller for timer
+ */
 .controller('TimerCtrl', function($scope, $timeout, TaskService) {
     $scope.counter = 0;
  
@@ -217,7 +218,9 @@ angular.module('tracktr.controllers', [])
     };
  
  
-    // stops and resets the current timer
+    /*
+     * Stop and reset the current timer
+     */ 
     $scope.stopTimer = function(task) {
         var current_time = new Date(); 
         var last_started = task.progress[task.progress.length - 1].timerLastStarted;
@@ -230,7 +233,9 @@ angular.module('tracktr.controllers', [])
     };
     
  
-    // triggered, when the timer stops, you can do something here, maybe show a visual indicator or vibrate the device
+    /*
+     * Triggered when the timer stops
+     */ 
     $scope.$on('timer-stopped', function(event, remaining) {
             console.log('You stopped!!');
     });
