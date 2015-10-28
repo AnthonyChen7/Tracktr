@@ -17,9 +17,11 @@ angular.module('tracktr.controllers', [])
    * Increment the count for count tasks
    */
   $scope.incCount = function(task) {
-    $scope.startProgress(task);
-    task.progress[task.progress.length - 1].progress+=1;
-    TaskService.updateTask(task, function(err){});
+    if(task.isCount) {
+      $scope.startProgress(task);
+      task.progress[task.progress.length - 1].progress+=1;
+      TaskService.updateTask(task, function(err){});
+    }
   };
   
   
