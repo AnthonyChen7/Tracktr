@@ -35,11 +35,9 @@ angular.module('tracktr.controllers', [])
       timerLastStarted: null
     };
       task.progress.push(progress);
-      TaskService.updateTask(task);
   };
   
   
-
   /*
    * Count the total progress of the task 
    */
