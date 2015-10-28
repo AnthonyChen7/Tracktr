@@ -54,23 +54,25 @@ angular.module('tracktr.controllers', [])
   
   /*
    * Count the amount time spent on the task
-   * @Param option is the output format, 1:seconds, 2:minutes, 3:hours
+   * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
    */
-  $scope.countTime = function(task,option) {
+  $scope.countTime = function(task,format) {
     var result = 0;
     if(task.isTime) {
       for(var i = 0; i < task.progress.length; i++) {
         result += task.progress[i].progress;
       }
     }
-    if(option === 1) {
-       result = $scope.toSeconds(result);
-    }
-    if(option === 2) {
-      result = $scope.toMinutes(result);
-    }
-    if(option === 3) {
-      result = $scope.toHours(result);
+    switch(format) {
+       case 1: 
+         result = $scope.toSeconds(result);
+         break;   
+       case 2: 
+         result = $scope.toMinutes(result);
+         break;
+       case 3: 
+         result = $scope.toHours(result);
+         break;
     }
     return result;
   };
@@ -145,20 +147,22 @@ angular.module('tracktr.controllers', [])
   
   /*
    * Count the current progress, and express it in seconds
-   * @Param option is the output format, 1:seconds, 2:minutes, 3:hours
+   * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
    */
-  $scope.progressTimer = function(task,option) {
+  $scope.progressTimer = function(task,format) {
     if(task.isTimerRunning) {
       var current = new Date();
       var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
-      if(option === 1) {
-       difference = $scope.toSeconds(difference);
-      }
-      if(option === 2) {
-        difference = $scope.toMinutes(difference);
-      }
-      if(option === 3) {
-        difference = $scope.toHours(difference);
+      switch(format) {
+         case 1:
+           difference = $scope.toSeconds(difference);
+          break;      
+         case 2: 
+           difference = $scope.toMinutes(difference);
+          break;      
+         case 3: 
+           difference = $scope.toHours(difference);
+          break;      
       }
       return difference;  
     }
