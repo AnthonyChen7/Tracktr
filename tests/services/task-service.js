@@ -249,6 +249,62 @@ describe('Task Service Unit Tests', function(){
           });
       });
     }); 
+    
+    
+    it('can insert a task with progress, add progress, and delete the task', function(done) {
+      var taskWithOneProgress = allTasks[0];
+      var progressToAdd = 
+          {
+              id: 1,
+              task_id: 1,
+              date: new Date(),
+              progress: 11,
+              timerLastStarted: new Date()
+            };
+      
+      // create a task with one progress
+      TaskService.createTask(taskWithOneProgress, function(err, id) {
+          // Set the new id
+          taskWithOneProgress.id = id;
+          
+          // retrieve the task from the database
+          TaskService.getTaskById(id, function(err, task) {
+            
+            // Add progress to the task
+            TaskService.addProgressToTask(taskWithOneProgress, progressToAdd,  function() {
+              
+              // Delete the task from the database
+            TaskService.deleteTask(task, function() {
+                
+                // Retrieve the updated task from the DB    
+                TaskService.getTaskById(id, function(err, task) {
+                  
+                  // Ensure task is null.
+                  expect(task).toBeNull();
+                  
+                  // Ensure that the days has been deleted in a cascade
+                  DB.query(SELECT_DAYS_PREPARED_STATEMENT, [id])
+                    .then(function(days_result) {
+                      var task_days = DB.fetch(days_result);
+                      
+                      expect(task_days).toBeNull();
+                        
+                  // Ensure that the progress has been deleted in a cascade
+                  DB.query(SELECT_PROGRESS_PREPARED_STATEMENT, [id])
+                    .then(function(progress_result) {
+                      var task_progress = DB.fetchAll(days_result);
+                            
+                      expect(task_progress.length).toEqual(0);
+                            
+                      done();
+                  });    
+                });
+              });
+            });
+          });
+        });
+      });
+    }); 
 });
 
 var allTasks = [   
