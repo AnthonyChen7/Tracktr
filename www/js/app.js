@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','tracktr.directives'])
+angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives'])
 
 .run(function($ionicPlatform, DB) {
   $ionicPlatform.ready(function() {
