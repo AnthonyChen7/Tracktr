@@ -255,7 +255,14 @@ angular.module('tracktr.services')
                
     DB.query(SELECT_TASK_BY_ID_PREPARED_STATEMENT, [id])
       .then(function(result) {
+        
         some_task = DB.fetch(result);
+        
+        // Return early if it does not exist in the database.
+        if(some_task == null) {
+          callback(null, null);
+          return;
+        }
         
         DB.query(SELECT_DAYS_PREPARED_STATEMENT, [id])
           .then(function(result) {
