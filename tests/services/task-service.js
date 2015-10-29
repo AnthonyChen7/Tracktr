@@ -153,9 +153,9 @@ describe('Task Service Unit Tests', function(){
         TaskService.getTaskById(id, function(err, task) {
           
           // Update task.days.sunday property to false
-          taskWithNoProgress.days.sunday = false;
+          task.days.sunday = false;
           
-          TaskService.updateTask(taskWithNoProgress, function() {
+          TaskService.updateTask(task, function() {
             
             // Retrieve the task from the DB
             TaskService.getTaskById(id, function(err, task) {
@@ -184,9 +184,9 @@ describe('Task Service Unit Tests', function(){
           TaskService.getTaskById(id, function(err, task) {
             
             // Update task.progress
-            taskWithOneProgress.progress[0].progress = 12;
+            task.progress[0].progress = 12;
             
-            TaskService.updateTask(taskWithOneProgress, function() {
+            TaskService.updateTask(task, function() {
                 
                 // Retrieve the updated task from the DB    
                 TaskService.getTaskById(id, function(err, task) {
@@ -339,6 +339,41 @@ describe('Task Service Unit Tests', function(){
         });  
       });
       
+    });
+    
+    it('can getAll tasks when there are two tasks', function(done) {
+      var taskOne = allTasks[0];
+      var taskTwo = allTasks[1];
+      
+      // Insert the first task
+      TaskService.createTask(taskOne, function(err, id) {
+        
+        // Insert the second task
+        TaskService.createTask(taskTwo, function(err, id) {
+          
+          // Retrieve all of the tasks
+          TaskService.getAll(function(err, tasks) {
+            
+            console.log(tasks[1]);
+            // Check the length of tasks returned
+            expect(tasks.length).toEqual(2);
+            
+            // Check the goals are correct
+            expect(tasks[0].goal).toEqual(10);
+            expect(tasks[1].goal).toEqual(10);
+            
+            // Check the days are correct
+            expect(tasks[0].days.sunday).toEqual(true);
+            expect(tasks[1].days.sunday).toEqual(true);
+            
+            // Check that progress is correct
+            expect(tasks[0].progress.length).toEqual(1);
+            expect(tasks[1].progress.length).toEqual(0);
+            
+            done();
+          }); 
+        });
+      });
     });
     
 });
