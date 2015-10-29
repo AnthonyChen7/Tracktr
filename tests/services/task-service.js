@@ -109,7 +109,7 @@ describe('Task Service Unit Tests', function(){
       });
     });
     
-     it('can insert a task and update isActive', function(done) {
+    it('can insert a task and update isActive', function(done) {
       var taskWithNoProgress = allTasks[1];
       
       // Create task with no progress
@@ -141,6 +141,38 @@ describe('Task Service Unit Tests', function(){
       });
     });
     
+    it('can insert a task and update sunday to false', function(done) {
+      var taskWithNoProgress = allTasks[1];
+      
+      // Create task with no progress
+      TaskService.createTask(taskWithNoProgress, function(err, id) {
+        // Set the id to the hardcoded task object
+        taskWithNoProgress.id = id;
+        
+        // Retrieve the task from the database
+        TaskService.getTaskById(id, function(err, task) {
+          
+          // Update task.days.sunday property to false
+          taskWithNoProgress.days.sunday = false;
+          
+          TaskService.updateTask(taskWithNoProgress, function() {
+            
+            // Retrieve the task from the DB
+            TaskService.getTaskById(id, function(err, task) {
+              
+              // Compare Progress task_id
+              expect(task.id).toEqual(taskWithNoProgress.id);
+              
+              // Compare Progress progress
+              expect(task.days.sunday).toEqual(false);
+              
+              done();
+            });    
+          });
+        });
+      });
+    });
+
 });
 
 var allTasks = [   
