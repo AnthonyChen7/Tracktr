@@ -3,7 +3,7 @@ angular.module('tracktr.controllers', [])
 .controller('HomeController', function($scope, $state, TaskService) {
   
   $scope.allTasks;
-        
+  $scope.date = new Date().getDate();      
   
   /*
    *Get all tasks from the DB
@@ -38,15 +38,35 @@ angular.module('tracktr.controllers', [])
   };
   
   
+  // /*
+  //  * Count the total progress of the task 
+  //  */
+  // $scope.countProgress = function(task){
+  //   var result = 0;
+  //   if(task.isCount) {
+  //      for(var i = 0; i < task.progress.length; i++){
+  //        result += task.progress[i].progress;
+  //      }
+  //   }
+  //   return result;
+  // };
+  
+  
   /*
    * Count the total progress of the task 
+   * TODO: implement to display count progress for current goal "period"
    */
   $scope.countProgress = function(task){
     var result = 0;
+    var current_date = new Date();
     if(task.isCount) {
-       for(var i = 0; i < task.progress.length; i++){
-         result += task.progress[i].progress;
-       }
+      if(task.frequency === 0) {
+         for(var i = 0; i < task.progress.length; i++){
+           if(task.progress[i].date.getDate() === current_date.getDate()) {
+              result += task.progress[i].progress;
+           }
+         }
+      }
     }
     return result;
   };
