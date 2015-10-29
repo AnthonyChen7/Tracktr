@@ -18,8 +18,9 @@ angular.module('tracktr.controllers', [])
    */
   $scope.incCount = function(task) {
     if(task.isCount) {
-      $scope.startProgress(task);
-      TaskService.updateTask(task, function(err){});
+      var newProgress = $scope.startProgress(task);
+      task.progress.push(newProgress);
+      TaskService.addProgressToTask(task, newProgress);
     }
   };
   
@@ -28,13 +29,12 @@ angular.module('tracktr.controllers', [])
    * Start a new progress for every count 
    */
   $scope.startProgress = function(task) {
-    var progress = {
+    return {
       task_id: task.id,
       date: new Date(),
       progress: 1,
       timerLastStarted: null
     };
-      task.progress.push(progress);
   };
   
   
