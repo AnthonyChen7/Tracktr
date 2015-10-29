@@ -315,6 +315,32 @@ describe('Task Service Unit Tests', function(){
       });
     });
     
+    
+    it('can getAll tasks when there is one task', function(done) {
+      var taskOne = allTasks[0];
+      
+      TaskService.createTask(taskOne, function(err, id) {
+        
+        TaskService.getAll(function(err, tasks) {
+          
+          // Check the length of tasks returned
+          expect(tasks.length).toEqual(1);
+          
+          // Check the goals are correct
+          expect(tasks[0].goal).toEqual(10);
+          
+          // Check the days are correct
+          expect(tasks[0].days.sunday).toEqual(true);
+          
+          // Check that progress is correct
+          expect(tasks[0].progress.length).toEqual(1);
+          
+          done();
+        });  
+      });
+      
+    });
+    
 });
 
 var allTasks = [   
