@@ -172,6 +172,44 @@ describe('Task Service Unit Tests', function(){
         });
       });
     });
+    
+    
+    it('can insert a task with one progress and update the progress', function(done) {
+      var taskWithOneProgress = allTasks[0];
+      
+      // create a task with one progress
+      TaskService.createTask(taskWithOneProgress, function(err, id) {
+          
+          // retrieve the task from the database
+          TaskService.getTaskById(id, function(err, task) {
+            
+            // Update task.progress
+            taskWithOneProgress.progress[0].progress = 12;
+            
+            TaskService.updateTask(taskWithOneProgress, function() {
+                
+                // Retrieve the updated task from the DB    
+                TaskService.getTaskById(id, function(err, task) {
+                  
+                  // Compare Name
+                  expect(task.name).toEqual(taskWithOneProgress.name);
+                  // Compare task_id
+                  expect(task.days.task_id).toEqual(taskWithOneProgress.days.task_id);
+                  // Compare length of progress array
+                  expect(task.progress.length).toEqual(1);
+                  // Compare progress's task id
+                  expect(task.progress[0].task_id).toEqual(1);
+                  // Compare progress's progress value
+                  expect(task.progress[0].progress).toEqual(12);
+                  
+                  done();
+                });
+            });
+          });
+      });
+});
+    
+ 
 
 });
 
