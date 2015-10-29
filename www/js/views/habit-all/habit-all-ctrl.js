@@ -579,9 +579,14 @@ var allTasks = [
    */
   $scope.retrieveData=function(task){
     var result = "";
-    // result += $scope.countProgress(task.progress) +  "/" + task.goal + " | " + $scope.getFrequency(task.frequency);
     
-    result += countProgress(task) +  "/" + task.goal + " | " + $scope.getFrequency(task.frequency);
+    if(task.isCount === true && task.isTime === false){
+    result += countProgress(task) +  "/" + task.goal;
+    }else{
+      result += countTime(task,3) + " Hours "+ countTime(task,2)+ " Minutes " + countTime(task,1)+ " Seconds "
+                +" / " + getGoalTime(task);                
+    }
+    result += " | " + $scope.getFrequency(task.frequency);
       
     if($scope.getDaysOfOccurence(task.days) != ""){
       result += " | "+ $scope.getDaysOfOccurence(task.days);

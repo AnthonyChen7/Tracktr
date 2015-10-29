@@ -35,8 +35,6 @@ var Task = function(task) {
 function countProgress(aTask){
   var result = 0;
   
-  if(aTask.isCount === true && aTask.isTime === false ){
-  
   if(aTask.frequency === 0){
     //Daily
     for(var i = 0; i < aTask.progress.length ; i++){
@@ -74,12 +72,7 @@ function countProgress(aTask){
       } 
     }
   }
-  
-  }else if(aTask.isCount === false && aTask.isTime === true){
     
-    result = countTime(aTask,1);
-  }
-  
   return result;
 }
 
@@ -109,6 +102,32 @@ function countTime(task,format) {
   };
   
   /*
+   * Count the current progress, and express it in seconds
+   * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
+   */
+   function progressTimer(task,format) {
+    if(task.isTimerRunning) {
+      var current = new Date();
+      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+      switch(format) {
+         case 1:
+           difference = toSeconds(difference);
+          break;      
+         case 2: 
+           difference = toMinutes(difference);
+          break;      
+         case 3: 
+           difference = toHours(difference);
+          break;      
+      }
+      return difference;  
+    }
+    else{
+    return 0;
+    }
+  };
+  
+  /*
    * Convert milliseconds into seconds
    */
    function toSeconds(num) {
@@ -133,3 +152,17 @@ function countTime(task,format) {
     num = Math.floor(num / 3600000);
     return num;
   };
+  
+  /**
+   * Returns a string that states that task's goal time in the format
+   *  x hours x minute
+   */
+  function getGoalTime(aTask){
+    var hours = Math.floor(aTask.goal / 60);
+    var minutes = aTask.goal % 60;
+    
+    var result = hours + " Hours " + minutes + " Minutes " + "0 Seconds";
+    
+    return result;
+  }
+  
