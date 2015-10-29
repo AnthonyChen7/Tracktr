@@ -72,6 +72,43 @@ describe('Task Service Unit Tests', function(){
       });
     });
     
+    it('can insert a task and add progress', function(done) {
+      var taskWithNoProgress = allTasks[1];
+      var progressToAdd = 
+          {
+              id: 1,
+              task_id: 1,
+              date: new Date(),
+              progress: 11,
+              timerLastStarted: new Date()
+            };
+      
+      // Create task with no progress
+      TaskService.createTask(taskWithNoProgress, function(err, id) {
+        
+        // Retrieve the task from the database
+        TaskService.getTaskById(id, function(err, task) {
+          
+          // Add a task to the progress
+          TaskService.addProgressToTask(task, progressToAdd, function() {
+            
+            // Retrieve the progress from the DB
+            TaskService.getTaskById(id, function(err, task) {
+              
+              // Compare Progress task_id
+              expect(task.progress[0].task_id).toEqual(task.id);
+              
+              // Compare Progress progress
+              expect(task.progress[0].progress).toEqual(11);
+              
+              done();
+            });
+          });
+          
+        });
+      });
+    });
+
 });
 
 var allTasks = [   
