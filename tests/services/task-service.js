@@ -305,6 +305,16 @@ describe('Task Service Unit Tests', function(){
         });
       });
     }); 
+    
+    
+    it('can getAll tasks when there are no tasks', function(done) {
+      
+      TaskService.getAll(function(err, tasks) {
+        expect(tasks.length).toEqual(0);
+        done();
+      });
+    });
+    
 });
 
 var allTasks = [   
