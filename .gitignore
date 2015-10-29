@@ -12,3 +12,4 @@ plugins
 www/lib/*
 ionic.project
 .io-config.json
+tags
