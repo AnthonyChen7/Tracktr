@@ -35,6 +35,8 @@ var Task = function(task) {
 function countProgress(aTask){
   var result = 0;
   
+  if(aTask.isCount === true && aTask.isTime === false ){
+  
   if(aTask.frequency === 0){
     //Daily
     for(var i = 0; i < aTask.progress.length ; i++){
@@ -73,5 +75,61 @@ function countProgress(aTask){
     }
   }
   
+  }else if(aTask.isCount === false && aTask.isTime === true){
+    
+    result = countTime(aTask,1);
+  }
+  
   return result;
 }
+
+/*
+   * Count the amount time spent on the task
+   * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
+   */
+function countTime(task,format) {
+    var result = 0;
+    if(task.isTime) {
+      for(var i = 0; i < task.progress.length; i++) {
+        result += task.progress[i].progress;
+      }
+    }
+    switch(format) {
+       case 1: 
+         result = toSeconds(result);
+         break;   
+       case 2: 
+         result = toMinutes(result);
+         break;
+       case 3: 
+         result = toHours(result);
+         break;
+    }
+    return result;
+  };
+  
+  /*
+   * Convert milliseconds into seconds
+   */
+   function toSeconds(num) {
+    num = Math.floor(num / 1000);
+    return num % 60;
+  };
+  
+  
+  /*
+   * Convert milliseconds into minutes
+   */
+  function toMinutes(num) {
+    num = Math.floor(num / 60000);
+    return num % 60;
+  };
+  
+  
+  /*
+   * Convert milliseconds into hours
+   */
+  function toHours(num) {
+    num = Math.floor(num / 3600000);
+    return num;
+  };
