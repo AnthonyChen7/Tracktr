@@ -108,7 +108,39 @@ describe('Task Service Unit Tests', function(){
         });
       });
     });
-
+    
+     it('can insert a task and update isActive', function(done) {
+      var taskWithNoProgress = allTasks[1];
+      
+      // Create task with no progress
+      TaskService.createTask(taskWithNoProgress, function(err, id) {
+        // Set the id to the hardcoded task object
+        taskWithNoProgress.id = id;
+        
+        // Retrieve the task from the database
+        TaskService.getTaskById(id, function(err, task) {
+          
+          // Update the isActive property to true
+          taskWithNoProgress.isActive = true;
+          
+          TaskService.updateTask(taskWithNoProgress, function() {
+            
+            // Retrieve the task from the DB
+            TaskService.getTaskById(id, function(err, task) {
+              
+              // Compare Progress task_id
+              expect(task.id).toEqual(taskWithNoProgress.id);
+              
+              // Compare Progress progress
+              expect(task.isActive).toEqual(true);
+              
+              done();
+            });    
+          });
+        });
+      });
+    });
+    
 });
 
 var allTasks = [   
