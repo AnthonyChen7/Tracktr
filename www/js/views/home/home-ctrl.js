@@ -60,7 +60,7 @@ angular.module('tracktr.controllers', [])
     var result = 0;
     var current_date = new Date();
     if(task.isCount) {
-      result = task.getProgress(task);
+      result = task.getProgress();
     }
     return result;
   };
