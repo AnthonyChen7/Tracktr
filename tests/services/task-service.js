@@ -34,18 +34,6 @@ describe('Task Service Unit Tests', function(){
         expect(TaskService).toBeDefined();
     });
     
-    
-    
-    
-    it('can insert an inactive every day daily task', function(done) {
-      TaskService.createTask(allTasks[0], function(err, id) {
-        TaskService.getTaskById(id, function(err, task) {
-          expect(id).toEqual(task.id);
-            done();
-          });
-      });
-    });
-    
     it('can update a task with no progress', function(done) {
       // create a task with no progress
       TaskService.createTask(allTasks[1], function(err, id) {
@@ -58,207 +46,88 @@ describe('Task Service Unit Tests', function(){
         });
       });
     });
-
-
+    
+    it('can insert a task with one progress', function(done) {
+      var taskWithOneProgress = allTasks[0];
+      
+      // create a task with one progress
+      TaskService.createTask(taskWithOneProgress, function(err, id) {
+          
+          // retrieve the task from the database
+          TaskService.getTaskById(id, function(err, task) {
+            
+            // Compare Name
+            expect(task.name).toEqual(taskWithOneProgress.name);
+            // Compare task_id
+            expect(task.days.task_id).toEqual(taskWithOneProgress.days.task_id);
+            // Compare length of progress array
+            expect(task.progress.length).toEqual(1);
+            // Compare progress's task id
+            expect(task.progress[0].task_id).toEqual(1);
+            // Compare progress's progress value
+            expect(task.progress[0].progress).toEqual(11);
+            
+            done();
+          });
+      });
+    });
+    
 });
 
 var allTasks = [   
     {
      name: 'Daily Everyday Not Active',
-     isActive: 0,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
+     isActive: false,
+     frequency: false,
+     isTime: false,
+     isCount: true, 
      goal: 10,
      icon: 0,
-     isTimerRunning: 0,
+     isTimerRunning: false,
      creationDate: new Date(),
      days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 1,
-       friday: 1,
-       saturday: 1
+       id: 1,
+       task_id: 1,
+       sunday: true,
+       monday: true,
+       tuesday: true,
+       wednesday: true,
+       thursday: true,
+       friday: true,
+       saturday: true
      },
      progress: [
        {
-         id: '1',
-         task_id: '1',
+         id: 1,
+         task_id: 1,
          date: new Date(),
          progress: 11,
          timerLastStarted: new Date()
        }
      ]
     },
-    
     {
-      id: 2,
-     name: 'Daily Active Some days no progress',
-     isActive: 1,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
-     goal: 2,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: new Date(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 0,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       
-     ]
-    },
-    
-     {
-       id: 3,
-     name: 'Weekly Active Some days 2 progress',
-     isActive: 1,
-     frequency: 1,
-     isTime: 0,
-     isCount: 1, 
+     name: 'Daily Everyday Not Active',
+     isActive: false,
+     frequency: false,
+     isTime: false,
+     isCount: true, 
      goal: 10,
      icon: 0,
-     isTimerRunning: 0,
+     isTimerRunning: false,
      creationDate: new Date(),
      days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
+       id: 1,
+       task_id: 1,
+       sunday: true,
+       monday: true,
+       tuesday: true,
+       wednesday: true,
+       thursday: true,
+       friday: true,
+       saturday: true
      },
      progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: new Date(),
-         progress: 10,
-         timerLastStarted: new Date()
-       },
-        {
-         id: '2',
-         task_id: '2',
-         date: new Date(),
-         progress: 30,
-         timerLastStarted: new Date()
-       }
-     ]
-    },
-    
-    {
-      id: 4,
-     name: 'monthly Active Some days',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: new Date(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: new Date(),
-         progress: 10,
-         timerLastStarted: new Date()
-       }
-     ]
-    },
-    
-    {
-      id: 5,
-     name: 'monthly Active no days',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: new Date(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: new Date(),
-         progress: 10,
-         timerLastStarted: new Date()
-       }
-     ]
-    },
-    
-    {
-      id: 6,
-     name: 'monthly not Active one day',
-     isActive: 0,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: new Date(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 1,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: new Date(),
-         progress: 10,
-         timerLastStarted: new Date()
-       }
      ]
     }
-    
-  ];
+];
