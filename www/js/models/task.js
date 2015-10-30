@@ -43,6 +43,7 @@ Task.prototype.getProgress = function(){
     }
   }else if(aTask.frequency === 1){
     //weekly
+    
     var today = new Date();
     today.setHours(0,0,0,0);
     
@@ -80,8 +81,7 @@ Task.prototype.getProgress = function(){
    * Count the amount time spent on the task
    * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
    */
-Task.prototype.countTime = function(format) {
-    var task = this;
+function countTime(task,format) {
     var result = 0;
     if(task.isTime) {
       for(var i = 0; i < task.progress.length; i++) {
@@ -101,7 +101,33 @@ Task.prototype.countTime = function(format) {
     }
     return result;
   };
-   
+  
+  /*
+   * Count the current progress, and express it in seconds
+   * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
+   */
+   function progressTimer(task,format) {
+    if(task.isTimerRunning) {
+      var current = new Date();
+      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
+      switch(format) {
+         case 1:
+           difference = toSeconds(difference);
+          break;      
+         case 2: 
+           difference = toMinutes(difference);
+          break;      
+         case 3: 
+           difference = toHours(difference);
+          break;      
+      }
+      return difference;  
+    }
+    else{
+    return 0;
+    }
+  };
+  
   /*
    * Convert milliseconds into seconds
    */

@@ -583,10 +583,9 @@ var allTasks = [
     if(task.isCount === true && task.isTime === false){
     result += task.getProgress(task) +  "/" + task.goal;
     }else if (task.isCount === false && task.isTime === true){
-      result += task.countTime(task,3) + " Hours "+ task.countTime(task,2)+ " Minutes " + task.countTime(task,1)+ " Seconds "
+      result += countTime(task,3) + " Hours "+ countTime(task,2)+ " Minutes " + countTime(task,1)+ " Seconds "
                 +" / " + getGoalTime(task);                
     }
-    
     result += " | " + $scope.getFrequency(task.frequency);
       
     if($scope.getDaysOfOccurence(task.days) != ""){
