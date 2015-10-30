@@ -32,7 +32,8 @@ var Task = function(task) {
  * aTask is a task object
  * Returns the progress (integer) based on the frequency
  */
-function countProgress(aTask){
+Task.prototype.getProgress = function(){
+  var aTask = this;
   var result = 0;
   
   if(aTask.frequency === 0){

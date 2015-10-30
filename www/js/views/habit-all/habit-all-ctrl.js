@@ -581,8 +581,8 @@ var allTasks = [
     var result = "";
     
     if(task.isCount === true && task.isTime === false){
-    result += countProgress(task) +  "/" + task.goal;
-    }else{
+    result += task.getProgress(task) +  "/" + task.goal;
+    }else if (task.isCount === false && task.isTime === true){
       result += countTime(task,3) + " Hours "+ countTime(task,2)+ " Minutes " + countTime(task,1)+ " Seconds "
                 +" / " + getGoalTime(task);                
     }

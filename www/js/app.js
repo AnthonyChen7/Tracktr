@@ -6,9 +6,9 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','tracktr.directives'])
+angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives'])
 
-.run(function($ionicPlatform, DB) {
+.run(function($ionicPlatform, $cordovaSplashscreen, DB) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,6 +21,11 @@ angular.module('tracktr', ['ionic', 'tracktr.controllers', 'tracktr.services','t
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+    
+    // Close the splash screen
+    setTimeout(function() {
+      $cordovaSplashscreen.hide();
+    }, 3000);
     
     
   });
