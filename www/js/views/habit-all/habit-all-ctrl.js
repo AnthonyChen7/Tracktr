@@ -31,7 +31,7 @@ angular.module('tracktr.controllers')
  var firstDayOfMonth = new Date(someDate.getFullYear(), someDate.getMonth(),1);
  var lastDayOfMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,0);
  
- var someDayOfNextMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,5)
+ var someDayOfNextMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,5);
   
 /**
  * Temporary list of tasks
