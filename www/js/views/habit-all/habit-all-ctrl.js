@@ -581,10 +581,10 @@ var allTasks = [
     var result = "";
     
     if(task.isCount === true && task.isTime === false){
-    result += task.getProgress(task) +  "/" + task.goal;
+    result += task.getProgress() +  "/" + task.goal;
     }else if (task.isCount === false && task.isTime === true){
-      result += countTime(task,3) + " Hours "+ countTime(task,2)+ " Minutes " + countTime(task,1)+ " Seconds "
-                +" / " + getGoalTime(task);                
+      result += task.countTime(3) + " Hours "+ task.countTime(2)+ " Minutes " + task.countTime(1)+ " Seconds "
+                +" / " + task.getGoalTime();                
     }
     result += " | " + $scope.getFrequency(task.frequency);
       

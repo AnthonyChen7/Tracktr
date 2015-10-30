@@ -81,7 +81,8 @@ Task.prototype.getProgress = function(){
    * Count the amount time spent on the task
    * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
    */
-function countTime(task,format) {
+Task.prototype.countTime = function(format) {
+    var task = this;
     var result = 0;
     if(task.isTime) {
       for(var i = 0; i < task.progress.length; i++) {
@@ -100,32 +101,6 @@ function countTime(task,format) {
          break;
     }
     return result;
-  };
-  
-  /*
-   * Count the current progress, and express it in seconds
-   * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
-   */
-   function progressTimer(task,format) {
-    if(task.isTimerRunning) {
-      var current = new Date();
-      var difference = current - task.progress[task.progress.length - 1].timerLastStarted;
-      switch(format) {
-         case 1:
-           difference = toSeconds(difference);
-          break;      
-         case 2: 
-           difference = toMinutes(difference);
-          break;      
-         case 3: 
-           difference = toHours(difference);
-          break;      
-      }
-      return difference;  
-    }
-    else{
-    return 0;
-    }
   };
   
   /*
@@ -158,7 +133,8 @@ function countTime(task,format) {
    * Returns a string that states that task's goal time in the format
    *  x hours x minute
    */
-  function getGoalTime(aTask){
+  Task.prototype.getGoalTime = function(){
+    var aTask = this;
     var hours = Math.floor(aTask.goal / 60);
     var minutes = aTask.goal % 60;
     
