@@ -23,14 +23,11 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
     }
     
     document.addEventListener("deviceready", function () {
-    setTimeout(function() {
-      $cordovaSplashscreen.hide();
-    }, 3000);
+      setTimeout(function() {
+        $cordovaSplashscreen.hide();
+      }, 3000);
     }, false);
-    // Close the splash screen
-    
-    
-    
+
   });
     
   // Initialize the Database
