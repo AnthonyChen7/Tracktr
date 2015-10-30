@@ -266,15 +266,23 @@ angular.module('tracktr.controllers', [])
     * Start the timer, create a new progress array entry 
     */
     $scope.startTimer = function(task) {
-       var progress = {
-          task_id: task.id,
-          date: new Date(),
-          progress: 0,
-          timerLastStarted: new Date()
-       };
-       task.progress.push(progress);
-       task.isTimerRunning = true;
-       TaskService.updateTask(task);
+      //  var progress = {
+      //     task_id: task.id,
+      //     date: new Date(),
+      //     progress: 0,
+      //     timerLastStarted: new Date()
+      //  };
+      //  task.progress.push(progress);
+      //  task.isTimerRunning = true;
+      //  TaskService.updateTask(task);
+      var newProgress = $scope.startProgress(task);
+      newProgress.timerLastStarted = new Date();
+      task.progress.push(newProgress);
+      TaskService.addProgressToTask(task, newProgress);
+      task.isTimerRunning = true;
+      
+      TaskService.updateTask(task);
+      
        mytimeout = $timeout($scope.onTimeout, 1000);
     };
  
