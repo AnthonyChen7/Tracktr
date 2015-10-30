@@ -22,10 +22,13 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
       StatusBar.styleLightContent();
     }
     
-    // Close the splash screen
+    document.addEventListener("deviceready", function () {
     setTimeout(function() {
       $cordovaSplashscreen.hide();
     }, 3000);
+    }, false);
+    // Close the splash screen
+    
     
     
   });
