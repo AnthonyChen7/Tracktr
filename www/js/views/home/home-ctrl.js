@@ -300,12 +300,15 @@ angular.module('tracktr.controllers', [])
       // var newProgress = $scope.startProgress(task);
       // newProgress.timerLastStarted = new Date();
       task.progress.push(newProgress);
-      TaskService.addProgressToTask(task, newProgress);
-      task.isTimerRunning = true;
       
+      TaskService.addProgressToTask(task, newProgress, function(progressId) {
+        task.progress[task.progress.length - 1].id = progressId;
+      });
+      
+      task.isTimerRunning = true;
       TaskService.updateTask(task);
       
-       mytimeout = $timeout($scope.onTimeout, 1000);
+      mytimeout = $timeout($scope.onTimeout, 1000);  
     };
  
  
@@ -315,7 +318,7 @@ angular.module('tracktr.controllers', [])
     $scope.stopTimer = function(task) {
         var current_time = new Date(); 
         var last_started = task.progress[task.progress.length - 1].timerLastStarted;
-        task.progress[task.progress.length - 1].progress = current_time - last_started;
+        task.progress[task.progress.length - 1].progress = current_time.getTime() - last_started.getTime();
         // task.progress[task.progress.length - 1].progress = 12345;
         task.isTimerRunning = false;
         TaskService.updateTask(task);
