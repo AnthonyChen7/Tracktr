@@ -138,7 +138,7 @@ Task.prototype.countTime = function(format) {
     var hours = Math.floor(aTask.goal / 60);
     var minutes = aTask.goal % 60;
     
-    var result = hours + " Hours " + minutes + " Minutes " + "0 Seconds";
+    var result = "Goal: " +hours + " Hours " + minutes + " Minutes " + "0 Seconds";
     
     return result;
   }
