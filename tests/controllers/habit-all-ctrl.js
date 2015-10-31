@@ -16,11 +16,9 @@ describe("Habit All Controller Tests", function(){
  var lastDayOfMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,0);
  
  var someDayOfNextMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,5);
-	
-	beforeEach(function(){
-		allTasks = [   
-    {
-     
+ 
+		 
+  var taskOne = new Task({
      name: 'Daily Everyday Not Active',
      isActive: 0,
      frequency: 0,
@@ -50,9 +48,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
+    }); 
     
-    {
+    var taskTwo = new Task({
       id: 2,
      name: 'Daily Active Some days no progress',
      isActive: 1,
@@ -77,9 +75,9 @@ describe("Habit All Controller Tests", function(){
      progress: [
        
      ]
-    },
+    });
     
-     {
+    var taskThree = new Task({
        id: 3,
      name: 'Weekly Active Some days 2 progress in date range',
      isActive: 1,
@@ -117,9 +115,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
-    
-    {
+    });
+     
+    var taskFour = new Task({
       id: 4,
      name: 'monthly Active Some days',
      isActive: 1,
@@ -150,9 +148,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
+    });
     
-    {
+    var taskFive = new Task({
       id: 5,
      name: 'monthly Active no days',
      isActive: 1,
@@ -183,9 +181,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
+    });
     
-    {
+    var taskSix = new Task( {
       id: 6,
      name: 'monthly not Active one day',
      isActive: 0,
@@ -216,9 +214,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
-    
-    {
+    });
+   
+    var taskSeven = new Task( {
        id: 3,
      name: 'Weekly Active Some days 2 progress out of date range',
      isActive: 1,
@@ -256,9 +254,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
-    
-    {
+    });
+   
+   var taskEight = new Task({
        id: 3,
      name: 'Weekly Active Some days 2 progress 1 out of date range & 1 in range',
      isActive: 1,
@@ -296,9 +294,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
+    }); 
     
-    {
+    var taskNine = new Task({
        id: 3,
      name: 'Weekly Active Some days 2 progress both at prev Sunday',
      isActive: 1,
@@ -336,9 +334,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
+    });
     
-    {
+    var task10 = new Task({
        id: 3,
      name: 'Weekly Active Some days 2 progress both at next Sunday',
      isActive: 1,
@@ -376,9 +374,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
+    });
     
-    {
+    var task11 = new Task({
       id: 5,
      name: 'monthly Active first day of month',
      isActive: 1,
@@ -409,9 +407,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
+    });
     
-    {
+    var task12 = new Task({
       id: 5,
      name: 'monthly Active last day of month',
      isActive: 1,
@@ -442,9 +440,9 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    },
+    });
     
-     {
+    var task13 = new Task({
       id: 5,
      name: 'monthly Active some day of next month',
      isActive: 1,
@@ -475,10 +473,19 @@ describe("Habit All Controller Tests", function(){
          timerLastStarted: someDate
        }
      ]
-    }
+    });
     
+    var scope;
     
-  ];
-	});
-	
+    // load the controller's module
+    beforeEach(module('tracktr.controllers'));
+
+    beforeEach(inject(function($rootScope, $controller) {
+        scope = $rootScope.$new();
+        $controller('HabitAllController', {$scope: scope});
+    }));
+    
 });
+
+	
+	
