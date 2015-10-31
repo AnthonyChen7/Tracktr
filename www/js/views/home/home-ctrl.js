@@ -26,7 +26,7 @@ angular.module('tracktr.controllers', [])
   
   
   /*
-   * Start a new progress for every count 
+   * Start a new count progress for every count 
    */
   $scope.startProgress = function(task) {
     return {
@@ -140,6 +140,28 @@ angular.module('tracktr.controllers', [])
       return false;
   };
   
+  
+  
+  /*
+   * Return true if it is a weekly task
+   */
+  $scope.isTaskWeekly = function(task) {
+    if(task.frequency === 1)
+       return true;
+    else 
+       return false;
+  };
+  
+  
+  /*
+   * Return true if it is a monthly task
+   */
+  $scope.isTaskMonthly = function(task) {
+    if(task.frequency === 2)
+       return true;
+    else 
+       return false;
+  };
   
   /*
    * Converts a day of week number to a string
@@ -266,17 +288,17 @@ angular.module('tracktr.controllers', [])
     * Start the timer, create a new progress array entry 
     */
     $scope.startTimer = function(task) {
-      //  var progress = {
-      //     task_id: task.id,
-      //     date: new Date(),
-      //     progress: 0,
-      //     timerLastStarted: new Date()
-      //  };
+       var newProgress = {
+          task_id: task.id,
+          date: new Date(),
+          progress: 0,
+          timerLastStarted: new Date()
+       };
       //  task.progress.push(progress);
       //  task.isTimerRunning = true;
       //  TaskService.updateTask(task);
-      var newProgress = $scope.startProgress(task);
-      newProgress.timerLastStarted = new Date();
+      // var newProgress = $scope.startProgress(task);
+      // newProgress.timerLastStarted = new Date();
       task.progress.push(newProgress);
       TaskService.addProgressToTask(task, newProgress);
       task.isTimerRunning = true;
@@ -294,6 +316,7 @@ angular.module('tracktr.controllers', [])
         var current_time = new Date(); 
         var last_started = task.progress[task.progress.length - 1].timerLastStarted;
         task.progress[task.progress.length - 1].progress = current_time - last_started;
+        // task.progress[task.progress.length - 1].progress = 12345;
         task.isTimerRunning = false;
         TaskService.updateTask(task);
         
