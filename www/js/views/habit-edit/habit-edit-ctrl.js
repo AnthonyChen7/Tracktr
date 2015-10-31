@@ -224,6 +224,7 @@ angular.module('tracktr.controllers')
 			$scope.isActive = task.isActive;
 			
 			$scope.frequency = $scope.frequencies[task.frequency];
+
 			if ($scope.frequency.code == 0) {
 				document.getElementById('daysField').style.display = '';
 			} else {

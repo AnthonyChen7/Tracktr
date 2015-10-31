@@ -127,31 +127,41 @@ angular.module('tracktr.services')
           DB.query(UPDATE_DAYS_PREPARED_STATEMENT, updateDaysQueryAttrs)
             .then(function(result) {
               // Update progress
-
-              // 1. Delete all progress
-              DB.query(DELETE_PROGRESS_PREPARED_STATEMENT, [task.id])
-                .then(function(result) {
-                  
-                  if(progressSize == 0) {
-                    if(callback) callback(null);
-                  }
-                  
-                  angular.forEach(task.progress, function(progress){
-                    // 2. Re add all progress
-                    var insertProgressQueryAttrs = insertProgressQueryAttr(progress);
-                    DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
-                      .then(function() {
-                        progressUpdatedCount++;
-                         
-                        if(progressUpdatedCount == progressSize) {
-                          if(callback) callback(null);
-                        }
-                      });  
-                  });
-                }) 
+              if(progressSize == 0) {
+                if(callback) callback(null);
+              }
+              
+              angular.forEach(task.progress, function(progress){
+                var updateProgressQueryAttrs = insertProgressQueryAttr(progress);
+                updateProgressQueryAttrs.push(progress.id);
+                
+                DB.query(UPDATE_PROGRESS_PREPARED_STATEMENT, updateProgressQueryAttrs)
+                  .then(function() {
+                    progressUpdatedCount++;
+                      
+                    if(progressUpdatedCount == progressSize) {
+                      if(callback) callback(null);
+                    }
+                  });  
+              }); 
           });                    
     });
   };
+  
+  
+  /**
+   * Add a new progress item to the task in the database.
+   * 
+   * Note: This method will not update the task argument.
+   */
+  self.addProgressToTask = function(task, progress, callback) {
+    var insertProgressQueryAttrs = insertProgressQueryAttr(progress);
+    
+    DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
+      .then(function(result) {
+        if(callback) callback();
+      });
+  }
   
   /**
    * Delete the task from the database.
@@ -245,7 +255,14 @@ angular.module('tracktr.services')
                
     DB.query(SELECT_TASK_BY_ID_PREPARED_STATEMENT, [id])
       .then(function(result) {
+        
         some_task = DB.fetch(result);
+        
+        // Return early if it does not exist in the database.
+        if(some_task == null) {
+          callback(null, null);
+          return;
+        }
         
         DB.query(SELECT_DAYS_PREPARED_STATEMENT, [id])
           .then(function(result) {

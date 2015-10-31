@@ -11,13 +11,18 @@
          Tasks
          <ion-list>
             <ion-item ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task)" ng-click="incCount(task)">
-               <p>{{task.name}}</p>
-               <p>Count: {{task.progress[0].progress}}</p>
-               <p>Date Created: {{task.creationDate | date }}</p>
-               <div  ng-controller="TimerCtrl">
-                  <p>{{minutes}} Minutes {{seconds}} Seconds</p>
-                  <button class="button button-stable" ng-click="startTimer(); $event.stopPropagation();"> Start </button>
-                  <button class="button button-stable" ng-click="stopTimer(); $event.stopPropagation();"> Stop </button>
+               {{task.name}}
+               <div ng-show="task.isCount">
+               Count: {{countProgress(task)}}
+               </div>
+               <div  ng-controller="TimerCtrl" ng-show="task.isTime">
+                 <div></div>
+                 Total time: {{countTime(task,3)}} Hours {{countTime(task,2)}} Minutes {{countTime(task,1)}} Seconds
+                 <br>
+                    Time: {{progressTimer(task,3)}} Hours {{progressTimer(task,2)}} Minutes {{progressTimer(task,1)}} Seconds
+                 <br>
+                  <button class="button button-stable" ng-click="startTimer(task); $event.stopPropagation();" ng-disabled="task.isTimerRunning"> Start </button>
+                  <button class="button button-stable" ng-click="stopTimer(task); $event.stopPropagation();" ng-disabled="!task.isTimerRunning"> Stop </button>
                </div>
             </ion-item>
          </ion-list>
