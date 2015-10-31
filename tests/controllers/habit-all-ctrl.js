@@ -491,9 +491,15 @@ var allTasks = [
     // }));
     
     
-    it("Test count progress on no progress", function(){ 
+    it("Test count no progress", function(){ 
       var task = new Task(allTasks[1]);
       var result = task.getProgress();
       expect(result).toBe(0);
+    });
+    
+    it("Test count one daily progress", function(){ 
+      var task = new Task(allTasks[0]);
+      var result = task.getProgress();
+      expect(result).toBe(11);
     });
 });
