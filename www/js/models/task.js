@@ -64,7 +64,7 @@ Task.prototype.getProgress = function(){
     //monthly
     var today = new Date();
     var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
-    var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1,0);
+    var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1);
     
     for(var i = 0; i < aTask.progress.length ; i++){
       
