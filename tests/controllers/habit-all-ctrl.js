@@ -18,12 +18,10 @@ describe("Habit All Controller Tests", function(){
     var scope;
     var task;
     var  days;
-    
-    /**
- * Temporary list of tasks
- */
+
 var allTasks = [   
     {
+      //0
      name: 'Daily Everyday Not Active',
      isActive: 0,
      frequency: 0,
@@ -56,6 +54,7 @@ var allTasks = [
     },
     
     {
+      //1
       id: 2,
      name: 'Daily Active Some days no progress',
      isActive: 1,
@@ -82,6 +81,7 @@ var allTasks = [
      ]
     },
     {
+      //2
      name: 'Daily 2 progress',
      isActive: 0,
      frequency: 0,
@@ -121,6 +121,7 @@ var allTasks = [
     },
     
      {
+       //3
        id: 3,
      name: 'Weekly Active Some days 2 progress in date range',
      isActive: 1,
@@ -161,105 +162,7 @@ var allTasks = [
     },
     
     {
-      id: 4,
-     name: 'monthly Active Some days',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate,
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate,
-         progress: 10,
-         timerLastStarted: someDate
-       }
-     ]
-    },
-    
-    {
-      id: 5,
-     name: 'monthly Active no days',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate,
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate,
-         progress: 10,
-         timerLastStarted: someDate
-       }
-     ]
-    },
-    
-    {
-      id: 6,
-     name: 'monthly not Active one day',
-     isActive: 0,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate,
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 1,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate,
-         progress: 10,
-         timerLastStarted: someDate
-       }
-     ]
-    },
-    
-    {
+      //4
        id: 3,
      name: 'Weekly Active Some days 2 progress out of date range',
      isActive: 1,
@@ -545,4 +448,12 @@ var allTasks = [
       var result = task.getProgress();
       expect(result).toBe(11+11);
     });
+    
+    it("Test weekly task; out of date range", function(){ 
+      var task = new Task(allTasks[4]);
+      var result = task.getProgress();
+      expect(result).toBe(0);
+    });
+    
+    //test within date range
 });
