@@ -32,7 +32,8 @@ var Task = function(task) {
  * aTask is a task object
  * Returns the progress (integer) based on the frequency
  */
-function countProgress(aTask){
+Task.prototype.getProgress = function(){
+  var aTask = this;
   var result = 0;
   
   if(aTask.frequency === 0){
@@ -72,6 +73,73 @@ function countProgress(aTask){
       } 
     }
   }
-  
+    
   return result;
 }
+
+/*
+   * Count the amount time spent on the task
+   * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
+   */
+Task.prototype.countTime = function(format) {
+    var task = this;
+    var result = 0;
+    if(task.isTime) {
+      for(var i = 0; i < task.progress.length; i++) {
+        result += task.progress[i].progress;
+      }
+    }
+    switch(format) {
+       case 1: 
+         result = toSeconds(result);
+         break;   
+       case 2: 
+         result = toMinutes(result);
+         break;
+       case 3: 
+         result = toHours(result);
+         break;
+    }
+    return result;
+  };
+  
+  /*
+   * Convert milliseconds into seconds
+   */
+   function toSeconds(num) {
+    num = Math.floor(num / 1000);
+    return num % 60;
+  };
+  
+  
+  /*
+   * Convert milliseconds into minutes
+   */
+  function toMinutes(num) {
+    num = Math.floor(num / 60000);
+    return num % 60;
+  };
+  
+  
+  /*
+   * Convert milliseconds into hours
+   */
+  function toHours(num) {
+    num = Math.floor(num / 3600000);
+    return num;
+  };
+  
+  /**
+   * Returns a string that states that task's goal time in the format
+   *  x hours x minute
+   */
+  Task.prototype.getGoalTime = function(){
+    var aTask = this;
+    var hours = Math.floor(aTask.goal / 60);
+    var minutes = aTask.goal % 60;
+    
+    var result = hours + " Hours " + minutes + " Minutes " + "0 Seconds";
+    
+    return result;
+  }
+  
