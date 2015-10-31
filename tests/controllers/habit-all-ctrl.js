@@ -24,7 +24,6 @@ describe("Habit All Controller Tests", function(){
  */
 var allTasks = [   
     {
-     
      name: 'Daily Everyday Not Active',
      isActive: 0,
      frequency: 0,
@@ -80,6 +79,44 @@ var allTasks = [
      },
      progress: [
        
+     ]
+    },
+    {
+     name: 'Daily 2 progress',
+     isActive: 0,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 1,
+       wednesday: 1,
+       thursday: 1,
+       friday: 1,
+       saturday: 1
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 11,
+         timerLastStarted: someDate
+       },
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 11,
+         timerLastStarted: someDate
+       }
      ]
     },
     
@@ -501,5 +538,11 @@ var allTasks = [
       var task = new Task(allTasks[0]);
       var result = task.getProgress();
       expect(result).toBe(11);
+    });
+    
+    it("Test count two daily progress", function(){ 
+      var task = new Task(allTasks[2]);
+      var result = task.getProgress();
+      expect(result).toBe(11+11);
     });
 });
