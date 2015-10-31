@@ -91,6 +91,9 @@ angular.module('tracktr.services', ['tracktr.config'])
    *  A JS object representing the resultsObject.
    */
   self.fetch = function(sqlResultsObject) {
+    if(sqlResultsObject.rows.length == 0) {
+      return null;
+    } 
     return sqlResultsObject.rows.item(0);
   };
   

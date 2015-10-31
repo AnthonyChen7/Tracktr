@@ -18,8 +18,9 @@ angular.module('tracktr.controllers', [])
    */
   $scope.incCount = function(task) {
     if(task.isCount) {
-      $scope.startProgress(task);
-      TaskService.updateTask(task, function(err){});
+      var newProgress = $scope.startProgress(task);
+      task.progress.push(newProgress);
+      TaskService.addProgressToTask(task, newProgress);
     }
   };
   
@@ -28,13 +29,12 @@ angular.module('tracktr.controllers', [])
    * Start a new progress for every count 
    */
   $scope.startProgress = function(task) {
-    var progress = {
+    return {
       task_id: task.id,
       date: new Date(),
       progress: 1,
       timerLastStarted: null
     };
-      task.progress.push(progress);
   };
   
   
@@ -60,13 +60,7 @@ angular.module('tracktr.controllers', [])
     var result = 0;
     var current_date = new Date();
     if(task.isCount) {
-      if(task.frequency === 0) {
-         for(var i = 0; i < task.progress.length; i++){
-           if(task.progress[i].date.getDate() === current_date.getDate()) {
-              result += task.progress[i].progress;
-           }
-         }
-      }
+      result = task.getProgress();
     }
     return result;
   };
@@ -272,15 +266,23 @@ angular.module('tracktr.controllers', [])
     * Start the timer, create a new progress array entry 
     */
     $scope.startTimer = function(task) {
-       var progress = {
-          task_id: task.id,
-          date: new Date(),
-          progress: 0,
-          timerLastStarted: new Date()
-       };
-       task.progress.push(progress);
-       task.isTimerRunning = true;
-       TaskService.updateTask(task);
+      //  var progress = {
+      //     task_id: task.id,
+      //     date: new Date(),
+      //     progress: 0,
+      //     timerLastStarted: new Date()
+      //  };
+      //  task.progress.push(progress);
+      //  task.isTimerRunning = true;
+      //  TaskService.updateTask(task);
+      var newProgress = $scope.startProgress(task);
+      newProgress.timerLastStarted = new Date();
+      task.progress.push(newProgress);
+      TaskService.addProgressToTask(task, newProgress);
+      task.isTimerRunning = true;
+      
+      TaskService.updateTask(task);
+      
        mytimeout = $timeout($scope.onTimeout, 1000);
     };
  
