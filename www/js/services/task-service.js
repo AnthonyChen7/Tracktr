@@ -134,7 +134,7 @@ angular.module('tracktr.services')
               angular.forEach(task.progress, function(progress){
                 var updateProgressQueryAttrs = insertProgressQueryAttr(progress);
                 updateProgressQueryAttrs.push(progress.id);
-                
+
                 DB.query(UPDATE_PROGRESS_PREPARED_STATEMENT, updateProgressQueryAttrs)
                   .then(function() {
                     progressUpdatedCount++;
@@ -153,13 +153,15 @@ angular.module('tracktr.services')
    * Add a new progress item to the task in the database.
    * 
    * Note: This method will not update the task argument.
+   * 
+   * Callback takes the inserted id.
    */
   self.addProgressToTask = function(task, progress, callback) {
     var insertProgressQueryAttrs = insertProgressQueryAttr(progress);
     
     DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
       .then(function(result) {
-        if(callback) callback();
+        if(callback) callback(result.insertId);
       });
   }
   
