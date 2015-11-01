@@ -582,17 +582,21 @@ var allTasks = [
     
     if(task.isCount === true && task.isTime === false){
     result += task.getProgress() +  "/" + task.goal;
-    }else if (task.isCount === false && task.isTime === true){
-      result += task.countTime(3) + " Hours "+ task.countTime(2)+ " Minutes " + task.countTime(1)+ " Seconds "
-                +" / " + task.getGoalTime();                
-    }
     result += " | " + $scope.getFrequency(task.frequency);
+    }else if (task.isCount === false && task.isTime === true){
+      //result += "Total time: " + task.countTime(3) + " Hours "+ task.countTime(2)+ " Minutes " + task.countTime(1)+ " Seconds";
+                //+"" + task.getGoalTime();
+    result += $scope.getFrequency(task.frequency);                
+    }
+    
       
     if($scope.getDaysOfOccurence(task.days) != ""){
       result += " | "+ $scope.getDaysOfOccurence(task.days);
     }
     return result;
   };
+  
+  
   
   /**
    * frequencyId is an integer
