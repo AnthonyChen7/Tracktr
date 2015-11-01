@@ -10,16 +10,22 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
 
 .run(function($ionicPlatform, $cordovaSplashscreen, DB) {
   $ionicPlatform.ready(function() {
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
-    if (window.StatusBar) {
+    
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
+      
+      setTimeout(function() {
+        $cordovaSplashscreen.hide();
+      }, 3000);
     }
     
     document.addEventListener("deviceready", function () {
@@ -96,7 +102,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
   .state('tab.edit', {
     url: '/edit/:habitId',
     views: {
-      'tab-home': {
+      'tab-all': {
         templateUrl: 'js/views/habit-edit/habit-edit.html',
         controller: 'HabitEditController'
       } 
