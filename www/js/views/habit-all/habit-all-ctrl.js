@@ -675,7 +675,7 @@ var allTasks = [
     
     var  dayOfWeek = $scope.dayOfWeekAsString(dayIndex);
       
-      for(field in days){
+      for(var field in days){
         if(field === dayOfWeek){
           if(days[field]===true){
             return true;

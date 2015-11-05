@@ -174,3 +174,14 @@ Task.prototype.countTime = function(format) {
        return false;
   };
   
+  /*
+   * Return true if it is a daily  task
+   */
+  Task.prototype.isTaskDaily = function() {
+    var task = this;
+    if(task.frequency === 0)
+       return true;
+    else 
+       return false;
+  };
+  
