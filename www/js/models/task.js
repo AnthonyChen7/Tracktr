@@ -38,8 +38,16 @@ Task.prototype.getProgress = function(){
   
   if(aTask.frequency === 0){
     //Daily
+    
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var lastSecondOfToday = new Date();
+    lastSecondOfToday.setHours(23,59,59,999);
+    
     for(var i = 0; i < aTask.progress.length ; i++){
-      result += aTask.progress[i].progress;
+      if(today.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastSecondOfToday.getTime()) {
+         result += aTask.progress[i].progress;
+      }
     }
   }else if(aTask.frequency === 1){
     //weekly
@@ -64,7 +72,7 @@ Task.prototype.getProgress = function(){
     //monthly
     var today = new Date();
     var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
-    var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1,0);
+    var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1);
     
     for(var i = 0; i < aTask.progress.length ; i++){
       
@@ -138,7 +146,7 @@ Task.prototype.countTime = function(format) {
     var hours = Math.floor(aTask.goal / 60);
     var minutes = aTask.goal % 60;
     
-    var result = hours + " Hours " + minutes + " Minutes " + "0 Seconds";
+    var result = "Goal: " +hours + " Hours " + minutes + " Minutes " + "0 Seconds";
     
     return result;
   }

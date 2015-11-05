@@ -1,6 +1,6 @@
 angular.module('tracktr.controllers')
 
-.controller("HabitEditController", function($scope,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
+.controller("HabitEditController", function($scope,$state,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
 	$scope.habitId = $stateParams.habitId;
 	
 	$scope.habitTypes = [
@@ -85,13 +85,13 @@ angular.module('tracktr.controllers')
 		typePopup.then(function(res) {
 			$scope.habitType = res;
 			if (res.name == "Time") {
-				// document.getElementById('goalField').style.display = 'none';
-				// document.getElementById('minutesField').style.display = '';
-				// document.getElementById('hoursField').style.display = '';
+				document.getElementById('goalField').style.display = 'none';
+				document.getElementById('minutesField').style.display = '';
+				document.getElementById('hoursField').style.display = '';
 			} else {
-				// document.getElementById('goalField').style.display = '';
-				// document.getElementById('minutesField').style.display = 'none';
-				// document.getElementById('hoursField').style.display = 'none';
+				document.getElementById('goalField').style.display = '';
+				document.getElementById('minutesField').style.display = 'none';
+				document.getElementById('hoursField').style.display = 'none';
 			}
 		});
 	};
@@ -134,9 +134,9 @@ angular.module('tracktr.controllers')
 		frequencyPopup.then(function(res) {
 			$scope.frequency = res;
 			if (res.name == "Daily") {
-				// document.getElementById('daysField').style.display = '';
+				document.getElementById('daysField').style.display = '';
 			} else {
-				// document.getElementById('daysField').style.display = 'none';
+				document.getElementById('daysField').style.display = 'none';
 			}
 		});
 	};
@@ -227,6 +227,8 @@ angular.module('tracktr.controllers')
 
 			if ($scope.frequency.code == 0) {
 				document.getElementById('daysField').style.display = '';
+			} else {
+				document.getElementById('daysField').style.display = 'none';
 			}
 			
 			if (task.isTime == 1) {
@@ -234,9 +236,17 @@ angular.module('tracktr.controllers')
 				$scope.hoursAndMinutes = task.goal;
 				$scope.hours = Math.floor(task.goal/60);
 				$scope.minutes = task.goal%60;
+				
+				document.getElementById('goalField').style.display = 'none';
+				document.getElementById('minutesField').style.display = '';
+				document.getElementById('hoursField').style.display = '';
 			} else if (task.isCount == 1) {
 				$scope.habitType = $scope.habitTypes[1];
 				$scope.goal = task.goal;
+				
+				document.getElementById('goalField').style.display = '';
+				document.getElementById('minutesField').style.display = 'none';
+				document.getElementById('hoursField').style.display = 'none';
 			}
 			
 			$scope.daysId = task.days.id;
@@ -300,7 +310,7 @@ angular.module('tracktr.controllers')
 			frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: isTimerRunning, creationDate: creationDate, progress: progress };
 		TaskService.updateTask(aTask, function(err, id) { });
 		// Return to Home View
-		$ionicHistory.goBack();
+		$state.go('tab.all');
 	}
 	
 	$scope.delete = function(habitId,daysId) {
@@ -309,6 +319,6 @@ angular.module('tracktr.controllers')
 		TaskService.deleteTask(taskToDelete, function(err, id) { });
 		
 		// Return to Home View
-		$ionicHistory.goBack();
+		$state.go('tab.all');
 	}
 });

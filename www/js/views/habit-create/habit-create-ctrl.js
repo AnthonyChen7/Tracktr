@@ -1,6 +1,6 @@
 angular.module('tracktr.controllers')
 
-.controller("HabitCreateController", function($scope,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
+.controller("HabitCreateController", function($scope,$state,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
 	$scope.habitTypes = [
 		{name: "Time", code: 0},
 		{name: "Count", code: 1}
@@ -258,6 +258,6 @@ angular.module('tracktr.controllers')
 		TaskService.createTask(aTask, function(err, id) { });
 		
 		// Return to Home View
-		$ionicHistory.goBack();
+		$state.go('tab.home');
 	}
 });
