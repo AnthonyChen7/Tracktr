@@ -496,9 +496,7 @@ var allTasks = [
        }
      ]
     }
-    
-    
-  ];
+];
     
   $scope.tasks = [];
   $scope.options= [EDIT, VIEW_REPORT, DELETE];
@@ -710,7 +708,6 @@ var allTasks = [
    */
   $scope.navCreateClick = function() {
     $state.go('tab.create'); 
-  }
-	
+  }	
 });
 
