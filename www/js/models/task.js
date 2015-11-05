@@ -151,3 +151,37 @@ Task.prototype.countTime = function(format) {
     return result;
   }
   
+   /*
+   * Return true if it is a weekly task
+   */
+  Task.prototype.isTaskWeekly = function() {
+    var task = this;
+    if(task.frequency === 1)
+       return true;
+    else 
+       return false;
+  };
+  
+  
+  /*
+   * Return true if it is a monthly task
+   */
+  Task.prototype.isTaskMonthly = function() {
+    var task = this;
+    if(task.frequency === 2)
+       return true;
+    else 
+       return false;
+  };
+  
+  /*
+   * Return true if it is a daily  task
+   */
+  Task.prototype.isTaskDaily = function() {
+    var task = this;
+    if(task.frequency === 0)
+       return true;
+    else 
+       return false;
+  };
+  
