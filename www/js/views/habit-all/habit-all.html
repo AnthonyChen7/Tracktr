@@ -23,7 +23,7 @@
       <h1>Current</h1>
     </div>
     
-    <div ng-repeat= "task in tasks | filter:searchText" ng-show="doesTaskOccurToday(task.days)">
+    <div ng-repeat= "task in tasks | filter:searchText" ng-show="doesTaskOccurToday(task.days)&&(task.isTaskWeekly()||task.isTaskMonthly()||task.isTaskDaily())">
     <task-info></task-info>
     </div>
     
@@ -31,7 +31,8 @@
       <h1>Other</h1>
     </div>
     
-    <div ng-repeat= "task in tasks | filter:searchText" ng-show="!doesTaskOccurToday(task.days)">
+    <div ng-repeat= "task in tasks | filter:searchText" ng-show="!doesTaskOccurToday(task.days)&&(task.isTaskWeekly()||task.isTaskMonthly()||task.isTaskDaily())">
+      
     <task-info></task-info>
     </div>
 

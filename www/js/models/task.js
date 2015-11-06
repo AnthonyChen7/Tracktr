@@ -38,28 +38,27 @@ Task.prototype.getProgress = function(){
   
   if(aTask.frequency === 0){
     //Daily
-    
     var today = new Date();
     today.setHours(0,0,0,0);
     var lastSecondOfToday = new Date();
-    lastSecondOfToday.setHours(23,59,59,999);
-    
+    lastSecondOfToday.setHours(23,59,59,999);   
     for(var i = 0; i < aTask.progress.length ; i++){
-      if(today.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastSecondOfToday.getTime()) {
+       if(today.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastSecondOfToday.getTime()) {
          result += aTask.progress[i].progress;
-      }
+       }
     }
   }else if(aTask.frequency === 1){
     //weekly
     
     var today = new Date();
-    today.setHours(0,0,0,0);
     
     var lastSunday = new Date(today);
     lastSunday.setDate(lastSunday.getDate() - lastSunday.getDay());
+    lastSunday.setHours(0,0,0,0);
     
     var nextSunday = new Date(today);
     nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
+    nextSunday.setHours(23,59,59,999);  
     
     for(var i = 0; i < aTask.progress.length ; i++){
       
@@ -72,7 +71,9 @@ Task.prototype.getProgress = function(){
     //monthly
     var today = new Date();
     var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
+    firstDayOfMonth.setHours(0,0,0,0);
     var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1);
+    lastDayOfMonth.setHours(23,59,59,999);  
     
     for(var i = 0; i < aTask.progress.length ; i++){
       
@@ -150,4 +151,38 @@ Task.prototype.countTime = function(format) {
     
     return result;
   }
+  
+   /*
+   * Return true if it is a weekly task
+   */
+  Task.prototype.isTaskWeekly = function() {
+    var task = this;
+    if(task.frequency === 1)
+       return true;
+    else 
+       return false;
+  };
+  
+  
+  /*
+   * Return true if it is a monthly task
+   */
+  Task.prototype.isTaskMonthly = function() {
+    var task = this;
+    if(task.frequency === 2)
+       return true;
+    else 
+       return false;
+  };
+  
+  /*
+   * Return true if it is a daily  task
+   */
+  Task.prototype.isTaskDaily = function() {
+    var task = this;
+    if(task.frequency === 0)
+       return true;
+    else 
+       return false;
+  };
   
