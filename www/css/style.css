@@ -23,3 +23,35 @@
  .icon-row {
      text-align: center;
  }
+ 
+.progress-circle {
+    height: 120px;
+}
+.progress-circle > svg {
+    height: 100%;
+}
+
+.circle-button {
+    width: 50%;
+}
+
+.home-bg {
+    background-color: whitesmoke;
+}
+
+.icon-colored {
+    /*color: darkgray;*/
+    color: #6FD57F;
+    font-size: 30px;
+    margin: 0px;
+    position: absolute; 
+}
+
+.count-button {
+    width: 100%;
+    border-radius: 5px 20px 5px;
+}
+
+.bar-custom {
+    background-color: #FC5B3F !important;
+}
