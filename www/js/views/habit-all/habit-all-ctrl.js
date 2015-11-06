@@ -547,7 +547,7 @@ var allTasks = [
     if(option === EDIT){
       $state.go('tab.edit', {habitId:task.id});
     }else if(option === VIEW_REPORT){
-      $state.go('tab.charts');
+      $state.go('tab.charts', {taskId:task.id});
     }else{
     
     var confirmPopup = $ionicPopup.confirm({
