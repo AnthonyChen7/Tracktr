@@ -6,14 +6,20 @@ describe("Habit All Controller Tests", function(){
  
  var prevSunday = new Date();
  prevSunday.setDate(prevSunday.getDate() - prevSunday.getDay());
+ prevSunday.setHours(0,0,0,0);
  
  var nextSunday = new Date();
  nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
+ nextSunday.setHours(23,59,59,999); 
  
  var firstDayOfMonth = new Date(someDate.getFullYear(), someDate.getMonth(),1);
+ firstDayOfMonth.setHours(0,0,0,0);
  var lastDayOfMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,0);
+ lastDayOfMonth.setHours(23,59,59,999); 
  
  var someDayOfNextMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,5);
+ 
+ var middleOfThisMonth = new Date(someDate.getFullYear(), someDate.getMonth(),10);
  
   var today = new Date();
     today.setHours(0,0,0,0);
@@ -652,6 +658,39 @@ var allTasks = [
          timerLastStarted: someDate.getTime()
        }
      ]
+    },
+    //18
+     {
+      id: 6,
+     name: 'monthly middle of month',
+     isActive: 0,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 1,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: middleOfThisMonth.getTime(),
+         progress: 10,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
     }
 ];
   
@@ -707,13 +746,61 @@ var allTasks = [
       expect(result).toBe(0);
     });
     
-    // it("Test weekly task; out of date range", function(){ 
-    //   var task = new Task(allTasks[15]);
-    //   var result = task.getProgress();
-    //   expect(result).toBe(10);
-    // });
+    it("Test weekly task; out of date range", function(){ 
+      var task = new Task(allTasks[7]);
+      var result = task.getProgress();
+      expect(result).toBe(0);
+    });
     
-    //test within date range
+    it("Test weekly task; in middle of date range", function(){ 
+      var task = new Task(allTasks[3]);
+      var result = task.getProgress();
+      expect(result).toBe(40);
+    });
+    
+    it("Test weekly task; 1 progress in range & 1 progress out of range", function(){ 
+      var task = new Task(allTasks[3]);
+      var result = task.getProgress();
+      expect(result).toBe(40);
+    });
+    
+    it("Test weekly task; two progress at beginning Sundays at time 00:00:00", function(){ 
+      var task = new Task(allTasks[9]);
+      var result = task.getProgress();
+      expect(result).toBe(40);
+    });
+    
+    it("Test weekly task; two progress at end Sundays at time 23:59:99", function(){ 
+      var task = new Task(allTasks[10]);
+      var result = task.getProgress();
+      expect(result).toBe(40);
+    });
+    
+    it("Test monthly task; First day of month at time 00:00:00", function(){ 
+      var task = new Task(allTasks[11]);
+      var result = task.getProgress();
+      expect(result).toBe(10);
+    });
+    
+    it("Test monthly task; Last day of month at time 23:59:99", function(){ 
+      var task = new Task(allTasks[12]);
+      var result = task.getProgress();
+      expect(result).toBe(10);
+    });
+    
+    it("Test monthly task; Some day of next month", function(){ 
+      var task = new Task(allTasks[13]);
+      var result = task.getProgress();
+      expect(result).toBe(0);
+    });
+    
+    it("Test monthly task; task progress in middle of month", function(){ 
+      var task = new Task(allTasks[18]);
+      var result = task.getProgress();
+      expect(result).toBe(10);
+    });
+    
+    
 });
 
  

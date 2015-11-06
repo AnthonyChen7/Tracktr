@@ -43,7 +43,7 @@ Task.prototype.getProgress = function(){
     var lastSecondOfToday = new Date();
     lastSecondOfToday.setHours(23,59,59,999);   
     for(var i = 0; i < aTask.progress.length ; i++){
-       if(today <= aTask.progress[i].date && aTask.progress[i].date <= lastSecondOfToday) {
+       if(today.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastSecondOfToday.getTime()) {
          result += aTask.progress[i].progress;
        }
     }
@@ -51,13 +51,14 @@ Task.prototype.getProgress = function(){
     //weekly
     
     var today = new Date();
-    today.setHours(0,0,0,0);
     
     var lastSunday = new Date(today);
     lastSunday.setDate(lastSunday.getDate() - lastSunday.getDay());
+    lastSunday.setHours(0,0,0,0);
     
     var nextSunday = new Date(today);
     nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
+    nextSunday.setHours(23,59,59,999);  
     
     for(var i = 0; i < aTask.progress.length ; i++){
       
@@ -70,7 +71,9 @@ Task.prototype.getProgress = function(){
     //monthly
     var today = new Date();
     var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
+    firstDayOfMonth.setHours(0,0,0,0);
     var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1);
+    lastDayOfMonth.setHours(23,59,59,999);  
     
     for(var i = 0; i < aTask.progress.length ; i++){
       
