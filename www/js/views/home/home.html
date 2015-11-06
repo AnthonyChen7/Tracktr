@@ -28,78 +28,37 @@
               </p>
           </div>
         </div>
-        <div class="row">
+        <!--<div class="row">
           <div class="col text-center" ng-show="!task.isCount && !task.isTimerRunning">
             <button class="button button-outline button-positive circle-button" ng-click="startTimer(task); $event.stopPropagation();">Start</button>
           </div>
-        </div>
+        </div>-->
         <div class="row">
-          <div class="col col-50 col-offset-25 text-center" ng-show="task.isCount">
+          <!--<div class="col col-50 col-offset-25 text-center" ng-show="task.isCount">
             <button class="button button-outline button-balanced circle-button count-button"  ng-click="incCount(task)">Count</button>
           </div>
           <div class="col col-10 text-center" ng-show="task.isCount">
               <p style="text-align: center;">
                 <button class="button button-balanced count-button">{{countProgress(task)}}</button>
               </p>
+          </div>-->
+          <div class="col col-20"></div>
+          <div class="col col-20 col-offset-20 text-center" ng-show="task.isCount">
+              <!--<p style="text-align: center;">
+                <button class="button button-outline button-minimal count-button">{{countProgress(task)}}</button>
+              </p>-->
+              <p style="text-align: center;">
+                <b>Count:</b><br>{{countProgress(task)}}
+              </p>
           </div>
         </div>
-        <div class="row">
+        <!--<div class="row">
           <div class="col text-center" ng-show="!task.isCount && task.isTimerRunning">
             <button class="button button-outline button-assertive circle-button" ng-click="stopTimer(task); $event.stopPropagation();">Stop</button>
           </div>
-         </div>
+         </div>-->
         </div>
       </div>
     </div>
   </ion-content>
 </ion-view>
-
-<!--<ion-view view-title="Habit Home" ng-init="init()">
-  <ion-content ng-controller="TimerCtrl">  
-    <div class="list">
-      <div class="item item-divider">
-          <div ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)" ng-click="incCount(task)">
-            <div id="example-circle"></div>
-            
-            {{task.name}}
-            <div ng-show="task.isCount">
-               Count: {{countProgress(task)}}
-            </div>
-            <br>
-            Total time: {{countTime(task,3)}} Hours {{countTime(task,2)}} Minutes {{countTime(task,1)}} Seconds
-            <br>
-            Time: {{progressTimer(task,3)}} Hours {{progressTimer(task,2)}} Minutes {{progressTimer(task,1)}} Seconds
-            <br>
-            
-            <button class="button button-stable" ng-click="incCount(task)">Count</button>
-            <button class="button button-stable" ng-click="startTimer(task); $event.stopPropagation();" ng-disabled="task.isTimerRunning">Start</button>
-            <button class="button button-stable" ng-click="stopTimer(task); $event.stopPropagation();" ng-disabled="!task.isTimerRunning">Stop </button>
-          </div>
-      </div>
-    </div>
-    
-    <!--<div class="list">
-       <div class="item item-divider">
-         Tasks
-         <ion-list>
-            <ion-item ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)" ng-click="incCount(task)">
-               {{task.name}}
-               <div ng-show="task.isCount">
-               Count: {{countProgress(task)}}
-               </div>
-               <div  ng-controller="TimerCtrl" ng-show="task.isTime">
-                 <div></div>
-                 Total time: {{countTime(task,3)}} Hours {{countTime(task,2)}} Minutes {{countTime(task,1)}} Seconds
-                 <br>
-                    Time: {{progressTimer(task,3)}} Hours {{progressTimer(task,2)}} Minutes {{progressTimer(task,1)}} Seconds
-                 <br>
-                  <button class="button button-stable" ng-click="startTimer(task); $event.stopPropagation();" ng-disabled="task.isTimerRunning"> Start </button>
-                  <button class="button button-stable" ng-click="stopTimer(task); $event.stopPropagation();" ng-disabled="!task.isTimerRunning"> Stop </button>
-               </div>
-            </ion-item>
-         </ion-list>
-       </div>
-    </div>
-
-  </ion-content>
-</ion-view>-->

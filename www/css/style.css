@@ -40,7 +40,8 @@
 }
 
 .icon-colored {
-    color: darkgray;
+    /*color: darkgray;*/
+    color: #6FD57F;
     font-size: 30px;
     margin: 0px;
     position: absolute; 
@@ -48,4 +49,9 @@
 
 .count-button {
     width: 100%;
+    border-radius: 5px 20px 5px;
+}
+
+.bar-custom {
+    background-color: #FC5B3F !important;
 }
