@@ -1,4 +1,4 @@
- var someDate = new Date();
+     var someDate = new Date();
  var anotherDate = new Date();
  anotherDate.setDate(anotherDate.getDate() + 10);
  
@@ -18,7 +18,7 @@
  */
 var allTasks = [   
     {
-     
+     //0
      name: 'Daily Everyday Not Active',
      isActive: 0,
      frequency: 0,
@@ -27,7 +27,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -43,14 +43,14 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: someDate,
+         date: someDate.getTime(),
          progress: 11,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//1
       id: 2,
      name: 'Daily Active Some days no progress',
      isActive: 1,
@@ -60,7 +60,7 @@ var allTasks = [
      goal: 2,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -76,8 +76,47 @@ var allTasks = [
        
      ]
     },
+    {//2
+      id: 2,
+     name: 'Daily Active Some days 2 progress in range',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 2,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 0,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+        {
+         id: '1',
+         task_id: '1',
+         date: someDate.getTime(),
+         progress: 11,
+         timerLastStarted: someDate.getTime()
+       },
+        {
+         id: '1',
+         task_id: '1',
+         date: someDate.getTime(),
+         progress: 11,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
     
-     {
+     {//3
        id: 3,
      name: 'Weekly Active Some days 2 progress in date range',
      isActive: 1,
@@ -87,7 +126,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -103,21 +142,21 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: someDate,
+         date: someDate.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        },
         {
          id: '2',
          task_id: '2',
-         date: someDate,
+         date: someDate.getTime(),
          progress: 30,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//4
       id: 4,
      name: 'monthly Active Some days',
      isActive: 1,
@@ -127,7 +166,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -143,14 +182,14 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: someDate,
+         date: someDate.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//5
       id: 5,
      name: 'monthly Active no days',
      isActive: 1,
@@ -160,7 +199,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -176,14 +215,14 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: someDate,
+         date: someDate.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//6
       id: 6,
      name: 'monthly not Active one day',
      isActive: 0,
@@ -193,7 +232,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -209,14 +248,14 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: someDate,
+         date: someDate.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//7
        id: 3,
      name: 'Weekly Active Some days 2 progress out of date range',
      isActive: 1,
@@ -226,7 +265,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -242,21 +281,21 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: anotherDate,
+         date: anotherDate.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        },
         {
          id: '2',
          task_id: '2',
-         date: anotherDate,
+         date: anotherDate.getTime(),
          progress: 30,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//8
        id: 3,
      name: 'Weekly Active Some days 2 progress 1 out of date range & 1 in range',
      isActive: 1,
@@ -266,7 +305,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -282,21 +321,21 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: anotherDate,
+         date: anotherDate.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        },
         {
          id: '2',
          task_id: '2',
-         date: someDate,
+         date: someDate.getTime(),
          progress: 30,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//9
        id: 3,
      name: 'Weekly Active Some days 2 progress both at prev Sunday',
      isActive: 1,
@@ -306,7 +345,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -322,21 +361,21 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: prevSunday,
+         date: prevSunday.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        },
         {
          id: '2',
          task_id: '2',
-         date: prevSunday,
+         date: prevSunday.getTime(),
          progress: 30,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//10
        id: 3,
      name: 'Weekly Active Some days 2 progress both at next Sunday',
      isActive: 1,
@@ -346,7 +385,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -362,21 +401,21 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: nextSunday,
+         date: nextSunday.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        },
         {
          id: '2',
          task_id: '2',
-         date: nextSunday,
+         date: nextSunday.getTime(),
          progress: 30,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//11
       id: 5,
      name: 'monthly Active first day of month',
      isActive: 1,
@@ -386,7 +425,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -402,14 +441,14 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: firstDayOfMonth,
+         date: firstDayOfMonth.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-    {
+    {//12
       id: 5,
      name: 'monthly Active last day of month',
      isActive: 1,
@@ -419,7 +458,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -435,14 +474,14 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: lastDayOfMonth,
+         date: lastDayOfMonth.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     },
     
-     {
+     {//13
       id: 5,
      name: 'monthly Active some day of next month',
      isActive: 1,
@@ -452,7 +491,7 @@ var allTasks = [
      goal: 10,
      icon: 0,
      isTimerRunning: 0,
-     creationDate: someDate,
+     creationDate: someDate.getTime(),
      days: {
        id: '1',
        task_id: '1',
@@ -468,9 +507,9 @@ var allTasks = [
        {
          id: '1',
          task_id: '1',
-         date: someDayOfNextMonth,
+         date: someDayOfNextMonth.getTime(),
          progress: 10,
-         timerLastStarted: someDate
+         timerLastStarted: someDate.getTime()
        }
      ]
     }
