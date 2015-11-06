@@ -23,7 +23,16 @@
     <script src="cordova.js"></script>
     
 
-    
+    <!-- Angular chart-->
+    <script src="lib/Chart.js/Chart.js"></script>
+    <script src="lib/angular-chart.js/dist/angular-chart.js"></script>
+    <link rel="stylesheet" href="lib/angular-chart.js/dist/angular-chart.css">
+
+
+
+    <!-- progressbar.js -->
+    <script src="lib/progressbar.js/dist/progressbar.js"></script>
+
 
     <!-- Main Module -->
     <script src="js/app.js"></script>
@@ -46,7 +55,7 @@
     <script src="js/models/progress.js"></script>
     
     <!-- Directives -->
-    <script src="js/directives/task-info/task-info.js"></script>
+    <script src="js/directives/directives.js"></script>
     
     <!--Dummy Task Data-->
     <script src="js/DummyTasks.js"></script>
@@ -57,7 +66,7 @@
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
-    <ion-nav-bar class="bar-dark">
+    <ion-nav-bar class="bar-dark bar-custom">
       <ion-nav-back-button>
       </ion-nav-back-button>
     </ion-nav-bar>
