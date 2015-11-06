@@ -38,7 +38,10 @@ module.exports = function(config) {
       '../www/js/services/*.js',
 
       // Tests
-      '../tests/**/*.js'
+      '../tests/**/*.js',
+      
+      //Dummy tasks file
+      '../www/js/DummyTasks.js'
     ],
 
 

@@ -1,4 +1,4 @@
-     var someDate = new Date();
+var someDate = new Date();
  var anotherDate = new Date();
  anotherDate.setDate(anotherDate.getDate() + 10);
  
@@ -28,7 +28,7 @@
  /**
  * Temporary list of tasks
  */
-var allTasks = [   
+var tasks = [   
     {
      //0
      name: 'Daily Everyday Not Active',
