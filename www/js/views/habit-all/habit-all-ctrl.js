@@ -104,8 +104,6 @@ angular.module('tracktr.controllers')
     result += task.getProgress() +  "/" + task.goal;
     result += " | " + $scope.getFrequency(task.frequency);
     }else if (task.isCount === false && task.isTime === true){
-      //result += "Total time: " + task.countTime(3) + " Hours "+ task.countTime(2)+ " Minutes " + task.countTime(1)+ " Seconds";
-                //+"" + task.getGoalTime();
     result += $scope.getFrequency(task.frequency);                
     }
     
@@ -171,19 +169,7 @@ angular.module('tracktr.controllers')
     
     return result;
   };
-    
-  /**
-   * Retreives the progress of a task.
-   * Returns an integer.
-   */
-  $scope.countProgress = function(progressArray){
-    var result = 0;
-    for(var i = 0; i < progressArray.length; i++){
-      result += progressArray[i].progress;
-    }
-    return result;
-  };
-  
+      
   /**
    * days is an object
    * Checks if the selected task is
