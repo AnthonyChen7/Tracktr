@@ -15,6 +15,12 @@ describe("Habit All Controller Tests", function(){
  
  var someDayOfNextMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,5);
  
+  var today = new Date();
+    today.setHours(0,0,0,0);
+    
+    var lastSecondOfToday = new Date();
+    lastSecondOfToday.setHours(23,59,59,999); 
+ 
  /**
  * Temporary list of tasks
  */
@@ -514,6 +520,138 @@ var allTasks = [
          timerLastStarted: someDate.getTime()
        }
      ]
+    },
+    //14
+    {
+      id: 5,
+     name: 'daily progress that occured prev Sunday',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: prevSunday.getTime(),
+         progress: 10,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    //15
+    {
+      id: 5,
+     name: 'daily progress that occured today at time 00:00:00',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: today.getTime(),
+         progress: 10,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    //16
+    {
+      id: 5,
+     name: 'daily progress that occured today at time 23:59:99',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: lastSecondOfToday.getTime(),
+         progress: 10,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    //17
+    {
+      id: 5,
+     name: 'daily progress that occured today at time 23:59:99',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: nextSunday.getTime(),
+         progress: 10,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
     }
 ];
   
@@ -533,7 +671,7 @@ var allTasks = [
       expect(result).toBe(0);
     });
     
-    it("Test count one daily progress", function(){ 
+    it("Test count one daily progress and it occurs today", function(){ 
       var task = new Task(allTasks[0]);
       var result = task.getProgress();
       expect(result).toBe(11);
@@ -545,11 +683,35 @@ var allTasks = [
       expect(result).toBe(22);
     });
     
-    it("Test weekly task; out of date range", function(){ 
-      var task = new Task(allTasks[7]);
+    it("Test count daily progress where date is prev Sunday", function(){ 
+      var task = new Task(allTasks[14]);
       var result = task.getProgress();
       expect(result).toBe(0);
     });
+    
+    it("Test count daily progress where date is today at time 00:00:00", function(){ 
+      var task = new Task(allTasks[15]);
+      var result = task.getProgress();
+      expect(result).toBe(10);
+    });
+    
+    it("Test count daily progress where date is today at time 23:59:99", function(){ 
+      var task = new Task(allTasks[16]);
+      var result = task.getProgress();
+      expect(result).toBe(10);
+    });
+    
+    it("Test count daily progress where date is next Sunday", function(){ 
+      var task = new Task(allTasks[17]);
+      var result = task.getProgress();
+      expect(result).toBe(0);
+    });
+    
+    // it("Test weekly task; out of date range", function(){ 
+    //   var task = new Task(allTasks[15]);
+    //   var result = task.getProgress();
+    //   expect(result).toBe(10);
+    // });
     
     //test within date range
 });
