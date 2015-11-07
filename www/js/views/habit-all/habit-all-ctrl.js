@@ -33,10 +33,10 @@ angular.module('tracktr.controllers')
   });
   
   //Put in dummy data
-  // for(var i = 0; i < allTasks.length; i++){
-  //   TaskService.createTask(allTasks[i], function(err,id){
-  //   });
-  // }
+  for(var i = 0; i < tasks2.length; i++){
+    TaskService.createTask(tasks2[i], function(err,id){
+    });
+  }
    
   /**
    * Returns boolean to tell us
@@ -191,6 +191,26 @@ angular.module('tracktr.controllers')
         }
       }
       return false;
+  };
+  
+  /**
+   * Returns boolean to tell whether task should be displayed in current.
+   * 
+   * aTask is a valid task object
+   */
+  $scope.shouldDisplayInCurrent = function(aTask){
+    
+    var isActive = aTask.isActive;
+    
+    //If task is weekly or monthly, it should automatically be displayed in current
+    if(aTask.frequency === 0){
+      //daily
+      var result = $scope.doesTaskOccurToday(aTask.days) && isActive;
+      return result;
+    }else{
+      //not daily
+      return (true && isActive);
+    }
   };
   
   /**
