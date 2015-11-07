@@ -50,4 +50,8 @@ angular.module('tracktr.controllers')
       
     });
   };
+  
+  ///pseudo code for displaying daily: go through every progress entry, put first one into a date, and a progressChart
+  ///for every entry i, check if the date is the same as i-1, if it is, add the progress to it
+  ///if not, append new element to the date (label) array, append new element to data array
 });
