@@ -1,4 +1,4 @@
-     var someDate = new Date();
+var someDate = new Date();
  var anotherDate = new Date();
  anotherDate.setDate(anotherDate.getDate() + 10);
  
@@ -26,9 +26,9 @@
     lastSecondOfToday.setHours(23,59,59,999); 
  
  /**
- * Temporary list of tasks
+ * Temporary list of tasks for testing
  */
-var allTasks = [   
+var tasks = [   
     {
      //0
      name: 'Daily Everyday Not Active',
@@ -43,13 +43,13 @@ var allTasks = [
      days: {
        id: '1',
        task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 1,
-       friday: 1,
-       saturday: 1
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
      },
      progress: [
        {
@@ -142,13 +142,13 @@ var allTasks = [
      days: {
        id: '1',
        task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
        thursday: 0,
        friday: 0,
-       saturday: 1
+       saturday: 0
      },
      progress: [
        {
@@ -185,10 +185,10 @@ var allTasks = [
        sunday: 0,
        monday: 0,
        tuesday: 0,
-       wednesday: 1,
+       wednesday: 0,
        thursday: 0,
        friday: 0,
-       saturday: 1
+       saturday: 0
      },
      progress: [
        {
@@ -252,7 +252,7 @@ var allTasks = [
        monday: 0,
        tuesday: 0,
        wednesday: 0,
-       thursday: 1,
+       thursday: 0,
        friday: 0,
        saturday: 0
      },
@@ -281,13 +281,13 @@ var allTasks = [
      days: {
        id: '1',
        task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
        thursday: 0,
        friday: 0,
-       saturday: 1
+       saturday: 0
      },
      progress: [
        {
@@ -321,13 +321,13 @@ var allTasks = [
      days: {
        id: '1',
        task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
        thursday: 0,
        friday: 0,
-       saturday: 1
+       saturday: 0
      },
      progress: [
        {
@@ -361,13 +361,13 @@ var allTasks = [
      days: {
        id: '1',
        task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
        thursday: 0,
        friday: 0,
-       saturday: 1
+       saturday: 0
      },
      progress: [
        {
@@ -401,13 +401,13 @@ var allTasks = [
      days: {
        id: '1',
        task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
        thursday: 0,
        friday: 0,
-       saturday: 1
+       saturday: 0
      },
      progress: [
        {
@@ -676,7 +676,7 @@ var allTasks = [
        monday: 0,
        tuesday: 0,
        wednesday: 0,
-       thursday: 1,
+       thursday: 0,
        friday: 0,
        saturday: 0
      },
@@ -687,6 +687,673 @@ var allTasks = [
          date: middleOfThisMonth.getTime(),
          progress: 10,
          timerLastStarted: someDate.getTime()
+       }
+     ]
+    }
+];
+
+/**
+ * Temporary list of tasks for adding into habit-all controller (not the testing one)
+ */
+var tasks2 = [   
+    {
+     //0
+     name: 'Daily Everyday Not Active',
+     isActive: 0,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 11,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//1
+      id: 2,
+     name: 'Daily Active Some days no progress',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 2,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 0,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       
+     ]
+    },
+    {//2
+      id: 2,
+     name: 'Daily Active Some days 2 progress in range',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 2,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 1,
+       monday: 1,
+       tuesday: 0,
+       wednesday: 1,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+        {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 11,
+         timerLastStarted: someDate
+       },
+        {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 11,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+     {//3
+       id: 3,
+     name: 'Weekly Active Some days 2 progress in date range',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: someDate,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//4
+      id: 4,
+     name: 'monthly Active Some days',
+     isActive: 1,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//5
+      id: 5,
+     name: 'monthly Active no days',
+     isActive: 1,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//6
+      id: 6,
+     name: 'monthly not Active one day',
+     isActive: 0,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//7
+       id: 3,
+     name: 'Weekly Active Some days 2 progress out of date range',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: anotherDate,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: anotherDate,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//8
+       id: 3,
+     name: 'Weekly Active Some days 2 progress 1 out of date range & 1 in range',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: anotherDate,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: someDate,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//9
+       id: 3,
+     name: 'Weekly Active Some days 2 progress both at prev Sunday',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: prevSunday,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: prevSunday,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//10
+       id: 3,
+     name: 'Weekly Active Some days 2 progress both at next Sunday',
+     isActive: 1,
+     frequency: 1,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: nextSunday,
+         progress: 10,
+         timerLastStarted: someDate
+       },
+        {
+         id: '2',
+         task_id: '2',
+         date: nextSunday,
+         progress: 30,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//11
+      id: 5,
+     name: 'monthly Active first day of month',
+     isActive: 1,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: firstDayOfMonth,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+    {//12
+      id: 5,
+     name: 'monthly Active last day of month',
+     isActive: 1,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: lastDayOfMonth,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    
+     {//13
+      id: 5,
+     name: 'monthly Active some day of next month',
+     isActive: 1,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDayOfNextMonth,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    //14
+    {
+      id: 5,
+     name: 'daily progress that occured prev Sunday',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: prevSunday,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    //15
+    {
+      id: 5,
+     name: 'daily progress that occured today at time 00:00:00',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: today,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    //16
+    {
+      id: 5,
+     name: 'daily progress that occured today at time 23:59:99',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: lastSecondOfToday,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    //17
+    {
+      id: 5,
+     name: 'daily progress that occured today at time 23:59:99',
+     isActive: 1,
+     frequency: 0,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: nextSunday,
+         progress: 10,
+         timerLastStarted: someDate
+       }
+     ]
+    },
+    //18
+     {
+      id: 6,
+     name: 'monthly middle of month',
+     isActive: 0,
+     frequency: 2,
+     isTime: 0,
+     isCount: 1, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: middleOfThisMonth,
+         progress: 10,
+         timerLastStarted: someDate
        }
      ]
     }
