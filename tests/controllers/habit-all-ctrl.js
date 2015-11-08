@@ -1,16 +1,18 @@
 describe("Habit All Controller Tests", function(){
     
- 
-  
+    var scope;
+    
+    beforeEach(
+        module('tracktr.services')    
+    );
       
     // load the controller's module
      beforeEach(module('tracktr.controllers'));
 
-    // beforeEach(inject(function($rootScope, $controller) {
-    //     scope = $rootScope.$new();
-    //     $controller('HabitAllController', {$scope: scope});
-    // }));
-    
+//     beforeEach(inject(function($rootScope, $controller) {
+//         scope = $rootScope.$new();
+//         $controller('HabitAllController', {$scope: scope, $state: {}, $ionicPopup:{}, TaskService:{} });
+//     }));
     
     it("Test count no progress", function(){ 
       var task = new Task(tasks[1]);

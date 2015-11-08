@@ -152,6 +152,7 @@ Task.prototype.countTime = function(format) {
     return result;
   }
   
+  
    /*
    * Return true if it is a weekly task
    */
