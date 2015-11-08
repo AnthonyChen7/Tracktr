@@ -114,6 +114,41 @@ describe("Habit All Controller Tests", function(){
       expect(result).toBe(10);
     });
     
+    it("test shouldDisplayInCurrent for daily inactive task", function(){
+        //A task that is in-active shouldn't be displayed in current
+        var task = new Task(tasks[0]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(false);
+    });
+    
+    it("test shouldDisplayInCurrent for daily active everyday task", function(){
+        //A task that is active & occurs everyday should be displayed in current
+        var task = new Task(tasks[2]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(true);
+    });
+    
+    it("test shouldDisplayInCurrent for weekly inactive task", function(){
+        //A weekly task that is inactive shouldn't be displayed in current
+        var task = new Task(tasks[3]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(false);
+    });
+    
+    it("test shouldDisplayInCurrent for weekly active task", function(){
+        //A weekly task that is active should be displayed in current
+        var task = new Task(tasks[7]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(true);
+    });
+    
+    it("test shouldDisplayInCurrent for monthly inactive task", function(){
+        //A monthly task that is inactive shouldn't be displayed in current
+        var task = new Task(tasks[13]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(false);
+    });
+    
+    it("test shouldDisplayInCurrent for weekly active task", function(){
+        //A monthly task that is active should be displayed in current
+        var task = new Task(tasks[12]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(true);
+    });
     
 });
 

@@ -26,7 +26,9 @@ var someDate = new Date();
     lastSecondOfToday.setHours(23,59,59,999); 
  
  /**
- * Temporary list of tasks for testing
+ * Do no modify unless you know what you're doing.
+ * This array of tasks is for testing purposes only.
+ * It is currently being used in the habit-all-ctrl unit tests.
  */
 var tasks = [   
     {
@@ -104,11 +106,11 @@ var tasks = [
        task_id: '1',
        sunday: 1,
        monday: 1,
-       tuesday: 0,
+       tuesday: 1,
        wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
+       thursday: 1,
+       friday: 1,
+       saturday: 1
      },
      progress: [
         {
@@ -130,8 +132,8 @@ var tasks = [
     
      {//3
        id: 3,
-     name: 'Weekly Active Some days 2 progress in date range',
-     isActive: 1,
+     name: 'Weekly inactive Some days 2 progress in date range',
+     isActive: 0,
      frequency: 1,
      isTime: 0,
      isCount: 1, 
@@ -495,8 +497,8 @@ var tasks = [
     
      {//13
       id: 5,
-     name: 'monthly Active some day of next month',
-     isActive: 1,
+     name: 'monthly inActive some day of next month',
+     isActive: 0,
      frequency: 2,
      isTime: 0,
      isCount: 1, 
@@ -691,6 +693,8 @@ var tasks = [
      ]
     }
 ];
+
+
 
 /**
  * Temporary list of tasks for adding into habit-all controller (not the testing one)
@@ -1162,8 +1166,8 @@ var tasks2 = [
     
      {//13
       id: 5,
-     name: 'monthly Active some day of next month',
-     isActive: 1,
+     name: 'monthly inActive some day of next month',
+     isActive: 0,
      frequency: 2,
      isTime: 0,
      isCount: 1, 
