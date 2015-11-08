@@ -33,10 +33,10 @@ angular.module('tracktr.controllers')
   });
   
   //Put in dummy data
-  for(var i = 0; i < tasks2.length; i++){
-    TaskService.createTask(tasks2[i], function(err,id){
-    });
-  }
+  // for(var i = 0; i < tasks2.length; i++){
+  //   TaskService.createTask(tasks2[i], function(err,id){
+  //   });
+  // }
    
   /**
    * Returns boolean to tell us

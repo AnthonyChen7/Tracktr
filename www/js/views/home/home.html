@@ -19,12 +19,15 @@
         <div class="row" ng-show="!task.isCount">
           <div class="col col-25 col-offset-25 text-center">
             <p style="text-align: center;">
-              <b>Total:</b><br>{{countTime(task,3)}}:{{countTime(task,2)}}:{{countTime(task,1)}}
+              <!--<b>Total:</b><br>{{countTime(task,3)}}:{{countTime(task,2)}}:{{countTime(task,1)}}-->
+              <b>Total:</b><br>{{task.getTotalTime()}}
             </p>
           </div>
           <div class="col col-25 text-center">
               <p style="text-align: center;">
-                <b>Current:</b><br>{{progressTimer(task,3)}}:{{progressTimer(task,2)}}:{{progressTimer(task,1)}}
+                <!--<b>Current:</b><br>{{progressTimer(task,3)}}:{{progressTimer(task,2)}}:{{progressTimer(task,1)}}-->
+                <b>Current:</b><br>{{displayProgressTimer(task)}}
+                
               </p>
           </div>
         </div>

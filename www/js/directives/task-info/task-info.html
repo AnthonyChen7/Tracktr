@@ -6,12 +6,14 @@
         &nbsp;
         <h2>{{task.name}}</h2>
         <p>
-        <div ng-show="task.isTime">Total time: {{task.countTime(3)}} Hours {{task.countTime(2)}} Minutes {{task.countTime(1)}} Seconds
-            <br>
-        {{task.getGoalTime()}}  
+        
+                <div ng-show="task.isTime">
+        Total Time: {{task.getTotalTime()}}
+        <br>
+        Goal Time: {{task.getGoalTime()}}  
         </div>
         {{retrieveData(task)}}
-        <p>              
+        </p>              
         <p></p> <!--Note: This needs to be here or else the options won't work.' -->
         </ion-toggle>
         
