@@ -65,7 +65,7 @@ angular.module('tracktr.controllers')
    */
   $scope.buttonHandler = function(option, task){
     if(option === EDIT){
-      $state.go('tab.edit', {habitId:task.id});
+      $state.go('edit', {habitId:task.id});
     }else if(option === VIEW_REPORT){
       $state.go('tab.charts', {taskId:task.id});
     }else{

@@ -89,24 +89,16 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
     }
   })
   
-  .state('tab.create', {
+  .state('create', {
     url: '/create',
-    views: {
-      'tab-home': {
-        templateUrl: 'js/views/habit-create/habit-create.html',
-        controller: 'HabitCreateController'  
-      }
-    }
+    templateUrl: 'js/views/habit-create/habit-create.html',
+    controller: 'HabitCreateController' 
   })
   
-  .state('tab.edit', {
+  .state('edit', {
     url: '/edit/:habitId',
-    views: {
-      'tab-all': {
-        templateUrl: 'js/views/habit-edit/habit-edit.html',
-        controller: 'HabitEditController'
-      } 
-    }
+    templateUrl: 'js/views/habit-edit/habit-edit.html',
+    controller: 'HabitEditController'
   })
   
   .state('settings', {
