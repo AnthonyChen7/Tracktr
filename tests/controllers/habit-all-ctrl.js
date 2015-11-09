@@ -36,11 +36,12 @@ describe("Habit All Controller Tests", function(){
       expect(result).toBe(22);
     });
     
-    it("Test count daily progress where date is this Sunday", function(){
-
+    it("Test count daily progress where date is last Sunday", function(){
+       
       var task = new Task(tasks[14]);
       var result = task.getProgress();
-      expect(result).toBe(10);
+      expect(result).toBe(0);
+      
     });
     
     it("Test count daily progress where date is today at time 00:00:00", function(){ 
@@ -81,9 +82,24 @@ describe("Habit All Controller Tests", function(){
     
     it("Test weekly task; two progress at beginning Sundays at time 00:00:00", function(){ 
       
+      /**
+       * If today is Sunday. Previous Sunday will equate to previous Sunday from last week.
+       * This means that the progress won't be counted.
+       * 
+       * However, if today is not Sunday. Then progress will be counted, because it's
+       * technically within this week.
+       */
+      var today = new Date();
+      
       var task = new Task(tasks[9]);
       var result = task.getProgress();
+      
+      if(today.getDay() != 0){
       expect(result).toBe(40);
+      }
+      else{
+         expect(result).toBe(0); 
+      }
     });
     
     it("Test weekly task; two progress at end Sundays at time 23:59:99", function(){ 
