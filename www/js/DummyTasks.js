@@ -5,7 +5,7 @@ var someDate = new Date();
  var prevSunday = new Date();
  prevSunday.setDate(prevSunday.getDate() - prevSunday.getDay());
  prevSunday.setHours(0,0,0,0);
- 
+  
  var nextSunday = new Date();
  nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
  nextSunday.setHours(23,59,59,999); 

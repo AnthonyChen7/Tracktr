@@ -36,10 +36,11 @@ describe("Habit All Controller Tests", function(){
       expect(result).toBe(22);
     });
     
-    it("Test count daily progress where date is prev Sunday", function(){ 
+    it("Test count daily progress where date is this Sunday", function(){
+
       var task = new Task(tasks[14]);
       var result = task.getProgress();
-      expect(result).toBe(0);
+      expect(result).toBe(10);
     });
     
     it("Test count daily progress where date is today at time 00:00:00", function(){ 
@@ -79,6 +80,7 @@ describe("Habit All Controller Tests", function(){
     });
     
     it("Test weekly task; two progress at beginning Sundays at time 00:00:00", function(){ 
+      
       var task = new Task(tasks[9]);
       var result = task.getProgress();
       expect(result).toBe(40);
