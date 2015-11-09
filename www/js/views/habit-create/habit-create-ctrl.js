@@ -258,6 +258,13 @@ angular.module('tracktr.controllers')
 		TaskService.createTask(aTask, function(err, id) { });
 		
 		// Return to Home View
-		$state.go('tab.home');
+		$ionicHistory.goBack();
 	}
+	
+	/**
+	 * Return back to the previous page
+	 */
+	$scope.goBack = function() {
+		$ionicHistory.goBack();
+	};
 });
