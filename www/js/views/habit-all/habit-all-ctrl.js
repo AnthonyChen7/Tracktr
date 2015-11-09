@@ -33,8 +33,8 @@ angular.module('tracktr.controllers')
   });
   
   //Put in dummy data
-  // for(var i = 0; i < allTasks.length; i++){
-  //   TaskService.createTask(allTasks[i], function(err,id){
+  // for(var i = 0; i < tasks2.length; i++){
+  //   TaskService.createTask(tasks2[i], function(err,id){
   //   });
   // }
    
@@ -67,7 +67,7 @@ angular.module('tracktr.controllers')
     if(option === EDIT){
       $state.go('tab.edit', {habitId:task.id});
     }else if(option === VIEW_REPORT){
-      $state.go('tab.charts');
+      $state.go('tab.charts', {taskId:task.id});
     }else{
     
     var confirmPopup = $ionicPopup.confirm({
@@ -180,7 +180,6 @@ angular.module('tracktr.controllers')
     var dayIndex = today.getDay();
     
     var  dayOfWeek = $scope.dayOfWeekAsString(dayIndex);
-      
       for(var field in days){
         if(field === dayOfWeek){
           if(days[field]===true){
@@ -191,6 +190,26 @@ angular.module('tracktr.controllers')
         }
       }
       return false;
+  };
+  
+  /**
+   * Returns boolean to tell whether task should be displayed in current.
+   * 
+   * aTask is a valid task object
+   */
+  $scope.shouldDisplayInCurrent = function(aTask){
+    
+    var isActive = (aTask.isActive==1);
+    
+    //If task is weekly or monthly, it should automatically be displayed in current
+    if(aTask.frequency === 0){
+      //daily
+      var result = $scope.doesTaskOccurToday(aTask.days) && isActive;
+      return result;
+    }else{
+      //not daily
+      return (true && isActive);
+    }
   };
   
   /**

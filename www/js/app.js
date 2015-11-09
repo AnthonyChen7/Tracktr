@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives'])
+angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives', 'chart.js', 'firebase'])
 
 .run(function($ionicPlatform, $cordovaSplashscreen, DB) {
   $ionicPlatform.ready(function() {
@@ -31,7 +31,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
     document.addEventListener("deviceready", function () {
       setTimeout(function() {
         $cordovaSplashscreen.hide();
-      }, 3000);
+      }, 1000);
     }, false);
 
   });
@@ -70,7 +70,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
   })
   
   .state('tab.charts', {
-    url: '/charts',
+    url: '/charts/:taskId',
     views: {
       'tab-charts': {
         templateUrl: 'js/views/habit-charts/habit-charts.html',
@@ -107,6 +107,12 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
         controller: 'HabitEditController'
       } 
     }
+  })
+  
+  .state('settings', {
+    url: '/settings',
+    templateUrl: 'js/views/settings/settings.html',
+    controller: 'SettingsController'
   });
 
   // if none of the above states are matched, use this as the fallback

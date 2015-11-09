@@ -22,8 +22,21 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
     
+
+    <!-- Angular chart-->
+    <script src="lib/Chart.js/Chart.js"></script>
+    <script src="lib/angular-chart.js/dist/angular-chart.js"></script>
+    <link rel="stylesheet" href="lib/angular-chart.js/dist/angular-chart.css">
+
+
+
     <!-- progressbar.js -->
     <script src="lib/progressbar.js/dist/progressbar.js"></script>
+    
+    <!-- Firebase -->
+    <script src="lib/firebase/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="lib/angularfire/dist/angularfire.min.js"></script>
 
     <!-- Main Module -->
     <script src="js/app.js"></script>
@@ -34,11 +47,13 @@
     <script src="js/views/habit-edit/habit-edit-ctrl.js"></script>
     <script src="js/views/habit-all/habit-all-ctrl.js"></script>
     <script src="js/views/habit-charts/habit-charts-ctrl.js"></script>
-     
+    <script src="js/views/settings/settings-ctrl.js"></script>
+    
     <!-- Services -->
     <script src="js/services/db-config.js"></script>
     <script src="js/services/database.js"></script>
     <script src="js/services/task-service.js"></script>
+    <script src="js/services/sharing-service.js"></script>
     
     <!-- Models -->
     <script src="js/models/task.js"></script>
@@ -50,8 +65,6 @@
     
     <!--Dummy Task Data-->
     <script src="js/DummyTasks.js"></script>
-    
-    
   </head>
   <body ng-app="tracktr">
     <!--

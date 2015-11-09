@@ -10,7 +10,8 @@ describe('Habit Charts Controller Tests', function(){
     }));
 
     // tests start here
-    it('should have initialized with testBoolean as true', function(){
-        expect(scope.testBoolean).toEqual(true);
-    });
+    //Commented out because testBoolean doesn't exist in charts controller no more
+    // it('should have initialized with testBoolean as true', function(){
+    //     expect(scope.testBoolean).toEqual(true);
+    // });
 });

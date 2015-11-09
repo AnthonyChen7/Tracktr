@@ -140,14 +140,29 @@ Task.prototype.countTime = function(format) {
   
   /**
    * Returns a string that states that task's goal time in the format
-   *  x hours x minute
+   *  h:mm:ss
    */
   Task.prototype.getGoalTime = function(){
     var aTask = this;
     var hours = Math.floor(aTask.goal / 60);
     var minutes = aTask.goal % 60;
     
-    var result = "Goal: " +hours + " Hours " + minutes + " Minutes " + "0 Seconds";
+    var result = hours + ":"+ pad(minutes) + ":" + "00";
+    
+    return result;
+  }
+  
+    /**
+   * Returns a string that states that task's total time in the format
+   *  h:mm:ss
+   */
+  Task.prototype.getTotalTime = function(){
+    var aTask = this;
+    var hours = aTask.countTime(3);
+    var minutes = aTask.countTime(2);
+    var seconds = aTask.countTime(1);
+    
+    var result = hours + ":"+ pad(minutes) + ":" + pad(seconds);
     
     return result;
   }
@@ -186,3 +201,17 @@ Task.prototype.countTime = function(format) {
        return false;
   };
   
+/**
+ * Puts a 0 before the number if its < 10
+ * Returns a string
+ */
+function pad(num){
+  var result = "";
+  if(num < 10){
+    result += "0"+num;
+    return result;
+  }else{
+    result += num;
+    return result;
+  }
+};

@@ -1,805 +1,154 @@
 describe("Habit All Controller Tests", function(){
     
-     var someDate = new Date();
- var anotherDate = new Date();
- anotherDate.setDate(anotherDate.getDate() + 10);
- 
- var prevSunday = new Date();
- prevSunday.setDate(prevSunday.getDate() - prevSunday.getDay());
- prevSunday.setHours(0,0,0,0);
- 
- var nextSunday = new Date();
- nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
- nextSunday.setHours(23,59,59,999); 
- 
- var firstDayOfMonth = new Date(someDate.getFullYear(), someDate.getMonth(),1);
- firstDayOfMonth.setHours(0,0,0,0);
- var lastDayOfMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,0);
- lastDayOfMonth.setHours(23,59,59,999); 
- 
- var someDayOfNextMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,5);
- 
- var middleOfThisMonth = new Date(someDate.getFullYear(), someDate.getMonth(),10);
- 
-  var today = new Date();
-    today.setHours(0,0,0,0);
+    var scope;
+    var mockTaskService;
     
-    var lastSecondOfToday = new Date();
-    lastSecondOfToday.setHours(23,59,59,999); 
- 
- /**
- * Temporary list of tasks
- */
-var allTasks = [   
-    {
-     //0
-     name: 'Daily Everyday Not Active',
-     isActive: 0,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 1,
-       friday: 1,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate.getTime(),
-         progress: 11,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//1
-      id: 2,
-     name: 'Daily Active Some days no progress',
-     isActive: 1,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
-     goal: 2,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 0,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       
-     ]
-    },
-    {//2
-      id: 2,
-     name: 'Daily Active Some days 2 progress in range',
-     isActive: 1,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
-     goal: 2,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 0,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-        {
-         id: '1',
-         task_id: '1',
-         date: someDate.getTime(),
-         progress: 11,
-         timerLastStarted: someDate.getTime()
-       },
-        {
-         id: '1',
-         task_id: '1',
-         date: someDate.getTime(),
-         progress: 11,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-     {//3
-       id: 3,
-     name: 'Weekly Active Some days 2 progress in date range',
-     isActive: 1,
-     frequency: 1,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       },
-        {
-         id: '2',
-         task_id: '2',
-         date: someDate.getTime(),
-         progress: 30,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//4
-      id: 4,
-     name: 'monthly Active Some days',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//5
-      id: 5,
-     name: 'monthly Active no days',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//6
-      id: 6,
-     name: 'monthly not Active one day',
-     isActive: 0,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 1,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDate.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//7
-       id: 3,
-     name: 'Weekly Active Some days 2 progress out of date range',
-     isActive: 1,
-     frequency: 1,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: anotherDate.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       },
-        {
-         id: '2',
-         task_id: '2',
-         date: anotherDate.getTime(),
-         progress: 30,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//8
-       id: 3,
-     name: 'Weekly Active Some days 2 progress 1 out of date range & 1 in range',
-     isActive: 1,
-     frequency: 1,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: anotherDate.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       },
-        {
-         id: '2',
-         task_id: '2',
-         date: someDate.getTime(),
-         progress: 30,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//9
-       id: 3,
-     name: 'Weekly Active Some days 2 progress both at prev Sunday',
-     isActive: 1,
-     frequency: 1,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: prevSunday.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       },
-        {
-         id: '2',
-         task_id: '2',
-         date: prevSunday.getTime(),
-         progress: 30,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//10
-       id: 3,
-     name: 'Weekly Active Some days 2 progress both at next Sunday',
-     isActive: 1,
-     frequency: 1,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 1,
-       monday: 1,
-       tuesday: 1,
-       wednesday: 1,
-       thursday: 0,
-       friday: 0,
-       saturday: 1
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: nextSunday.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       },
-        {
-         id: '2',
-         task_id: '2',
-         date: nextSunday.getTime(),
-         progress: 30,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//11
-      id: 5,
-     name: 'monthly Active first day of month',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: firstDayOfMonth.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-    {//12
-      id: 5,
-     name: 'monthly Active last day of month',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: lastDayOfMonth.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    
-     {//13
-      id: 5,
-     name: 'monthly Active some day of next month',
-     isActive: 1,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: someDayOfNextMonth.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    //14
-    {
-      id: 5,
-     name: 'daily progress that occured prev Sunday',
-     isActive: 1,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: prevSunday.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    //15
-    {
-      id: 5,
-     name: 'daily progress that occured today at time 00:00:00',
-     isActive: 1,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: today.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    //16
-    {
-      id: 5,
-     name: 'daily progress that occured today at time 23:59:99',
-     isActive: 1,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: lastSecondOfToday.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    //17
-    {
-      id: 5,
-     name: 'daily progress that occured today at time 23:59:99',
-     isActive: 1,
-     frequency: 0,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 0,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: nextSunday.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    },
-    //18
-     {
-      id: 6,
-     name: 'monthly middle of month',
-     isActive: 0,
-     frequency: 2,
-     isTime: 0,
-     isCount: 1, 
-     goal: 10,
-     icon: 0,
-     isTimerRunning: 0,
-     creationDate: someDate.getTime(),
-     days: {
-       id: '1',
-       task_id: '1',
-       sunday: 0,
-       monday: 0,
-       tuesday: 0,
-       wednesday: 0,
-       thursday: 1,
-       friday: 0,
-       saturday: 0
-     },
-     progress: [
-       {
-         id: '1',
-         task_id: '1',
-         date: middleOfThisMonth.getTime(),
-         progress: 10,
-         timerLastStarted: someDate.getTime()
-       }
-     ]
-    }
-];
-  
+    //create mock TaskService
+    beforeEach(
+        module('tracktr.services', function($provide){
+              $provide.value('TaskService', mockTaskService);
+        })    
+    );
       
     // load the controller's module
      beforeEach(module('tracktr.controllers'));
 
-    // beforeEach(inject(function($rootScope, $controller) {
-    //     scope = $rootScope.$new();
-    //     $controller('HabitAllController', {$scope: scope});
-    // }));
-    
+    beforeEach(inject(function($rootScope, $controller) {
+        scope = $rootScope.$new();
+        $controller('HabitAllController', {$scope: scope, $state: {}, $ionicPopup:{}, TaskService: mockTaskService });
+    }));
     
     it("Test count no progress", function(){ 
-      var task = new Task(allTasks[1]);
+      var task = new Task(tasks[1]);
       var result = task.getProgress();
       expect(result).toBe(0);
     });
     
     it("Test count one daily progress and it occurs today", function(){ 
-      var task = new Task(allTasks[0]);
+      var task = new Task(tasks[0]);
       var result = task.getProgress();
       expect(result).toBe(11);
     });
     
     it("Test count two daily progress", function(){ 
-      var task = new Task(allTasks[2]);
+      var task = new Task(tasks[2]);
       var result = task.getProgress();
       expect(result).toBe(22);
     });
     
     it("Test count daily progress where date is prev Sunday", function(){ 
-      var task = new Task(allTasks[14]);
+      var task = new Task(tasks[14]);
       var result = task.getProgress();
       expect(result).toBe(0);
     });
     
     it("Test count daily progress where date is today at time 00:00:00", function(){ 
-      var task = new Task(allTasks[15]);
+      var task = new Task(tasks[15]);
       var result = task.getProgress();
       expect(result).toBe(10);
     });
     
     it("Test count daily progress where date is today at time 23:59:99", function(){ 
-      var task = new Task(allTasks[16]);
+      var task = new Task(tasks[16]);
       var result = task.getProgress();
       expect(result).toBe(10);
     });
     
     it("Test count daily progress where date is next Sunday", function(){ 
-      var task = new Task(allTasks[17]);
+      var task = new Task(tasks[17]);
       var result = task.getProgress();
       expect(result).toBe(0);
     });
     
     it("Test weekly task; out of date range", function(){ 
-      var task = new Task(allTasks[7]);
+      var task = new Task(tasks[7]);
       var result = task.getProgress();
       expect(result).toBe(0);
     });
     
     it("Test weekly task; in middle of date range", function(){ 
-      var task = new Task(allTasks[3]);
+      var task = new Task(tasks[3]);
       var result = task.getProgress();
       expect(result).toBe(40);
     });
     
     it("Test weekly task; 1 progress in range & 1 progress out of range", function(){ 
-      var task = new Task(allTasks[3]);
+      var task = new Task(tasks[3]);
       var result = task.getProgress();
       expect(result).toBe(40);
     });
     
     it("Test weekly task; two progress at beginning Sundays at time 00:00:00", function(){ 
-      var task = new Task(allTasks[9]);
+      var task = new Task(tasks[9]);
       var result = task.getProgress();
       expect(result).toBe(40);
     });
     
     it("Test weekly task; two progress at end Sundays at time 23:59:99", function(){ 
-      var task = new Task(allTasks[10]);
+      var task = new Task(tasks[10]);
       var result = task.getProgress();
       expect(result).toBe(40);
     });
     
     it("Test monthly task; First day of month at time 00:00:00", function(){ 
-      var task = new Task(allTasks[11]);
+      var task = new Task(tasks[11]);
       var result = task.getProgress();
       expect(result).toBe(10);
     });
     
     it("Test monthly task; Last day of month at time 23:59:99", function(){ 
-      var task = new Task(allTasks[12]);
+      var task = new Task(tasks[12]);
       var result = task.getProgress();
       expect(result).toBe(10);
     });
     
     it("Test monthly task; Some day of next month", function(){ 
-      var task = new Task(allTasks[13]);
+      var task = new Task(tasks[13]);
       var result = task.getProgress();
       expect(result).toBe(0);
     });
     
     it("Test monthly task; task progress in middle of month", function(){ 
-      var task = new Task(allTasks[18]);
+      var task = new Task(tasks[18]);
       var result = task.getProgress();
       expect(result).toBe(10);
     });
     
+    it("test shouldDisplayInCurrent for daily inactive task", function(){
+        //A task that is in-active shouldn't be displayed in current
+        var task = new Task(tasks[0]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(false);
+    });
+    
+    it("test shouldDisplayInCurrent for daily active everyday task", function(){
+        //A task that is active & occurs everyday should be displayed in current
+        var task = new Task(tasks[2]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(true);
+    });
+    
+    it("test shouldDisplayInCurrent for weekly inactive task", function(){
+        //A weekly task that is inactive shouldn't be displayed in current
+        var task = new Task(tasks[3]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(false);
+    });
+    
+    it("test shouldDisplayInCurrent for weekly active task", function(){
+        //A weekly task that is active should be displayed in current
+        var task = new Task(tasks[7]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(true);
+    });
+    
+    it("test shouldDisplayInCurrent for monthly inactive task", function(){
+        //A monthly task that is inactive shouldn't be displayed in current
+        var task = new Task(tasks[13]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(false);
+    });
+    
+    it("test shouldDisplayInCurrent for weekly active task", function(){
+        //A monthly task that is active should be displayed in current
+        var task = new Task(tasks[12]);
+        expect(scope.shouldDisplayInCurrent(task)).toEqual(true);
+    });
     
 });
 
