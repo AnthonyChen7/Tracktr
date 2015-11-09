@@ -317,7 +317,18 @@ angular.module('tracktr.controllers', [])
         return 0;
       }
     };
-
+   
+   /**
+    * Displays the current progress of time based task in format:
+    h:mm:ss
+    */
+   $scope.displayProgressTimer = function(task){
+     var hours = $scope.progressTimer(task,3);
+     var minutes = $scope.progressTimer(task,2);
+     var seconds = $scope.progressTimer(task,1);
+     
+     return hours+":"+pad(minutes)+":"+pad(seconds);
+   };
 
     /*
      * Count the current progress, and express it in seconds
@@ -376,6 +387,13 @@ angular.module('tracktr.controllers', [])
      */
     $scope.navCreateClick = function () {
       $state.go('tab.create');
+    };
+    
+    /**
+     * Navigation to settings
+     */
+    $scope.openSettings = function() {
+      $state.go('settings');
     };
 
     $scope.counter = 0;

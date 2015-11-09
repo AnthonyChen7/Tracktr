@@ -33,10 +33,10 @@ angular.module('tracktr.controllers')
   });
   
   //Put in dummy data
-  for(var i = 0; i < tasks2.length; i++){
-    TaskService.createTask(tasks2[i], function(err,id){
-    });
-  }
+  // for(var i = 0; i < tasks2.length; i++){
+  //   TaskService.createTask(tasks2[i], function(err,id){
+  //   });
+  // }
    
   /**
    * Returns boolean to tell us
@@ -180,7 +180,6 @@ angular.module('tracktr.controllers')
     var dayIndex = today.getDay();
     
     var  dayOfWeek = $scope.dayOfWeekAsString(dayIndex);
-      
       for(var field in days){
         if(field === dayOfWeek){
           if(days[field]===true){
@@ -200,7 +199,7 @@ angular.module('tracktr.controllers')
    */
   $scope.shouldDisplayInCurrent = function(aTask){
     
-    var isActive = aTask.isActive;
+    var isActive = (aTask.isActive==1);
     
     //If task is weekly or monthly, it should automatically be displayed in current
     if(aTask.frequency === 0){

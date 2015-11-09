@@ -1,0 +1,32 @@
+<ion-view view-title="Settings">  
+  <ion-nav-buttons id="10" side="primary" ng-click="goBack()" nav-direction="back">
+    <button class="button button-clear button-icon" ng-click="goBack()" nav-direction="back">
+      <i class="ion-chevron-left"></i>
+    </button>
+  </ion-nav-buttons> 
+  <ion-content>
+
+    <div class="list">
+      <!-- User profile if authenticated -->      
+      <div class="item item-button-right" ng-show="isAuthenticated">
+        <img ng-src="{{profile_url}}"/>
+        {{ name }}
+      </div>
+      
+      <!-- Login Button, only shown if the user is not logged in -->
+      <div class="item item-button-right" ng-show="!isAuthenticated" ng-click="fbAuthentication()">
+        Login with Facebook
+        <button class="button button-positive">
+          <i class="icon ion-social-facebook"></i>
+        </button>
+      </div>
+    
+      <!-- Logout Button, only shown if logged in -->
+      <div class="item item-button-right" ng-show="isAuthenticated" ng-click="logout()">
+        Logout of Facebook
+      </div>
+      
+    </div>
+</ul>
+  </ion-content>
+</ion-view>
