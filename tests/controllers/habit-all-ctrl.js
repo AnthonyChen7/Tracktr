@@ -40,18 +40,13 @@ describe("Habit All Controller Tests", function(){
        /**
        * If today is Sunday. Previous Sunday will equate to previous Sunday from last week.
        * This means that the progress won't be counted.
-       * 
-       * However, if today is not Sunday. Then progress will be counted, because it's
-       * technically today.
        */
       var today = new Date();
       var task = new Task(tasks[14]);
       var result = task.getProgress();
-      if(today.getDay()===0){
+      
       expect(result).toBe(0);
-      }else{
-         expect(result).toBe(10); 
-      }
+     
       
     });
     
