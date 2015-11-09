@@ -310,7 +310,7 @@ angular.module('tracktr.controllers')
 			frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: isTimerRunning, creationDate: creationDate, progress: progress };
 		TaskService.updateTask(aTask, function(err, id) { });
 		// Return to Home View
-		$state.go('tab.all');
+		$ionicHistory.goBack();
 	}
 	
 	$scope.delete = function(habitId,daysId) {
@@ -319,6 +319,13 @@ angular.module('tracktr.controllers')
 		TaskService.deleteTask(taskToDelete, function(err, id) { });
 		
 		// Return to Home View
-		$state.go('tab.all');
+		$ionicHistory.goBack();
 	}
+	
+	/**
+	 * Return back to the previous page
+	 */
+	$scope.goBack = function() {
+		$ionicHistory.goBack();
+	};
 });

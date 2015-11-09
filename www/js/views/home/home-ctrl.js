@@ -386,7 +386,7 @@ angular.module('tracktr.controllers', [])
      *Navigation for create button
      */
     $scope.navCreateClick = function () {
-      $state.go('tab.create');
+      $state.go('create');
     };
     
     /**
