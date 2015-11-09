@@ -388,6 +388,13 @@ angular.module('tracktr.controllers', [])
     $scope.navCreateClick = function () {
       $state.go('tab.create');
     };
+    
+    /**
+     * Navigation to settings
+     */
+    $scope.openSettings = function() {
+      $state.go('settings');
+    };
 
     $scope.counter = 0;
 
