@@ -40,6 +40,7 @@ describe("Habit All Controller Tests", function(){
        /**
        * If today is Sunday. Previous Sunday will equate to previous Sunday from last week.
        * This means that the progress won't be counted.
+       * 
        */
       var today = new Date();
       var task = new Task(tasks[14]);
