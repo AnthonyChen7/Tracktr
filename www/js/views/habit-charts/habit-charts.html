@@ -1,7 +1,7 @@
 <ion-view view-title="Habit Charts">
   <ion-content>
     Task Name: {{task.name}}
-    <div ng-init="loadProgress()">
+    <div ng-init="loadDailyProgress()">
       <canvas id="bar" class="chart chart-bar"
           chart-data="progress" chart-labels="labels">
       </canvas>
