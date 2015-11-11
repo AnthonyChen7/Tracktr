@@ -139,10 +139,16 @@
         <ion-modal-view>
         <ion-header-bar class="bar bar-header bar-dark">
                 <h1 class="title">Edit Progress</h1>
-                <button class="button button-clear" ng-click="closeEditProgressModal()">Cancel</button>
+                <button class="button button-clear" ng-click="closeEditProgressModal()"><i class="ion-chevron-left"></i></button>
               </ion-header-bar>
         <ion-content>
-        Hello!
+        
+        <ion-list>
+        <ion-item ng-repeat="p in progress">
+        {{displayFormattedDate(p.date)}} {{displayFormattedProgress(p.progress)}}
+        </ion-item>
+        </ion-list>
+        
         </ion-content>
         </ion-modal-view>
         </script>

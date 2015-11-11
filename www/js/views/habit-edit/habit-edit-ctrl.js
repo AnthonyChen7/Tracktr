@@ -1,6 +1,7 @@
 angular.module('tracktr.controllers')
 
 .controller("HabitEditController", function($scope,$state,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
+	
 	$scope.habitId = $stateParams.habitId;
 	
 	$scope.habitTypes = [
@@ -46,7 +47,7 @@ angular.module('tracktr.controllers')
 		{class: "icon ion-bonfire icon-custom", code: 18, value: false},
 		{class: "icon ion-lightbulb icon-custom", code: 19, value: true},
 		];		
-	
+		
 	$scope.range = function(start, end) {
 		var result = [];
 		for (var i = start; i <= end; i++) {
@@ -215,7 +216,7 @@ angular.module('tracktr.controllers')
 	
 	//Clean up edit progress modal when we're done with it
 	$scope.$on('$destroy',function(){
-		$scope.modal.remove();
+		$scope.editProgressModal.remove();
 	});
 	
 	// Execute action on hide modal
@@ -255,7 +256,7 @@ angular.module('tracktr.controllers')
 			$scope.isActive = task.isActive;
 			
 			$scope.frequency = $scope.frequencies[task.frequency];
-
+			
 			if ($scope.frequency.code == 0) {
 				document.getElementById('daysField').style.display = '';
 			} else {
@@ -263,6 +264,7 @@ angular.module('tracktr.controllers')
 			}
 			
 			if (task.isTime == 1) {
+				
 				$scope.habitType = $scope.habitTypes[0];
 				$scope.hoursAndMinutes = task.goal;
 				$scope.hours = Math.floor(task.goal/60);
@@ -272,6 +274,7 @@ angular.module('tracktr.controllers')
 				document.getElementById('minutesField').style.display = '';
 				document.getElementById('hoursField').style.display = '';
 			} else if (task.isCount == 1) {
+				
 				$scope.habitType = $scope.habitTypes[1];
 				$scope.goal = task.goal;
 				
@@ -352,6 +355,25 @@ angular.module('tracktr.controllers')
 		// Return to Home View
 		$ionicHistory.goBack();
 	}
+	
+	$scope.displayFormattedDate = function(date){
+		var yyyy= date.getFullYear().toString();
+		var mm = (date.getMonth()+1).toString(); //getMonth() is zero based
+		var dd = date.getDate().toString();
+		
+		return  yyyy+"/"+(mm[1]?mm:"0"+mm[0])+"/"+(dd[1]?dd:"0"+dd[0]);
+	};
+	
+	$scope.displayFormattedProgress = function(progress){
+		if($scope.task.isTime === true){
+			var seconds = toSeconds(progress);
+			var minutes = toMinutes(progress);
+			var hours = toHours(progress);
+			return hours+":"+pad(minutes)+":"+pad(seconds);
+		}else{
+			return progress;
+		}
+	};
 	
 	/**
 	 * Return back to the previous page
