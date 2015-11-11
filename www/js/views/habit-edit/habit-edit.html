@@ -130,6 +130,24 @@
         </div>
         
         <div class="padding-left padding-right">
+          <button class="button button-block button-dark" ng-click="openEditProgressModal()">
+            Edit Progress
+          </button>
+        </div>
+        
+        <script id="editProgressModal.html" type="text/ng-template">
+        <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+                <h1 class="title">Edit Progress</h1>
+                <button class="button button-clear" ng-click="closeEditProgressModal()">Cancel</button>
+              </ion-header-bar>
+        <ion-content>
+        Hello!
+        </ion-content>
+        </ion-modal-view>
+        </script>
+        
+        <div class="padding-left padding-right">
           <button class="button button-block button-dark" ng-click="save(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress)" ng-disabled="createTask.$invalid">
             Save
           </button>
