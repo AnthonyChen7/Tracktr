@@ -110,7 +110,7 @@ angular.module('tracktr.controllers')
   $scope.loadWeeklyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
-      $scope.labels = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thur.', 'Fri', 'Sat'];
+      $scope.labels = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thur.', 'Fri.', 'Sat.'];
       $scope.week = option;
       
       var today = new Date();
