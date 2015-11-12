@@ -15,7 +15,7 @@ angular.module('tracktr.services')
 	
 	
 	// Sharing 
-	var tasksRef      = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com/tasks");
+	var tasksRef      = new Firebase("https://blazing-inferno-5411.firebaseio.com/tasks");
   	var tasksRefArray = $firebaseArray(tasksRef);
 	
 	//============================================================//
@@ -45,22 +45,54 @@ angular.module('tracktr.services')
 	self.uploadTask = function(task, callback) {
 		// upload task with current user id to firebase
 		if(!isAuthenticated) {
-			callback("Not Authenticated");
+			callback("Not Authenticated while trying to upload to firebase");
 			return;
 		}
-		task.fbID = getAuthData.id;
+		
+		var fbID = getAuthData().id;
+		
+		// Add our facebook ID to the task
+		task.fbID = fbID;
+		console.log(task.fbID);
 		tasksRefArray.$add(task).then(function(ref) {
-			var id = ref.key;
-			task.firebaseRefID = id;
-			TaskService.updateTask(task);
+			console.log("asdf");
+			var id = ref.key();
+			// Add the key of the task in firebase to the task
+			task.firebaseRefID = id;			
+			// Update the task.
+			TaskService.updateTask(task, function(err) {
+				callback(null);
+			});
 		});	
 	};
 	
 	/**
 	 * Remove the task from being shared with friends
+	 * @Param callback callback method taking err as an argument if there is an error.
 	 */
-	self.removeTask = function(task) {
+	self.removeTask = function(task, callback) {
 		// remove the task if it exists in firebase
+		if(!isAuthenticated) {
+			callback("Not Authenticated while trying to delete from firebase");
+			return;
+		}
+		
+		var taskToDelete;
+		// Find the task in tasksRefArray so we can delete it
+		angular.forEach(tasksRefArray, function(refTask) {
+			
+			if(refTask.$id === task.firebaseRefID) {
+				taskToDelete = refTask;
+			}
+		});
+		// Delete the found task 
+		tasksRefArray.$remove(taskToDelete).then(function(ref) {
+			if(ref.key() === taskToDelete.firebaseRefID) {
+				callback(null);
+			} else {
+				callback("Delete Failure");
+			}
+		});
 	};
 	
 	/**

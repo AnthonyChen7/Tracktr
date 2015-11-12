@@ -13,6 +13,8 @@ angular.module('tracktr.services', ['tracktr.config'])
     var numTables = DB_CONFIG.tables.length;  // Total number of tables to be created
     var numCreatedTables = 0;                 // Current number of tables created
     
+    //self.nuke(function(){});
+    
     angular.forEach(DB_CONFIG.tables, function(table) {
       var columns = [];
       
@@ -52,7 +54,7 @@ angular.module('tracktr.services', ['tracktr.config'])
         deferred.resolve(result);
         $rootScope.$apply();
       }, function(transaction, error) {
-        console.log(error);
+        console.log(query, error);
         deferred.reject(error);
       });
     });

@@ -1,5 +1,5 @@
 angular.module('tracktr.controllers')
-.controller("HabitAllController", function($scope, $state, $ionicPopup, TaskService) {
+.controller("HabitAllController", function($scope, $state, $ionicPopup, TaskService, SharingService) {
 
 /**
  * Constants  
@@ -27,17 +27,22 @@ angular.module('tracktr.controllers')
   $scope.$on("$ionicView.enter", function(){
     TaskService.getAll(function(err,tasks){
     $scope.tasks = tasks;
+    
+    // If nothing in the database.
+    if($scope.tasks.length == 0) {
+        //Put in dummy data
+        for(var i = 0; i < tasks2.length; i++){
+          TaskService.createTask(tasks2[i], function(err,id){
+          });
+        }
+    }
     // for(var i = 0; i< $scope.tasks.length; i++){
     // TaskService.deleteTask($scope.tasks[i], function(err){});
     // }
   }); 
   });
   
-  //Put in dummy data
-  // for(var i = 0; i < tasks2.length; i++){
-  //   TaskService.createTask(tasks2[i], function(err,id){
-  //   });
-  // }
+
    
   /**
    * Returns boolean to tell us
@@ -80,7 +85,15 @@ angular.module('tracktr.controllers')
           if(confirm) {
             // now set to shared, so send it to firebase
             task.isShared = true;
-            TaskService.updateTask(task);
+            TaskService.updateTask(task, function(err) {
+              // Upload the task to firebase.
+              SharingService.uploadTask(task, function(err) {
+                if(err) {
+                  console.log(err);
+                }
+              })
+            });
+            
           }
         })
       } else {
@@ -92,7 +105,14 @@ angular.module('tracktr.controllers')
           if(confirm) {
             // no longer shared, tear it down from firebase
             task.isShared = false;
-            TaskService.updateTask(task);
+            TaskService.updateTask(task, function(err) {
+              // Delete the task from firebase
+              SharingService.removeTask(task, function(err) {
+                if(err) {
+                  console.log(err);
+                }
+              })
+            });
           }
         })
       }

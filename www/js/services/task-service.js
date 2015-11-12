@@ -20,7 +20,7 @@ angular.module('tracktr.services')
               'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   var UPDATE_TASK_PREPARED_STATEMENT = 
               'UPDATE task ' +
-              'SET name=?, isActive=?, frequency=?, isTime=?, isCount=?, goal=?, icon=?, isTimerRunning=?, creationDate=?, isShared=? ' +
+              'SET name=?, isActive=?, frequency=?, isTime=?, isCount=?, goal=?, icon=?, isTimerRunning=?, creationDate=?, isShared=?, ' +
               'fbID=?, firebaseRefID=? ' +
               'WHERE id=?';
   var DELETE_TASK_PREPARED_STATEMENT = 
