@@ -62,7 +62,14 @@ angular.module('tracktr.controllers')
 				console.log(err);
 			} else {
 				$scope.friends = friends;
+				$scope.getFriendsTasks();
 			}
+		});
+	};
+	
+	$scope.getFriendsTasks = function() {
+		angular.forEach($scope.friends, function(friend) {
+			friend.sharedTasks = SharingService.getOneFriendsTasks(friend);
 		});
 	} 
 	

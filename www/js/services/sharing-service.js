@@ -53,10 +53,20 @@ angular.module('tracktr.services')
 	
 	/**
 	 * Retreive a friend's shared tasks in an array
+	 * 
 	 */
 	self.getOneFriendsTasks = function(friend) {
 		// use the friend id to contact firebase and get their shared tasks
 		// return the shared tasks
+		var result = [];
+		
+		angular.forEach(tasksRefArray, function(task) {
+			if(tasksRefArray.fbID == friend.id) {
+				result.push(task);
+			}
+		});
+		
+		return result;
 	};
 	
 	/**
