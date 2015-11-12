@@ -3,6 +3,8 @@ angular.module('tracktr.controllers')
 .controller('SharedTaskInfoController', function ($scope, $state, $ionicHistory, SharingService, $ionicPopup, TaskService) {
 
   var VIEW_REPORT = "View Report";
+  var IMPORT      = "Import";
+  
   var DAILY = "Daily";
   var MONTHLY = "Monthly";
   var WEEKLY = "Weekly";
@@ -14,7 +16,7 @@ angular.module('tracktr.controllers')
   var SATURDAY = "Sa";
   var SUNDAY = "Su";
   
-  $scope.options= [ VIEW_REPORT];
+  $scope.options= [ VIEW_REPORT, IMPORT];
   
   /**
    * Returns boolean to tell us
@@ -44,8 +46,10 @@ angular.module('tracktr.controllers')
    */
   $scope.buttonHandler = function(option, task){
     
-     if(option === VIEW_REPORT){
+    if(option === VIEW_REPORT){
       $state.go('charts', {taskId:task.id});  
+    } else if (option === IMPORT) {
+      
     }
   };
   
