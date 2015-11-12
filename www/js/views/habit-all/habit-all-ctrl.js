@@ -7,6 +7,7 @@ angular.module('tracktr.controllers')
  var EDIT = "Edit";
  var VIEW_REPORT = "View Report";
  var DELETE = "Delete";
+ var SHARE = "Share"
  var DAILY = "Daily";
  var MONTHLY = "Monthly";
  var WEEKLY = "Weekly";
@@ -19,7 +20,7 @@ angular.module('tracktr.controllers')
  var SUNDAY = "Su";
      
   $scope.tasks = [];
-  $scope.options= [EDIT, VIEW_REPORT, DELETE];
+  $scope.options= [EDIT, VIEW_REPORT, DELETE, SHARE];
   
 
   //Get all tasks from DB everytime this view is entered
@@ -68,6 +69,31 @@ angular.module('tracktr.controllers')
       $state.go('edit', {habitId:task.id});
     }else if(option === VIEW_REPORT){
       $state.go('charts', {taskId:task.id});
+    }else if(option === SHARE) {
+      task.isShared = !task.isShared;
+      TaskService.updateTask(task);
+      if(task.isShared) {
+        // TODO
+        var sharePopup = $ionicPopup.confirm({
+          title: 'Share',
+          template: 'Would you like to share this with your friends?'
+        }).then(function(confirm) {
+          if(confirm) {
+            // now set to shared, so send it to firebase
+          }
+        })
+      } else {
+        // TODO
+        var sharePopup = $ionicPopup.confirm({
+          title: 'Unshare',
+          template: 'Would you like to unshare this with your friends?'
+        }).then(function(confirm) {
+          if(confirm) {
+            // no longer shared, tear it down from firebase
+          }
+        })
+      }
+      
     }else{
     
     var confirmPopup = $ionicPopup.confirm({
