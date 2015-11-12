@@ -59,12 +59,13 @@ angular.module('tracktr.services')
 		// use the friend id to contact firebase and get their shared tasks
 		// return the shared tasks
 		var result = [];
-		
 		// Wait until the reference to firebase has loaded. 
 		tasksRefArray.$loaded(function() {
 			angular.forEach(tasksRefArray, function(task) {
-				if(task.fbID == friend.id) {
-					result.push(task);
+				console.log(task);
+				if(task.fbID == friend.id) {	
+					var fbTask = new Task(task);
+					result.push(fbTask);
 				}
 			});
 		});
@@ -87,17 +88,23 @@ angular.module('tracktr.services')
 		
 		// Add our facebook ID to the task
 		task.fbID = fbID;
-		console.log(task.fbID);
+		console.log("before prepare:",task);
+		task.prepareForFirebase();
+		console.log("after prepare:",task);
 		tasksRefArray.$add(task).then(function(ref) {
-			console.log("asdf");
 			var id = ref.key();
 			// Add the key of the task in firebase to the task
-			task.firebaseRefID = id;			
+			task.firebaseRefID = id;
+			
+				
+			
 			// Update the task.
 			TaskService.updateTask(task, function(err) {
 				callback(null);
 			});
 		});	
+		// Convert back 	
+		task.parseFromFirebase();
 	};
 	
 	/**
@@ -121,11 +128,7 @@ angular.module('tracktr.services')
 		});
 		// Delete the found task 
 		tasksRefArray.$remove(taskToDelete).then(function(ref) {
-			if(ref.key() === taskToDelete.firebaseRefID) {
 				callback(null);
-			} else {
-				callback("Delete Failure");
-			}
 		});
 	};
 	

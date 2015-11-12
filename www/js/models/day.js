@@ -8,11 +8,11 @@
 var Day = function(day) {
 	this.id = day.id;
 	this.task_id = day.task_id;
-	this.sunday = (day.sunday == 1);
-	this.monday = (day.monday == 1);
-	this.tuesday = (day.tuesday == 1);
-	this.wednesday = (day.wednesday == 1);
-	this.thursday = (day.thursday == 1);
-	this.friday = (day.friday == 1);
-	this.saturday = (day.saturday == 1);
+	this.sunday = (day.sunday ? true : false);
+	this.monday = (day.monday ? true : false);
+	this.tuesday = (day.tuesday ? true : false);
+	this.wednesday = (day.wednesday ? true : false);
+	this.thursday = (day.thursday ? true : false);
+	this.friday = (day.friday ? true : false);
+	this.saturday = (day.saturday ? true : false);
 }

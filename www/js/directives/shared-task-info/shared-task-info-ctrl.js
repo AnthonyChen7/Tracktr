@@ -1,50 +1,60 @@
 angular.module('tracktr.controllers')
-.controller("HabitAllController", function($scope, $state, $ionicPopup, TaskService, SharingService) {
 
-/**
- * Constants  
- **/  
- 
- var DAILY = "Daily";
- var MONTHLY = "Monthly";
- var WEEKLY = "Weekly";
- var MONDAY = "M";
- var TUESDAY = "T";
- var WEDNESDAY = "W";
- var THURSDAY = "Th";
- var FRIDAY = "F";
- var SATURDAY = "Sa";
- var SUNDAY = "Su";
-     
-  $scope.tasks = [];
-  
+.controller('SharedTaskInfoController', function ($scope, $state, $ionicHistory, SharingService, $ionicPopup, TaskService) {
 
-  //Get all tasks from DB everytime this view is entered
-  $scope.$on("$ionicView.enter", function(){
-    TaskService.getAll(function(err,tasks){
-    $scope.tasks = tasks;
-    
-    // If nothing in the database.
-    if($scope.tasks.length == 0) {
-        //Put in dummy data
-        for(var i = 0; i < tasks2.length; i++){
-          TaskService.createTask(tasks2[i], function(err,id){
-          });
-        }
-    }
-    // for(var i = 0; i< $scope.tasks.length; i++){
-    // TaskService.deleteTask($scope.tasks[i], function(err){});
-    // }
-  }); 
-  });
+  var VIEW_REPORT = "View Report";
+  var DAILY = "Daily";
+  var MONTHLY = "Monthly";
+  var WEEKLY = "Weekly";
+  var MONDAY = "M";
+  var TUESDAY = "T";
+  var WEDNESDAY = "W";
+  var THURSDAY = "Th";
+  var FRIDAY = "F";
+  var SATURDAY = "Sa";
+  var SUNDAY = "Su";
   
-  
+  $scope.options= [ VIEW_REPORT];
   
   /**
+   * Returns boolean to tell us
+   * if options for the specified task is shown
+   */
+  $scope.isGroupShown = function(task){
+    return $scope.shownGroup === task;
+  };
+  
+  /**
+   * Toggle task to show options
+   */
+  $scope.toggleGroup = function(task){
+    if($scope.isGroupShown(task)){
+      $scope.shownGroup = null;
+    }else{
+      $scope.shownGroup = task;
+    }
+  };
+
+
+  /**
+   * Option is a string
+   * task is a task
+   * Based on options selected,
+   * it will bring user to the correct page
+   */
+  $scope.buttonHandler = function(option, task){
+    
+     if(option === VIEW_REPORT){
+      $state.go('charts', {taskId:task.id});  
+    }
+  };
+  
+    /**
    * Retrieves the data of the task
    */
   $scope.retrieveData=function(task){
     var result = "";
+    
     if(task.isCount === true && task.isTime === false){
     result += task.getProgress() +  "/" + task.goal;
     result += " | " + $scope.getFrequency(task.frequency);
@@ -58,10 +68,7 @@ angular.module('tracktr.controllers')
     }
     return result;
   };
-  
-  
-  
-  /**
+    /**
    * frequencyId is an integer
    * Returns the frequency of a task as a string
    */
@@ -172,12 +179,4 @@ angular.module('tracktr.controllers')
   $scope.dayOfWeekAsString = function(dayIndex){
     return ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dayIndex];
   };
-  
-  /**
-   * Click handler for new habit button
-   */
-  $scope.navCreateClick = function() {
-    $state.go('tab.create'); 
-  }	
 });
-

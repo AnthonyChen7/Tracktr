@@ -1,7 +1,6 @@
 <!--Displays the information of a task along with options to view,edit, delete.-->
 
-      <ion-item class="item-stable" ng-click="toggleGroup(task)" ng-class="{active: isGroupShown(task)}">
-        <ion-toggle ng-model="task.isActive" ng-check="task.isActive" ng-change="updateIsActive(task)">
+      <ion-item class="item-stable" ng-click="toggleGroup(task)" ng-class="{active: isGroupShown(task)}">        
         <i class="icon" ng-class="isGroupShown(task)? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
         <h2>{{task.name}}</h2>
