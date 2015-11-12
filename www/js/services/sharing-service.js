@@ -268,7 +268,7 @@ angular.module('tracktr.services')
 	 * the current user is authenticated
 	 */
 	self.isAuthenticated = function() {
-		if(window.localStorage[FB_AUTH_KEY] === "0") {
+		if(window.localStorage[FB_AUTH_KEY] === "0" || !window.localStorage[FB_AUTH_KEY]) {
 			return false;
 		} else {
 			return true;
@@ -281,7 +281,6 @@ angular.module('tracktr.services')
 	 */
 	self.getAuthData = function() {
 		var authData = window.localStorage[FB_AUTH_KEY];
-		
 		if(authData) {
 			return JSON.parse(authData);
 		} else {
