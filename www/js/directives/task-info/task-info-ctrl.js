@@ -42,45 +42,53 @@ angular.module('tracktr.controllers')
       $state.go('charts', {taskId:task.id});
     }else if(option === SHARE) {
       var newShareState = !task.isShared;
+      
       if(newShareState) {
-        
-        var sharePopup = $ionicPopup.confirm({
-          title: 'Share',
-          template: 'Would you like to share this with your friends?'
-        }).then(function(confirm) {
-          if(confirm) {
-            // now set to shared, so send it to firebase
-            task.isShared = true;
-            TaskService.updateTask(task, function(err) {
-              // Upload the task to firebase.
-              console.log("before upload:", task);
-              SharingService.uploadTask(task, function(err) {
-                if(err) {
-                  console.log(err);
-                }
-              })
-            });
-            
-          }
-        })
+
+        if(SharingService.isAuthenticated()){
+        // prompt user to share          
+          var sharePopup = $ionicPopup.confirm({
+            title: 'Share',
+            template: 'Would you like to share this with your friends?'
+          }).then(function(confirm) {
+            if(confirm) {
+              // now set to shared, so send it to firebase
+              task.isShared = true;
+              TaskService.updateTask(task, function(err) {
+                // Upload the task to firebase.
+                SharingService.uploadTask(task, function(err) {
+                  if(err) {
+                    console.log(err); 
+                  }
+                })
+              });    
+            }
+          });
+        } else {
+         $scope.notifyUnauthenticated();
+        }
       } else {
-        var sharePopup = $ionicPopup.confirm({
-          title: 'Unshare',
-          template: 'Would you like to unshare this with your friends?'
-        }).then(function(confirm) {
-          if(confirm) {
-            // no longer shared, tear it down from firebase
-            task.isShared = false;
-            TaskService.updateTask(task, function(err) {
-              // Delete the task from firebase
-              SharingService.removeTask(task, function(err) {
-                if(err) {
-                  console.log(err);
-                }
-              })
+        if(SharingService.isAuthenticated()){
+          var sharePopup = $ionicPopup.confirm({
+            title: 'Unshare',
+            template: 'Would you like to unshare this with your friends?'
+          }).then(function(confirm) {
+              if(confirm) {
+                // no longer shared, tear it down from firebase
+                task.isShared = false;
+                TaskService.updateTask(task, function(err) {
+                  // Delete the task from firebase
+                  SharingService.removeTask(task, function(err) {
+                    if(err) {
+                      console.log(err);
+                    }
+                  })
+                });
+              }
             });
-          }
-        })
+        } else {
+          $scope.notifyUnauthenticated();
+        }
       }
       
     }else{
@@ -117,4 +125,13 @@ angular.module('tracktr.controllers')
   $scope.updateIsActive=function(task){
     TaskService.updateTask(task, function(err){});
   };
+  
+  $scope.notifyUnauthenticated = function() {
+     $ionicPopup.confirm({
+        title: "Authentication Error",
+        template: "Please Login through Facebook before sharing"
+      }).then(function(confirm) {
+        // TODO: navigate to authentication page;
+      });
+  }
 });

@@ -241,7 +241,6 @@ Task.prototype.parseFromFirebase = function() {
   this.creationDate = new Date(this.creationDate);
 
   for(var i = 0; i < this.progress.length; i++) {
-    console.log("KLDJFDS");
     var progress = this.progress[i];
     
     progress.date = new Date(progress.date);
