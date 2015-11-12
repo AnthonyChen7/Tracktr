@@ -14,7 +14,8 @@ angular.module('tracktr.config', [])
         {name: 'goal',           type: 'integer'},
         {name: 'icon',           type: 'integer'},
         {name: 'isTimerRunning', type: 'integer'},
-        {name: 'creationDate',   type: 'text'}
+        {name: 'creationDate',   type: 'text'},
+        {name: 'isShared',       type: 'integer'}
       ]
     },
     {

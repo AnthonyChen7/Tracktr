@@ -16,6 +16,7 @@ var Task = function(task) {
   this.icon = task.icon;
   this.isTimerRunning = (task.isTimerRunning == 1);
   this.creationDate = new Date(parseInt(task.creationDate, 10));
+  this.isShared = (task.isShared == 1);
 
   // Instantiate days 
   this.days = new Day(task.days);
