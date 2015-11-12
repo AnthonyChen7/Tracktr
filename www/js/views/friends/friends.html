@@ -34,6 +34,9 @@
           <img class="fb-profile-picture" ng-src="{{friend.picture_url}}"/>
           <div class="fb-name">{{ friend.name }}</div>
         </div>
+        <div class="no-share" ng-show="friend.sharedTasks.length == 0">
+          {{friend.name}} is not sharing any habits right now.
+        </div>
         <div ng-repeat= "task in friend.sharedTasks | filter:searchText">
           <shared-task-info></shared-task-info>
         </div> 
