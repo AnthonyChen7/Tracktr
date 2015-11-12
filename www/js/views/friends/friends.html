@@ -12,7 +12,7 @@
         </div>
         
         <!-- Login Button, only shown if the user is not logged in -->
-        <div class="item item-button-right" ng-show="!isAuthenticated" ng-click="fbAuthentication()">
+        <div class="item item-button-right" ng-show="(isAuthenticated == false)" ng-click="fbAuthentication()">
           Login with Facebook
           <button class="button button-positive">
             <i class="icon ion-social-facebook"></i>

@@ -62,7 +62,6 @@ angular.module('tracktr.services')
 		// Wait until the reference to firebase has loaded. 
 		tasksRefArray.$loaded(function() {
 			angular.forEach(tasksRefArray, function(task) {
-				console.log(task);
 				if(task.fbID == friend.id) {	
 					var fbTask = new Task(task);
 					result.push(fbTask);
