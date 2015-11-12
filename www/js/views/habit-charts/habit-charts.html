@@ -1,11 +1,20 @@
 <ion-view view-title="Habit Charts">
+    <ion-nav-buttons id="10" side="primary">
+    <button class="button button-clear button-icon" ng-click="goBack()" nav-direction="back">
+      <i class="ion-chevron-left"></i>
+    </button>
+  </ion-nav-buttons> 
   <ion-content>
     Task Name: {{task.name}}
-    <div ng-init="loadProgress()">
-      <canvas id="bar" class="chart chart-bar"
-          chart-data="progress" chart-labels="labels">
+    <div ng-init="loadWeeklyProgress(0)">
+      <canvas id="bar" class="chart chart-line"
+          chart-data="data" chart-labels="labels">
       </canvas>
-     </div>
+      <button ng-click="updateToPrevious()">Previous week</button>
+      <button ng-click="updateToCurrent()">Next week</button>
+    </div>
+    
+    
 
   </ion-content>
 </ion-view>

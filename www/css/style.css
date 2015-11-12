@@ -55,3 +55,12 @@
 .bar-custom {
     background-color: #FC5B3F !important;
 }
+
+
+
+
+/* Authentication */
+.auth-container {
+    padding: 10px;
+    background-color: whitesmoke;
+}
