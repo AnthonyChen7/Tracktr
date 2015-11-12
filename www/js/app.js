@@ -69,12 +69,18 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
     }
   })
   
-  .state('tab.charts', {
+  .state('charts', {
     url: '/charts/:taskId',
+    templateUrl: 'js/views/habit-charts/habit-charts.html',
+    controller: 'HabitChartsController'
+  })
+  
+  .state('tab.friends', {
+    url: '/friends',
     views: {
-      'tab-charts': {
-        templateUrl: 'js/views/habit-charts/habit-charts.html',
-        controller: 'HabitChartsController'
+      'tab-friends': {
+        templateUrl: 'js/views/friends/friends.html',
+        controller: 'FriendsController'
       }
     }
   })

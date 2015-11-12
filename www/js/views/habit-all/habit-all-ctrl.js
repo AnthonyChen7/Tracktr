@@ -67,7 +67,7 @@ angular.module('tracktr.controllers')
     if(option === EDIT){
       $state.go('edit', {habitId:task.id});
     }else if(option === VIEW_REPORT){
-      $state.go('tab.charts', {taskId:task.id});
+      $state.go('charts', {taskId:task.id});
     }else{
     
     var confirmPopup = $ionicPopup.confirm({

@@ -1,6 +1,6 @@
 angular.module('tracktr.controllers')
 
-.controller("HabitChartsController", function($scope, $stateParams, TaskService) {
+.controller("HabitChartsController", function($scope, $stateParams, $ionicHistory, TaskService) {
 	$scope.testBoolean = true;
   $scope.taskId = $stateParams.taskId;
 	console.log($scope.taskId);
@@ -233,4 +233,10 @@ angular.module('tracktr.controllers')
       });
     });
   
+   /**
+    * Return back to the previous page
+    */
+    $scope.goBack = function() {
+      $ionicHistory.goBack();
+    };
 });
