@@ -26,5 +26,12 @@
       </div>
     </div>
     
+    <div class="list" ng-show="isAuthenticated">
+      <div class="item item-button-right" ng-repeat="friend in friends">
+        <img ng-src="{{friend.picture_url}}"/>
+        {{ friend.name }}
+      </div>
+    </div>
+    
   </ion-content>
 </ion-view>

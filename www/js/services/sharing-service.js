@@ -24,10 +24,31 @@ angular.module('tracktr.services')
 	
 	/**
 	 * Retrieve FB friends' IDs in an array
+	 * @Param callback callback that takes err and response
 	 */
-	self.getFriends = function() {
+	self.getFriends = function(callback) {
 		// use fb api to get array of friends
 		// return array of friends
+		graphAPI("friends", {}, self.getAuthData().id,function(err, response) {
+			if(err) {
+				callback(err, null);
+				return;
+			}
+			
+			var friendsArray = response.data.data;
+			var friendsSize = friendsArray.length;
+			var receivedPicturesCount = 0;
+			angular.forEach(friendsArray, function(friend) {
+				self.getPicture(friend.id, function(err, url) {
+					friend.picture_url = url;
+					receivedPicturesCount++;
+					
+					if(receivedPicturesCount == friendsSize) {
+						callback(null, response.data.data);			
+					}	
+				});
+			});
+		});
 	};
 	
 	/**
@@ -49,7 +70,7 @@ angular.module('tracktr.services')
 			return;
 		}
 		
-		var fbID = getAuthData().id;
+		var fbID = self.getAuthData().id;
 		
 		// Add our facebook ID to the task
 		task.fbID = fbID;
@@ -146,7 +167,7 @@ angular.module('tracktr.services')
 	 */
 	self.getName = function(callback){
 		/* make the API call */
-		graphAPI('/', {}, function(err, response) {
+		graphAPI('/', {}, self.getAuthData().id, function(err, response) {
 			if(response) {
 				window.localStorage[FB_NAME] = response.data.name;
 				callback(null, response.data.name);	
@@ -161,13 +182,13 @@ angular.module('tracktr.services')
 	 * Retrieve the url to user's profile photo and set it into local storage
 	 * calback(err, url: String)
 	 */
-	self.getPicture = function(callback) {
+	self.getPicture = function(id, callback) {
 		var params = 
 			{
 				redirect: false,
 				type: 'normal'
 			}
-		graphAPI('picture', params, function(err, response) {
+		graphAPI('picture', params, id, function(err, response) {
 			if(response) {
 				var url = response.data.data.url;
 				window.localStorage[PROFILE_URL] = url;
@@ -186,10 +207,11 @@ angular.module('tracktr.services')
 	/**
 	 * Make a call to the graph api.
 	 * redirect: whether or not to redirect: boolean
+	 * @Param id facebook id
 	 * Takes a callback(err, response)
 	 */
-	function graphAPI(path, params, callback) {
-		var authData = getAuthData();
+	function graphAPI(path, params, id, callback) {
+		var authData = self.getAuthData();
 		
 		// return if the user is not logged in
 		if(authData == null) {
@@ -210,8 +232,8 @@ angular.module('tracktr.services')
 			}
 		}   
 
-		var url = 'https://graph.facebook.com/'+ authData.id +'/'+ path;	
-		
+		var url = 'https://graph.facebook.com/'+ id +'/'+ path;	
+
 		// Perform the http GET request and callback
 		$http({
 			method: 'GET',
@@ -236,7 +258,7 @@ angular.module('tracktr.services')
 	/**
 	 * Return the auth data
 	 */
-	function getAuthData() {
+	self.getAuthData = function() {
 		var authData = window.localStorage[FB_AUTH_KEY];
 		
 		if(authData) {
