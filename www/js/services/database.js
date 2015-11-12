@@ -52,6 +52,7 @@ angular.module('tracktr.services', ['tracktr.config'])
         deferred.resolve(result);
         $rootScope.$apply();
       }, function(transaction, error) {
+        console.log(error);
         deferred.reject(error);
       });
     });

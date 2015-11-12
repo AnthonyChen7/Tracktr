@@ -1,13 +1,22 @@
 angular.module('tracktr.services') 
-.factory('SharingService', function($http) {
-	var FIREBASE_URL = "https://blazing-inferno-5411.firebaseio.com";
-	var FB_AUTH_KEY = "FBAUTHKEY";
-	var PROFILE_URL = "FBPROFILEURL";
-	var FB_NAME = "FBNAME";
-	
-	var ref = new Firebase(FIREBASE_URL);
-	
+.factory('SharingService', function($http, $firebaseArray, TaskService) {
 	var self = this;
+	
+	//============================================================//
+	//					Constants
+	//============================================================//
+	
+	// Authentication
+	var FIREBASE_URL = "https://blazing-inferno-5411.firebaseio.com";
+	var FB_AUTH_KEY  = "FBAUTHKEY";
+	var PROFILE_URL  = "FBPROFILEURL";
+	var FB_NAME      = "FBNAME";
+	var ref          = new Firebase(FIREBASE_URL);
+	
+	
+	// Sharing 
+	var tasksRef      = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com/tasks");
+  	var tasksRefArray = $firebaseArray(tasksRef);
 	
 	//============================================================//
 	//					Service Methods
@@ -31,9 +40,20 @@ angular.module('tracktr.services')
 	
 	/**
 	 * Upload a single task to share with friends
+	 * @Param callback callback method taking err as an argument if there is an error.
 	 */
-	self.uploadTask = function(task) {
-		// upload task with current user id to firebase 
+	self.uploadTask = function(task, callback) {
+		// upload task with current user id to firebase
+		if(!isAuthenticated) {
+			callback("Not Authenticated");
+			return;
+		}
+		task.fbID = getAuthData.id;
+		tasksRefArray.$add(task).then(function(ref) {
+			var id = ref.key;
+			task.firebaseRefID = id;
+			TaskService.updateTask(task);
+		});	
 	};
 	
 	/**

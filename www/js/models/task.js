@@ -17,6 +17,8 @@ var Task = function(task) {
   this.isTimerRunning = (task.isTimerRunning == 1);
   this.creationDate = new Date(parseInt(task.creationDate, 10));
   this.isShared = (task.isShared == 1);
+  this.fbID = task.fbID;
+  this.firebaseRefID = task.firebaseRefID;
 
   // Instantiate days 
   this.days = new Day(task.days);
