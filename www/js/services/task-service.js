@@ -298,7 +298,7 @@ angular.module('tracktr.services')
             task.icon, 
             (task.isTimerRunning) ? 1 : 0, 
             task.creationDate.getTime() ,
-            task.isShared
+            task.isShared ? 1 : 0
             ];
   };
   

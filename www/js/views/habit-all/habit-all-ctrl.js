@@ -70,9 +70,8 @@ angular.module('tracktr.controllers')
     }else if(option === VIEW_REPORT){
       $state.go('charts', {taskId:task.id});
     }else if(option === SHARE) {
-      task.isShared = !task.isShared;
-      TaskService.updateTask(task);
-      if(task.isShared) {
+      var newShareState = !task.isShared;
+      if(newShareState) {
         // TODO
         var sharePopup = $ionicPopup.confirm({
           title: 'Share',
@@ -80,6 +79,8 @@ angular.module('tracktr.controllers')
         }).then(function(confirm) {
           if(confirm) {
             // now set to shared, so send it to firebase
+            task.isShared = true;
+            TaskService.updateTask(task);
           }
         })
       } else {
@@ -90,6 +91,8 @@ angular.module('tracktr.controllers')
         }).then(function(confirm) {
           if(confirm) {
             // no longer shared, tear it down from firebase
+            task.isShared = false;
+            TaskService.updateTask(task);
           }
         })
       }
