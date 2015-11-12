@@ -143,11 +143,18 @@
               </ion-header-bar>
         <ion-content>
         
-        <ion-list>
-        <ion-item ng-repeat="p in progress">
-        {{displayFormattedDate(p.date)}} {{displayFormattedProgress(p.progress)}}
-        </ion-item>
-        </ion-list>
+        
+        
+        <div class="row header">
+        <div class="col">Date</div>
+        <div class="col">Progress Count</div>
+        </div>
+        
+        <div class="row" ng-repeat="p in progress">
+        <div class="col">{{displayFormattedDate(p.date)}}</div>
+        <div class="col">{{displayFormattedProgress(p.progress)}}</div>
+        </div>
+        
         
         </ion-content>
         </ion-modal-view>

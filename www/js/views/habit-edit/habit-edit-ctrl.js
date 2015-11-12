@@ -361,7 +361,10 @@ angular.module('tracktr.controllers')
 		var mm = (date.getMonth()+1).toString(); //getMonth() is zero based
 		var dd = date.getDate().toString();
 		
-		return  yyyy+"/"+(mm[1]?mm:"0"+mm[0])+"/"+(dd[1]?dd:"0"+dd[0]);
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		
+		return  yyyy+"/"+(mm[1]?mm:"0"+mm[0])+"/"+(dd[1]?dd:"0"+dd[0]) + " "+ pad(hours)+":"+pad(minutes);
 	};
 	
 	$scope.displayFormattedProgress = function(progress){
