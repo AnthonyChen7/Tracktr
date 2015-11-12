@@ -47,6 +47,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -80,6 +83,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -106,6 +112,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -146,6 +155,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -186,6 +198,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -219,6 +234,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -252,6 +270,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -285,6 +306,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -325,6 +349,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -365,6 +392,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -405,6 +435,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -445,6 +478,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -478,6 +514,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -511,6 +550,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -544,6 +586,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -577,6 +622,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -610,6 +658,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -643,6 +694,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -676,6 +730,9 @@ var tasks = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -716,6 +773,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -749,6 +809,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -775,6 +838,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -815,6 +881,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -855,6 +924,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -888,6 +960,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -921,6 +996,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -954,6 +1032,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -994,6 +1075,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1034,6 +1118,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1074,6 +1161,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1114,6 +1204,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1147,6 +1240,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1180,6 +1276,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1213,6 +1312,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1246,6 +1348,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1279,6 +1384,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1312,6 +1420,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',
@@ -1345,6 +1456,9 @@ var tasks2 = [
      icon: 0,
      isTimerRunning: 0,
      creationDate: someDate,
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
      days: {
        id: '1',
        task_id: '1',

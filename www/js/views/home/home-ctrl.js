@@ -389,13 +389,6 @@ angular.module('tracktr.controllers', [])
       $state.go('create');
     };
     
-    /**
-     * Navigation to settings
-     */
-    $scope.openSettings = function() {
-      $state.go('settings');
-    };
-
     $scope.counter = 0;
 
     var mytimeout = null; // the current timeoutID

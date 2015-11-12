@@ -1,5 +1,5 @@
 angular.module('tracktr.controllers')
-.controller("HabitAllController", function($scope, $state, $ionicPopup, TaskService) {
+.controller("HabitAllController", function($scope, $state, $ionicPopup, TaskService, SharingService) {
 
 /**
  * Constants  
@@ -7,6 +7,7 @@ angular.module('tracktr.controllers')
  var EDIT = "Edit";
  var VIEW_REPORT = "View Report";
  var DELETE = "Delete";
+ var SHARE = "Share"
  var DAILY = "Daily";
  var MONTHLY = "Monthly";
  var WEEKLY = "Weekly";
@@ -19,24 +20,29 @@ angular.module('tracktr.controllers')
  var SUNDAY = "Su";
      
   $scope.tasks = [];
-  $scope.options= [EDIT, VIEW_REPORT, DELETE];
+  $scope.options= [EDIT, VIEW_REPORT, DELETE, SHARE];
   
 
   //Get all tasks from DB everytime this view is entered
   $scope.$on("$ionicView.enter", function(){
     TaskService.getAll(function(err,tasks){
     $scope.tasks = tasks;
+    
+    // If nothing in the database.
+    if($scope.tasks.length == 0) {
+        //Put in dummy data
+        for(var i = 0; i < tasks2.length; i++){
+          TaskService.createTask(tasks2[i], function(err,id){
+          });
+        }
+    }
     // for(var i = 0; i< $scope.tasks.length; i++){
     // TaskService.deleteTask($scope.tasks[i], function(err){});
     // }
   }); 
   });
   
-  //Put in dummy data
-  // for(var i = 0; i < tasks2.length; i++){
-  //   TaskService.createTask(tasks2[i], function(err,id){
-  //   });
-  // }
+
    
   /**
    * Returns boolean to tell us
@@ -67,7 +73,50 @@ angular.module('tracktr.controllers')
     if(option === EDIT){
       $state.go('edit', {habitId:task.id});
     }else if(option === VIEW_REPORT){
-      $state.go('tab.charts', {taskId:task.id});
+      $state.go('charts', {taskId:task.id});
+    }else if(option === SHARE) {
+      var newShareState = !task.isShared;
+      if(newShareState) {
+        // TODO
+        var sharePopup = $ionicPopup.confirm({
+          title: 'Share',
+          template: 'Would you like to share this with your friends?'
+        }).then(function(confirm) {
+          if(confirm) {
+            // now set to shared, so send it to firebase
+            task.isShared = true;
+            TaskService.updateTask(task, function(err) {
+              // Upload the task to firebase.
+              SharingService.uploadTask(task, function(err) {
+                if(err) {
+                  console.log(err);
+                }
+              })
+            });
+            
+          }
+        })
+      } else {
+        // TODO
+        var sharePopup = $ionicPopup.confirm({
+          title: 'Unshare',
+          template: 'Would you like to unshare this with your friends?'
+        }).then(function(confirm) {
+          if(confirm) {
+            // no longer shared, tear it down from firebase
+            task.isShared = false;
+            TaskService.updateTask(task, function(err) {
+              // Delete the task from firebase
+              SharingService.removeTask(task, function(err) {
+                if(err) {
+                  console.log(err);
+                }
+              })
+            });
+          }
+        })
+      }
+      
     }else{
     
     var confirmPopup = $ionicPopup.confirm({

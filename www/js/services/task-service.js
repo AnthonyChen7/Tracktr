@@ -8,18 +8,20 @@ angular.module('tracktr.services')
 
   // TASK PREPARED STATEMENTS
   var SELECT_ALL_TASK_PREPARED_STATEMENT = 
-              'SELECT id, name, isActive, frequency, isTime, isCount, goal, icon, isTimerRunning, creationDate ' + 
+              'SELECT id, name, isActive, frequency, isTime, isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID ' + 
               'FROM task';
   var SELECT_TASK_BY_ID_PREPARED_STATEMENT = 
-              'SELECT id, name, isActive, frequency, isTime, isCount, goal, icon, isTimerRunning, creationDate ' + 
+              'SELECT id, name, isActive, frequency, isTime, isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID ' + 
               'FROM task ' + 
               'WHERE id=?';
   var INSERT_TASK_PREPARED_STATEMENT = 
               'INSERT INTO task (name, isActive, frequency, isTime, ' +
-              'isCount, goal, icon, isTimerRunning, creationDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+              'isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID) ' + 
+              'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   var UPDATE_TASK_PREPARED_STATEMENT = 
               'UPDATE task ' +
-              'SET name=?, isActive=?, frequency=?, isTime=?, isCount=?, goal=?, icon=?, isTimerRunning=?, creationDate=? ' +
+              'SET name=?, isActive=?, frequency=?, isTime=?, isCount=?, goal=?, icon=?, isTimerRunning=?, creationDate=?, isShared=?, ' +
+              'fbID=?, firebaseRefID=? ' +
               'WHERE id=?';
   var DELETE_TASK_PREPARED_STATEMENT = 
               'DELETE FROM task ' + 
@@ -297,7 +299,10 @@ angular.module('tracktr.services')
             task.goal, 
             task.icon, 
             (task.isTimerRunning) ? 1 : 0, 
-            task.creationDate.getTime() 
+            task.creationDate.getTime() ,
+            task.isShared ? 1 : 0,
+            task.fbID,
+            task.firebaseRefID,
             ];
   };
   
