@@ -146,16 +146,24 @@
         
         
         <div class="row header">
-        <div class="col">Date</div>
-        <div class="col">Progress Count</div>
+        <div class="col" align='center'>Date</div>
+        <div class="col" align='center'>Progress Count</div>
+        <div class="col"></div>
         </div>
         
-        <div class="row" ng-repeat="p in progress">
-        <div class="col">{{displayFormattedDate(p.date)}}</div>
-        <div class="col">{{displayFormattedProgress(p.progress)}}</div>
+        <div class="row" ng-repeat="p in progress" style="border:1px solid black;">
+        <div class="col" align='center'>{{displayFormattedDate(p.date)}}</div>
+        <div class="col" align='center'>{{displayFormattedProgress(p.progress)}}</div>
+        
+    <div class="col" align='center'>
+    <button>
+      <i class="ion-close-circled"></i>
+    </button>
+     </div>
+
+        
         </div>
-        
-        
+       
         </ion-content>
         </ion-modal-view>
         </script>

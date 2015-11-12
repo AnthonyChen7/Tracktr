@@ -13,7 +13,7 @@ angular.module('tracktr.services', ['tracktr.config'])
     var numTables = DB_CONFIG.tables.length;  // Total number of tables to be created
     var numCreatedTables = 0;                 // Current number of tables created
     
-    //self.nuke(function(){});
+    // self.nuke(function(){});
     
     angular.forEach(DB_CONFIG.tables, function(table) {
       var columns = [];
