@@ -60,10 +60,13 @@ angular.module('tracktr.services')
 		// return the shared tasks
 		var result = [];
 		
-		angular.forEach(tasksRefArray, function(task) {
-			if(tasksRefArray.fbID == friend.id) {
-				result.push(task);
-			}
+		// Wait until the reference to firebase has loaded. 
+		tasksRefArray.$loaded(function() {
+			angular.forEach(tasksRefArray, function(task) {
+				if(task.fbID == friend.id) {
+					result.push(task);
+				}
+			});
 		});
 		
 		return result;
