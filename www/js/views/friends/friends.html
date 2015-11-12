@@ -1,5 +1,30 @@
 <ion-view view-title="Friends">
   <ion-content>
-    <p> Friends </p>
+
+    <div class="list">
+      
+      <!-- Authentication -->
+      <div class="auth-container">
+        <!-- User profile if authenticated -->      
+        <div class="item item-button-right" ng-show="isAuthenticated">
+          <img ng-src="{{profile_url}}"/>
+          {{ name }}
+        </div>
+        
+        <!-- Login Button, only shown if the user is not logged in -->
+        <div class="item item-button-right" ng-show="!isAuthenticated" ng-click="fbAuthentication()">
+          Login with Facebook
+          <button class="button button-positive">
+            <i class="icon ion-social-facebook"></i>
+          </button>
+        </div>
+      
+        <!-- Logout Button, only shown if logged in -->
+        <div class="item item-button-right" ng-show="isAuthenticated" ng-click="logout()">
+          Logout of Facebook
+        </div>
+      </div>
+    </div>
+    
   </ion-content>
 </ion-view>
