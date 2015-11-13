@@ -57,7 +57,10 @@ angular.module('tracktr.services')
               'WHERE id=?';
   var DELETE_PROGRESS_PREPARED_STATEMENT = 
               'DELETE FROM progress ' + 
-              'WHERE task_id=?'
+              'WHERE task_id=?';
+  var DELETE_ONE_PROGRESS_PREPARED_STATEMENT =
+              'DELETE FROM progress ' +
+              'WHERE task_id=? and id=?';
 
   
                         
@@ -164,6 +167,19 @@ angular.module('tracktr.services')
     DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
       .then(function(result) {
         if(callback) callback(result.insertId);
+      });
+  }
+  
+  /**
+   * Delete a progress item from the database
+   * @Param callback err if there was an error.
+   */
+  self.removeProgressFromTask = function(task, progress, callback) {
+    var deleteProgressQueryAttrs = [task.id, progress.id];
+    
+    DB.query(DELETE_ONE_PROGRESS_PREPARED_STATEMENT, deleteProgressQueryAttrs)
+      .then(function(result) {
+        if(callback) callback(null);
       });
   }
   

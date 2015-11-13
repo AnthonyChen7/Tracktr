@@ -306,6 +306,53 @@ describe('Task Service Unit Tests', function(){
       });
     }); 
     
+    it('can insert a task with progress, add progress, and delete the progress', function(done) {
+      var taskWithOneProgress = allTasks[0];
+      var progressToAdd = 
+          {
+              id: 1,
+              task_id: 1,
+              date: new Date(),
+              progress: 11,
+              timerLastStarted: new Date()
+            };
+      
+      // create a task with one progress
+      TaskService.createTask(taskWithOneProgress, function(err, id) {
+          // Set the new id
+          taskWithOneProgress.id = id;
+          
+          // retrieve the task from the database
+          TaskService.getTaskById(id, function(err, task) {
+            
+            // Add progress to the task
+            TaskService.addProgressToTask(taskWithOneProgress, progressToAdd,  function() {
+              
+              // Delete the progress from the database
+              TaskService.removeProgressFromTask(task, progressToAdd, function() {
+                
+                // Retrieve the updated task from the DB    
+                TaskService.getTaskById(id, function(err, task) {
+                  
+                  // Ensure task is null.
+                  expect(task.progress.length).toEqual(1);
+                        
+                  // Ensure that the progress has been deleted in a cascade
+                  DB.query(SELECT_PROGRESS_PREPARED_STATEMENT, [id])
+                    .then(function(progress_result) {
+                      var task_progress = DB.fetchAll(progress_result);
+                            
+                      expect(task_progress.length).toEqual(1);
+                            
+                      done();
+                  });    
+                });
+              });
+            });
+          });
+        });
+      });  
+    
     
     it('can getAll tasks when there are no tasks', function(done) {
       

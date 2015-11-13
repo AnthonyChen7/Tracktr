@@ -1,9 +1,9 @@
 angular.module('tracktr.controllers')
 
 .controller('FriendsController', function ($scope, $state, $ionicHistory, SharingService) {
-	var authKey = window.localStorage['FBAUTHKEY'];
 	
-	$scope.isAuthenticated = (authKey != null);	
+	$scope.isAuthenticated = SharingService.isAuthenticated();
+	
 	
 	$scope.goBack = function() {
 		$ionicHistory.goBack();
@@ -16,6 +16,7 @@ angular.module('tracktr.controllers')
 			} else {
 				$scope.getName();
 				$scope.getProfileURL();
+				$scope.getFriends();
 				$scope.isAuthenticated = true;				
 			}
 		});
@@ -26,7 +27,6 @@ angular.module('tracktr.controllers')
 			
 			SharingService.logoutFB();
 			$scope.isAuthenticated = false;
-			window.localStorage['FBAUTHKEY'] = null;
 				
 		} catch (err) {
 			console.log(err);		
@@ -73,8 +73,7 @@ angular.module('tracktr.controllers')
 		});
 	} 
 	
-	
-	if($scope.isAuthenticated) {
+	if(SharingService.isAuthenticated()) {
 		$scope.getName();
 		$scope.getProfileURL();
 		$scope.getFriends();
