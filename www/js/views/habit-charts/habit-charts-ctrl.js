@@ -123,42 +123,56 @@ angular.module('tracktr.controllers')
       var lastSunday = new Date();
       lastSunday.setDate(today.getDate() - (7*option) - today.getDay());
       lastSunday.setHours(0,0,0,0);
+      var sundayDateString = (lastSunday.getMonth()+1) + "/" + lastSunday.getDate();
+      $scope.labels[0] = $scope.labels[0] + " " + sundayDateString;
       console.log("lastSunday is " + lastSunday.getDate());
       
       //monday date object
       var monday = new Date();
       monday.setDate(today.getDate() - (7*option) - today.getDay() + 1);
       monday.setHours(0,0,0,0);
+      var mondayDateString = (monday.getMonth()+1) + "/" + monday.getDate();
+      $scope.labels[1] = $scope.labels[1] + " " + mondayDateString;
       console.log("Monday is " + monday.getDate());
       
       //tuesday date object
       var tuesday = new Date();
       tuesday.setDate(today.getDate() - (7*option) - today.getDay() + 2);
       tuesday.setHours(0,0,0,0);
+      var tuesdayDateString = (tuesday.getMonth()+1) + "/" + tuesday.getDate();
+      $scope.labels[2] = $scope.labels[2] + " " + tuesdayDateString;
       console.log("Tuesday is " + tuesday.getDate());
       
       //wednesday date object
       var wednesday = new Date();
       wednesday.setDate(today.getDate() - (7*option) - today.getDay() + 3);
       wednesday.setHours(0,0,0,0);
+      var wednesdayDateString = (wednesday.getMonth()+1) + "/" + wednesday.getDate();
+      $scope.labels[3] = $scope.labels[3] + " " + wednesdayDateString;
       console.log("Wednesday is " + wednesday.getDate());
       
       //thursday date object
       var thursday = new Date();
       thursday.setDate(today.getDate() - (7*option) - today.getDay() + 4);
       thursday.setHours(0,0,0,0);
+      var thursdayDateString = (thursday.getMonth()+1) + "/" + thursday.getDate();
+      $scope.labels[4] = $scope.labels[4] + " " + thursdayDateString;
       console.log("Thursday is " + thursday.getDate());
       
       //friday date object
       var friday = new Date();
       friday.setDate(today.getDate() - (7*option) - today.getDay() + 5);
       friday.setHours(0,0,0,0);
+      var fridayDateString = (friday.getMonth()+1) + "/" + friday.getDate();
+      $scope.labels[5] = $scope.labels[5] + " " + fridayDateString;
       console.log("Friday is " + friday.getDate());
       
       //saturday date object
       var saturday = new Date();
       saturday.setDate(today.getDate() - (7*option) - today.getDay() + 6);
       saturday.setHours(0,0,0,0);
+      var saturdayDateString = (saturday.getMonth()+1) + "/" + saturday.getDate();
+      $scope.labels[6] = $scope.labels[6] + " " + saturdayDateString;
       console.log("Saturday is " + saturday.getDate());
       
       //nextSunday date object
@@ -166,6 +180,8 @@ angular.module('tracktr.controllers')
       nextSunday.setDate(today.getDate() - (7*option) - today.getDay() + 7);
       nextSunday.setHours(0,0,0,0);
       console.log("NextSunday is " + nextSunday.getDate());
+      
+      $scope.currentWeek = sundayDateString + " - " + saturdayDateString;
       
       for(var i = 0; i < $scope.task.progress.length; i++) {
         var progressTime = $scope.task.progress[i].date.getTime();
