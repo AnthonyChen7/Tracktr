@@ -245,6 +245,8 @@ angular.module('tracktr.controllers')
       var today = new Date();
       today.setDate(today.getDate() - $scope.days);
       
+      $scope.currentDay = $scope.monthNames[today.getMonth()] + " " + today.getDate(); //for displaying current date  on chart
+      
       for(var i = 0; i < $scope.task.progress.length; i++) {
         var progressDate = $scope.task.progress[i].date;
         if($scope.isSameDate(today,progressDate)) {
