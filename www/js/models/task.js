@@ -3,20 +3,20 @@
  */
 
 /**
- * Task constructor from SQLite representation
+ * Task constructor from SQLite or Firebase representation
  */ 
 var Task = function(task) {
   this.id = task.id;
   this.name = task.name;
-  this.isActive = (task.isActive == 1);
+  this.isActive = (task.isActive ? true : false);
   this.frequency = task.frequency;
-  this.isTime = (task.isTime == 1);
-  this.isCount = (task.isCount == 1);
+  this.isTime = (task.isTime ? true : false);
+  this.isCount = (task.isCount ? true : false);
   this.goal = task.goal;
   this.icon = task.icon;
-  this.isTimerRunning = (task.isTimerRunning == 1);
+  this.isTimerRunning = (task.isTimerRunning ? true : false);
   this.creationDate = new Date(parseInt(task.creationDate, 10));
-  this.isShared = (task.isShared == 1);
+  this.isShared = (task.isShared ? true : false);
   this.fbID = task.fbID;
   this.firebaseRefID = task.firebaseRefID;
 
@@ -64,7 +64,6 @@ Task.prototype.getProgress = function(){
     nextSunday.setHours(23,59,59,999);  
     
     for(var i = 0; i < aTask.progress.length ; i++){
-      
       if(lastSunday.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= nextSunday.getTime()){
       result += aTask.progress[i].progress;
       }
@@ -218,3 +217,46 @@ function pad(num){
     return result;
   }
 };
+
+/**
+ * Firebase does not store everything that we want it to.
+ * 1. dates to numbers
+ */
+Task.prototype.prepareForFirebase = function() {
+  this.creationDate = this.creationDate.getTime();
+
+  for(var i = 0; i < this.progress.length; i++) {
+    var progress = this.progress[i];
+    
+    progress.date = progress.date.getTime();
+    progress.timerLastStarted = progress.timerLastStarted.getTime();
+  }
+  
+}
+
+/**
+ * Opposite of prepareForFirebase
+ */
+Task.prototype.parseFromFirebase = function() {
+  this.creationDate = new Date(this.creationDate);
+
+  for(var i = 0; i < this.progress.length; i++) {
+    var progress = this.progress[i];
+    
+    progress.date = new Date(progress.date);
+    progress.timerLastStarted = new Date(progress.timerLastStarted);
+  }
+
+}
+
+function parseFromFirebase(task) {
+  
+   task.creationDate = new Date(task.creationDate);
+  
+  for(var i = 0; i < task.progress.length; i++) {
+    var progress = task.progress[i];
+    
+    progress.date = new Date(progress.date)
+    progress.timerLastStarted = new Date(progress.timerLastStarted);
+  }
+}

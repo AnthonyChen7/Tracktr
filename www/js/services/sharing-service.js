@@ -59,11 +59,14 @@ angular.module('tracktr.services')
 		// use the friend id to contact firebase and get their shared tasks
 		// return the shared tasks
 		var result = [];
-		
-		angular.forEach(tasksRefArray, function(task) {
-			if(tasksRefArray.fbID == friend.id) {
-				result.push(task);
-			}
+		// Wait until the reference to firebase has loaded. 
+		tasksRefArray.$loaded(function() {
+			angular.forEach(tasksRefArray, function(task) {
+				if(task.fbID == friend.id) {	
+					var fbTask = new Task(task);
+					result.push(fbTask);
+				}
+			});
 		});
 		
 		return result;
@@ -75,7 +78,7 @@ angular.module('tracktr.services')
 	 */
 	self.uploadTask = function(task, callback) {
 		// upload task with current user id to firebase
-		if(!isAuthenticated) {
+		if(!self.isAuthenticated()) {
 			callback("Not Authenticated while trying to upload to firebase");
 			return;
 		}
@@ -84,17 +87,25 @@ angular.module('tracktr.services')
 		
 		// Add our facebook ID to the task
 		task.fbID = fbID;
-		console.log(task.fbID);
+		
+		// Convert all values firebase cannot use to usable values
+		task.prepareForFirebase();
+		
 		tasksRefArray.$add(task).then(function(ref) {
-			console.log("asdf");
 			var id = ref.key();
 			// Add the key of the task in firebase to the task
-			task.firebaseRefID = id;			
+			task.firebaseRefID = id;
+			
+				
+			
 			// Update the task.
 			TaskService.updateTask(task, function(err) {
 				callback(null);
 			});
 		});	
+		
+		// Convert back to values app can understand.
+		task.parseFromFirebase();
 	};
 	
 	/**
@@ -103,7 +114,7 @@ angular.module('tracktr.services')
 	 */
 	self.removeTask = function(task, callback) {
 		// remove the task if it exists in firebase
-		if(!isAuthenticated) {
+		if(!self.isAuthenticated()) {
 			callback("Not Authenticated while trying to delete from firebase");
 			return;
 		}
@@ -118,11 +129,7 @@ angular.module('tracktr.services')
 		});
 		// Delete the found task 
 		tasksRefArray.$remove(taskToDelete).then(function(ref) {
-			if(ref.key() === taskToDelete.firebaseRefID) {
 				callback(null);
-			} else {
-				callback("Delete Failure");
-			}
 		});
 	};
 	
@@ -158,12 +165,12 @@ angular.module('tracktr.services')
 	 * Throws exception if user is not logged in.
 	 */
 	self.logoutFB = function() {
-		if(window.localStorage[FB_AUTH_KEY] == null) {
+		if(window.localStorage[FB_AUTH_KEY] === "0") {
 			throw "Not logged in";
 		}
 		
 		ref.unauth();
-		window.localStorage[FB_AUTH_KEY] = null;
+		window.localStorage[FB_AUTH_KEY] = "0";
 	};
 	
 	//============================================================//
@@ -260,8 +267,12 @@ angular.module('tracktr.services')
 	 * Return a boolean determining whether or not
 	 * the current user is authenticated
 	 */
-	function isAuthenticated() {
-		return (window.localStorage[FB_AUTH_KEY] == null);
+	self.isAuthenticated = function() {
+		if(window.localStorage[FB_AUTH_KEY] === "0" || !window.localStorage[FB_AUTH_KEY]) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	
@@ -270,7 +281,6 @@ angular.module('tracktr.services')
 	 */
 	self.getAuthData = function() {
 		var authData = window.localStorage[FB_AUTH_KEY];
-		
 		if(authData) {
 			return JSON.parse(authData);
 		} else {
