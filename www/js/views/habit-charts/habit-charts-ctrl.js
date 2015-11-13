@@ -183,7 +183,9 @@ angular.module('tracktr.controllers')
           console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][6]);
         }
       }
-      
+      if($scope.task.isTime) {
+        $scope.timeFormat($scope.data);
+      }
       console.log('data is: ' + $scope.data[0]);
     });
   };
@@ -402,6 +404,19 @@ angular.module('tracktr.controllers')
     }
   };
   
+  
+  /**
+   * transform time on the chart to h:m:s format
+   * 
+   */
+  $scope.timeFormat = function(data2DArray) {
+    for(var i = 0;i < data2DArray[0].length;i++) {
+      var progress = data2DArray[0][i];
+      // $scope.data[0][i] = ($scope.data[0][i]/60000) + "Min. " + Math.floor(progress/3600000) + ":" + (Math.floor(progress/60000) % 60) + ":" + (Math.floor(progress/1000) % 60);
+      $scope.data[0][i] = $scope.data[0][i]/60000;
+      console.log("hihihihihi time is: " + $scope.data[0][i] + "minutes");
+    }
+  };
   
   /**
    * Return back to the previous page
