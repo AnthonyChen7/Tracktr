@@ -6,10 +6,15 @@
   </ion-nav-buttons> 
   <ion-content>
     Task Name: {{task.name}}
-    <div ng-init="loadDailyProgress()">
+    <div ng-init="loadDailyProgress(0)">
       <canvas id="bar" class="chart chart-line"
           chart-data="data" chart-labels="labels">
       </canvas>
+      <div>
+        <button ng-click="previousDay()">Previous Day</button>
+        <button ng-click="nextDay()">Next Day</button>
+      </div>
+      
       <button ng-click="updateToPrevious()">Previous week</button>
       <button ng-click="updateToCurrent()">Next week</button>
     </div>
