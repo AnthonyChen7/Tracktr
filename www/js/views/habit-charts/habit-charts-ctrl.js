@@ -385,6 +385,7 @@ angular.module('tracktr.controllers')
       
       var thisYear = new Date();
       thisYear.setFullYear(thisYear.getFullYear() - $scope.years);
+      $scope.currentYear = thisYear.getFullYear();
       
       for(var i = 0;i < $scope.task.progress.length; i++) {
         var month = $scope.task.progress[i].date.getMonth();
