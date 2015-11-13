@@ -149,10 +149,11 @@
         <div class="row header">
         <div class="col" align='center'>Date</div>
         <div class="col" align='center'>Progress Count</div>
-        <div class="col" align='center'>Delete</div>
+        <div class="col" align='center'></div>
         </div>
         
         <div class="row" ng-repeat="p in progress" style="border:1px solid black;">
+        
         <div class="col" align='center'>{{displayFormattedDate(p.date)}}</div>
         <div class="col" align='center'>{{displayFormattedProgress(p.progress)}}</div>
         
@@ -167,6 +168,30 @@
        
         </ion-content>
         </ion-modal-view>
+        </script>
+        
+        <script id="addProgressModal.html" type="text/ng-template">
+        <ion-modal-view>
+       <ion-header-bar class="bar bar-header bar-dark">
+                <h1 class="title" style="text-align: center;">Add New Progress</h1>
+           
+        </ion-header-bar>
+        <ion-content>
+        
+        <div class="padding-left padding-right">
+          <button class="button button-block button-dark">
+            Save
+          </button>
+        </div>
+        
+         <div class="padding-left padding-right padding-bottom">
+          <button class="button button-block button-dark">
+            Cancel
+          </button>
+        </div>
+        
+        </ion-content> 
+        </ion-modal-view>  
         </script>
         
         <div class="padding-left padding-right">
