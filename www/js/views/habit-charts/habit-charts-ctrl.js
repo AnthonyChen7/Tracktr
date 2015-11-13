@@ -56,7 +56,7 @@ angular.module('tracktr.controllers')
   ///pseudo code for displaying daily: go through every progress entry, put first one into a date, and a progressChart
   ///for every entry i, check if the date is the same as i-1, if it is, add the progress to it
   ///if not, append new element to the date (label) array, append new element to data array
-  $scope.loadDailyProgress = function() {
+  $scope.loadDailyProgress_1 = function() {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
       
@@ -105,6 +105,8 @@ angular.module('tracktr.controllers')
    * option is: 0 for current week,
    *            1 for last week,
    *            2 for two weeks ago etc
+   * 
+   * TODO: create helper to check if a date is on sun mon tues...etc
    */
   
   $scope.loadWeeklyProgress = function(option) {
@@ -224,19 +226,140 @@ angular.module('tracktr.controllers')
     $scope.loadWeeklyProgress($scope.week);
   }
   
-  /*
-     *Reload tasks every time home tab is entered
-     */
-    $scope.$on("$ionicView.enter", function () {
-      TaskService.getTaskById($scope.taskId, function(err, task) {
-        $scope.task = task;
-      });
+  /**
+   * pseudo code for displaying progress by hours:
+   * get date of today, set hours to (0,0,0,0)
+   * 
+   * for every progress entry, checkDate = task.progress.date; checkDate.setHours(0,0,0,0);
+   * get date.getHours, if from 0-1 && checkDate.getTime() === today.getTime(), put into data[0][0]
+   * 1-2, data[0][1]
+   * 
+   */
+  $scope.loadDailyProgress = function() {
+    TaskService.getTaskById($scope.taskId, function(err, task) { 
+      $scope.task = task;
+      $scope.labels = ['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00',
+                       '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+      $scope.data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]                 
+      var today = new Date();
+      
+      
+      for(var i = 0; i < $scope.task.progress.length; i++) {
+        var progressDate = $scope.task.progress[i].date;
+        if($scope.isSameDate(today,progressDate)) {
+        // var checkTime = checkDate.getTime();
+        // var actualDate = $scope.task.progress[i].date;
+           var hours = progressDate.getHours();
+           console.log('hour is: ' + hours);
+           $scope.data[0][hours] += $scope.task.progress[i].progress;
+           console.log('progress is: ' + $scope.task.progress[i].progress);
+          //  switch(hours) {
+          //    case 0:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 1:
+          //        $scope.data[0][1] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 2:
+          //        $scope.data[0][2] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 3:
+          //        $scope.data[0][3] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 4:
+          //        $scope.data[0][4] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 5:
+          //        $scope.data[0][5] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 6:
+          //        $scope.data[0][6] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 7:
+          //        $scope.data[0][] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 8:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 9:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 10:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 11:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 12:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 13:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 14:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 15:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 16:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 17:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 18:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 19:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 20:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 21:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 22:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+          //    case 23:
+          //        $scope.data[0][0] += $scope.task.progress[i].progress;
+          //        break;
+             
+          //  }
+        
+        }
+      }
+      
     });
+  };
   
-   /**
-    * Return back to the previous page
-    */
-    $scope.goBack = function() {
-      $ionicHistory.goBack();
-    };
+  /**
+   * Check if two dates are the same
+   */
+  $scope.isSameDate = function(date1,date2) {
+    console.log('today is: ' + date1.getDate() + ', progressDate is: ' + date2.getDate());
+    return(
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  };
+  
+  /** 
+   * Reload tasks every time home tab is entered
+   */
+  $scope.$on("$ionicView.enter", function () {
+    TaskService.getTaskById($scope.taskId, function(err, task) {
+      $scope.task = task;
+    });
+  });
+  
+  /**
+   * Return back to the previous page
+   */
+  $scope.goBack = function() {
+    $ionicHistory.goBack();
+  };
 });

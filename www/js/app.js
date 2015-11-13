@@ -70,6 +70,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
   })
   
   .state('charts', {
+    cache: false,
     url: '/charts/:taskId',
     templateUrl: 'js/views/habit-charts/habit-charts.html',
     controller: 'HabitChartsController'
