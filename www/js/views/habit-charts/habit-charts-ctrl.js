@@ -6,7 +6,7 @@ angular.module('tracktr.controllers')
 	console.log($scope.taskId);
 	// $scope.labels = ['Nov. 1', 'Nov. 2', 'Nov. 3', 'Nov. 4', 'Nov. 5', 'Nov. 6', 'Nov. 7','Nov. 8','Nov. 9','Nov. 10','Nov. 11','Nov. 12','Nov. 13'];
   $scope.labels = [];
-  $scope.series = ['Series A', 'Series B'];
+  // $scope.series = ['Series A', 'Series B'];
   
   //Month names
   $scope.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -235,14 +235,15 @@ angular.module('tracktr.controllers')
    * 1-2, data[0][1]
    * 
    */
-  $scope.loadDailyProgress = function() {
+  $scope.loadDailyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
       $scope.labels = ['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00',
                        '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
-      $scope.data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]                 
+      $scope.data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+      $scope.days = option;                
       var today = new Date();
-      
+      today.setDate(today.getDate() - $scope.days);
       
       for(var i = 0; i < $scope.task.progress.length; i++) {
         var progressDate = $scope.task.progress[i].date;
@@ -335,6 +336,7 @@ angular.module('tracktr.controllers')
     });
   };
   
+  
   /**
    * Check if two dates are the same
    */
@@ -345,6 +347,26 @@ angular.module('tracktr.controllers')
       date1.getMonth() === date2.getMonth() &&
       date1.getDate() === date2.getDate()
     );
+  };
+  
+  
+  /**
+   * Update the chart to previous day
+   */
+  $scope.previousDay = function() {
+    $scope.days += 1;
+    $scope.loadDailyProgress($scope.days);
+  };
+  
+  
+  /**
+   * Update the chart to the next day
+   */
+  $scope.nextDay = function() {
+    if($scope.days >0){
+      $scope.days -= 1;
+      $scope.loadDailyProgress($scope.days);
+    }
   };
   
   /** 
