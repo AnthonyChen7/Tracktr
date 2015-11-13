@@ -371,6 +371,51 @@ angular.module('tracktr.controllers')
     }
   };
   
+  
+  /**
+   * pseudo code:
+   * for every progress entry, check if the date is 
+   */
+  $scope.loadMonthlyProgress = function(option) {
+    TaskService.getTaskById($scope.taskId, function(err, task) {
+      $scope.task = task;
+      $scope.data = [[0,0,0,0,0,0,0,0,0,0,0,0]];
+      $scope.labels = $scope.monthNames;
+      $scope.years = option;
+      
+      var thisYear = new Date();
+      thisYear.setFullYear(thisYear.getFullYear() - $scope.years);
+      
+      for(var i = 0;i < $scope.task.progress.length; i++) {
+        var month = $scope.task.progress[i].date.getMonth();
+        if($scope.task.progress[i].date.getFullYear() === thisYear.getFullYear()) {
+          $scope.data[0][month] += $scope.task.progress[i].progress;
+        }
+      }
+    });
+  };
+  
+  
+  /**
+   * Update chart to display the previous year
+   */
+  $scope.previousYear = function() {
+    $scope.years += 1;
+    $scope.loadMonthlyProgress($scope.years);
+  };
+  
+  
+  /**
+   * Update chart to display the previous year
+   */
+  $scope.nextYear = function() {
+    if($scope.years > 0) {
+       $scope.years -= 1;
+       $scope.loadMonthlyProgress($scope.years);
+    }
+  };
+  
+  
   /** 
    * Reload tasks every time home tab is entered
    */
