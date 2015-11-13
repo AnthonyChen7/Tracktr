@@ -433,15 +433,6 @@ angular.module('tracktr.controllers')
   };
   
   
-  /** 
-   * Reload tasks every time home tab is entered
-   */
-  $scope.$on("$ionicView.enter", function () {
-    TaskService.getTaskById($scope.taskId, function(err, task) {
-      $scope.task = task;
-    });
-  });
-  
   /**
    * Return back to the previous page
    */
