@@ -4,54 +4,15 @@ angular.module('tracktr.controllers')
 	$scope.testBoolean = true;
   $scope.taskId = $stateParams.taskId;
 	console.log($scope.taskId);
-	// $scope.labels = ['Nov. 1', 'Nov. 2', 'Nov. 3', 'Nov. 4', 'Nov. 5', 'Nov. 6', 'Nov. 7','Nov. 8','Nov. 9','Nov. 10','Nov. 11','Nov. 12','Nov. 13'];
   $scope.labels = [];
-  // $scope.series = ['Series A', 'Series B'];
   
   //Month names
   $scope.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-  // $scope.data = [
-  //   [65, 59, 80, 81, 56, 55, 40],
-  //   [28, 48, 40, 19, 86, 27, 90]
-  // ];
   $scope.task_progress = [];
   $scope.progress=[[]];
   $scope.data = [[]];
  
-  
-  $scope.loadProgress = function() {
-    TaskService.getTaskById($scope.taskId, function(err, task) { 
-    $scope.task = task;
-      
-      //Only loads every progress entry into progress, to display on chart
-      // for(var i = 0; i < task.progress.length; i++) {
-      //   $scope.progress[0][i] = task.progress[i].progress;
-      //   console.log("progress " + i + " is " + $scope.progress[0][i]);
-      // }
-      
-    var today = new Date();
-    var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
-    var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1);
-    var result = 0;
-    
-    for(var i = 0; i < $scope.task.progress.length ; i++){
-      
-      if(firstDayOfMonth.getTime() <= $scope.task.progress[i].date.getTime() && $scope.task.progress[i].date.getTime() <= lastDayOfMonth.getTime()){
-         result += $scope.task.progress[i].progress;
-      } 
-    }
-    
-    if(task.isTime) {
-      result = Math.floor(result / 1000);
-    }
-    console.log(result);
-    $scope.progress[0][0] = result;  
-    $scope.labels = [$scope.monthNames[today.getMonth()]];
-    
-      
-    });
-  };
   
   ///pseudo code for displaying daily: go through every progress entry, put first one into a date, and a progressChart
   ///for every entry i, check if the date is the same as i-1, if it is, add the progress to it
@@ -92,6 +53,7 @@ angular.module('tracktr.controllers')
     });
   };
   
+  
   /*
    * get current week: getlast sunday, get next sunday
    * put Sun Mon Tue Wed Thur Fri Sat in labels array
@@ -108,7 +70,6 @@ angular.module('tracktr.controllers')
    * 
    * TODO: create helper to check if a date is on sun mon tues...etc
    */
-  
   $scope.loadWeeklyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
@@ -227,6 +188,10 @@ angular.module('tracktr.controllers')
     });
   };
   
+  
+  /**
+   * Update the chart to display the previous week
+   */
   $scope.previousWeek = function() { 
     console.log("!!week is: " + $scope.week);
     $scope.week+=1;
@@ -234,6 +199,10 @@ angular.module('tracktr.controllers')
     $scope.loadWeeklyProgress($scope.week);
   };
   
+  
+  /**
+   * Update the chart to display the next week
+   */
   $scope.nextWeek = function() {
     // console.log("!!week is: " + $scope.week);
     if($scope.week > 0)
@@ -241,6 +210,7 @@ angular.module('tracktr.controllers')
     console.log("week is: " + $scope.week);
     $scope.loadWeeklyProgress($scope.week);
   }
+  
   
   /**
    * pseudo code for displaying progress by hours:
@@ -369,7 +339,7 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * Update the chart to previous day
+   * Update the chart to display the previous day
    */
   $scope.previousDay = function() {
     $scope.days += 1;
@@ -378,7 +348,7 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * Update the chart to the next day
+   * Update the chart to display the next day
    */
   $scope.nextDay = function() {
     if($scope.days >0){
@@ -414,7 +384,7 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * Update chart to display the previous year
+   * Update the chart to display the previous year
    */
   $scope.previousYear = function() {
     $scope.years += 1;
@@ -423,7 +393,7 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * Update chart to display the previous year
+   * Update the chart to display the previous year
    */
   $scope.nextYear = function() {
     if($scope.years > 0) {
