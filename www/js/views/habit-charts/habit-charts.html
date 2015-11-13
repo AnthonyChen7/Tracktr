@@ -6,6 +6,8 @@
   </ion-nav-buttons> 
   <ion-content>
     Task Name: {{task.name}}
+    <br>
+    Date: {{currentDay}}
     <div ng-init="loadDailyProgress(0)">
       <canvas id="bar" class="chart chart-line"
           chart-data="data" chart-labels="labels">
