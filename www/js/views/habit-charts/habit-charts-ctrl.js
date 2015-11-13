@@ -211,14 +211,14 @@ angular.module('tracktr.controllers')
     });
   };
   
-  $scope.updateToPrevious = function() { 
+  $scope.previousWeek = function() { 
     console.log("!!week is: " + $scope.week);
     $scope.week+=1;
     console.log("week is: " + $scope.week);
     $scope.loadWeeklyProgress($scope.week);
   };
   
-  $scope.updateToCurrent = function() {
+  $scope.nextWeek = function() {
     // console.log("!!week is: " + $scope.week);
     if($scope.week > 0)
        $scope.week-=1;
