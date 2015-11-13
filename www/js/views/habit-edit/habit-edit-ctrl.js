@@ -356,6 +356,10 @@ angular.module('tracktr.controllers')
 		$ionicHistory.goBack();
 	}
 	
+	/**
+	 * Displays the date in an appropriate format
+	 * date is a javascript date object
+	 */
 	$scope.displayFormattedDate = function(date){
 		var yyyy= date.getFullYear().toString();
 		var mm = (date.getMonth()+1).toString(); //getMonth() is zero based
@@ -367,15 +371,38 @@ angular.module('tracktr.controllers')
 		return  yyyy+"/"+(mm[1]?mm:"0"+mm[0])+"/"+(dd[1]?dd:"0"+dd[0]) + " "+ pad(hours)+":"+pad(minutes);
 	};
 	
-	$scope.displayFormattedProgress = function(progress){
+	/**
+	 * Displays the progress in an appropriate format
+	 * 
+	 */
+	$scope.displayFormattedProgress = function(progressCount){
 		if($scope.task.isTime === true){
-			var seconds = toSeconds(progress);
-			var minutes = toMinutes(progress);
-			var hours = toHours(progress);
+			var seconds = toSeconds(progressCount);
+			var minutes = toMinutes(progressCount);
+			var hours = toHours(progressCount);
 			return hours+":"+pad(minutes)+":"+pad(seconds);
 		}else{
-			return progress;
+			return progressCount;
 		}
+	};
+	
+	/**
+	 * Deletes the specified progress from the progress array of the task object
+	 * progressObject is a valid progress object
+	 */
+	$scope.deleteProgress = function(progressObject){
+		TaskService.removeProgressFromTask($scope.task, progressObject, function(err){
+			
+			TaskService.updateTask($scope.task, function(err){
+				var index = $scope.progress.indexOf(progressObject);
+          $scope.progress.splice(index,1);
+			});
+			
+		} );
+		
+		
+		
+		
 	};
 	
 	/**
