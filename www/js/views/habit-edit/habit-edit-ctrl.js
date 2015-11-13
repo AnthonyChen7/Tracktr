@@ -391,11 +391,13 @@ angular.module('tracktr.controllers')
 	 * progressObject is a valid progress object
 	 */
 	$scope.deleteProgress = function(progressObject){
+		
+		var index = $scope.progress.indexOf(progressObject);
+		
 		TaskService.removeProgressFromTask($scope.task, progressObject, function(err){
 			
 			TaskService.updateTask($scope.task, function(err){
-				var index = $scope.progress.indexOf(progressObject);
-          $scope.progress.splice(index,1);
+          		$scope.progress.splice(index,1);
 			});
 			
 		} );
