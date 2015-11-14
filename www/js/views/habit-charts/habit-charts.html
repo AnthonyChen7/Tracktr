@@ -8,9 +8,9 @@
     <h3>Task Name: {{task.name}}</h3>
     <br>
     <div class="button-bar">
-       <a class="button button-outline button-positive" ng-click="showDaily()"> Daily </a>
-       <a class="button button-outline button-positive" ng-click="showMonthly()"> Monthly </a>
-       <a class="button button-outline button-positive" ng-click="showWeekly()"> Weekly </a>
+       <a class="button button-outline button-positive" ng-click="showDaily()" ng-disabled="isDaily"> Daily </a>
+       <a class="button button-outline button-positive" ng-click="showMonthly()" ng-disabled="isMonthly"> Monthly </a>
+       <a class="button button-outline button-positive" ng-click="showWeekly()" ng-disabled="isWeekly"> Weekly </a>
     </div>
     
     <div ng-if="isWeekly">
