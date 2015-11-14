@@ -15,43 +15,41 @@
     
     <div ng-if="isWeekly">
       <br>
-      <div>
+      <div class="row">
+        <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousWeek()">Previous week</a>
         <p class="col text-center">Week: {{currentWeek}}</p>
+        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextWeek()">Next week</a>
       </div>
       <br>
       <canvas id="bar" class="chart chart-line"
           chart-data="data" chart-labels="labels" on-swipe-right="previousWeek()" on-swipe-left="nextWeek()">
       </canvas>
-      <div>
-        <a class="button icon-left ion-chevron-left button-outline button-positive" ng-click="previousWeek()">Previous week</a>
-        <a class="button icon-right ion-chevron-right button-outline button-positive" ng-click="nextWeek()">Next week</a>
-      </div>
     </div>
     
     <div ng-if="isDaily">
       <br>
-      <div class="col text-center">Date: {{currentDay}}</div>
+      <div class="row">
+        <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousDay()">Previous Day</a>
+        <p class="col text-center">Date: {{currentDay}}</p>
+        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextDay()">Next Day</a>
+      </div>
       <br>
       <canvas id="bar" class="chart chart-line"
           chart-data="data" chart-labels="labels" on-swipe-right="previousDay()" on-swipe-left="nextDay()">
       </canvas>
-      <div>
-        <a class="button icon-left ion-chevron-left button-outline button-positive" ng-click="previousDay()">Previous Day</a>
-        <a class="button icon-right ion-chevron-right button-outline button-positive" ng-click="nextDay()">Next Day</a>
-      </div>
     </div>
       
     <div ng-if="isMonthly">
       <br>
-      <div class="col text-center">Year: {{currentYear}}</div>
+      <div class="row">
+        <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousYear()">Previous Year</a>
+        <p class="col text-center">Year: {{currentYear}}</p>
+        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextYear()">Next Year</a>
+      </div>
       <br>
       <canvas id="bar" class="chart chart-line"
           chart-data="data" chart-labels="labels" on-swipe-right="previousYear()" on-swipe-left="nextYear()">
       </canvas>
-      <div>
-        <a class="button icon-left ion-chevron-left button-outline button-positive" ng-click="previousYear()">Previous Year</a>
-        <a class="button icon-right ion-chevron-right button-outline button-positive" ng-click="nextYear()">Next Year</a>
-      </div>
     </div>
   </ion-content>
 </ion-view>
