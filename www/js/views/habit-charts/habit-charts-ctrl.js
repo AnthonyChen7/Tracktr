@@ -355,10 +355,12 @@ angular.module('tracktr.controllers')
    * Switch to daily chart view
    */
   $scope.showDaily = function() {
-    $scope.isWeekly = false;
-    $scope.isDaily = true;
-    $scope.isMonthly = false;
-    $scope.loadDailyProgress(0);
+    if(!$scope.isDaily){
+       $scope.isWeekly = false;
+       $scope.isDaily = true;
+       $scope.isMonthly = false;
+       $scope.loadDailyProgress(0);
+    }
   };
   
   
@@ -366,10 +368,12 @@ angular.module('tracktr.controllers')
    * Switch to monthly chart view
    */
   $scope.showMonthly = function() {
-    $scope.isWeekly = false;
-    $scope.isDaily = false;
-    $scope.isMonthly = true;
-    $scope.loadMonthlyProgress(0);
+    if(!$scope.isMonthly){
+       $scope.isWeekly = false;
+       $scope.isDaily = false;
+       $scope.isMonthly = true;
+       $scope.loadMonthlyProgress(0);
+    }
   };
   
   
@@ -377,10 +381,12 @@ angular.module('tracktr.controllers')
    * Switch to weekly chart view
    */
   $scope.showWeekly = function() {
-    $scope.isWeekly = true;
-    $scope.isDaily = false;
-    $scope.isMonthly = false;
-    $scope.loadWeeklyProgress(0);
+    if(!$scope.isWeekly) {
+       $scope.isWeekly = true;
+       $scope.isDaily = false;
+       $scope.isMonthly = false;
+       $scope.loadWeeklyProgress(0);
+    }
   };
   
   
