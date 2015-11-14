@@ -229,6 +229,7 @@ angular.module('tracktr.controllers')
   $scope.loadDailyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
+    });
       $scope.labels = ['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00',
                        '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
       $scope.data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
@@ -251,8 +252,6 @@ angular.module('tracktr.controllers')
            console.log('progress is: ' + $scope.task.progress[i].progress);
         }
       }
-      
-    });
   };
   
   
@@ -295,6 +294,7 @@ angular.module('tracktr.controllers')
   $scope.loadMonthlyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) {
       $scope.task = task;
+    });
       $scope.data = [[0,0,0,0,0,0,0,0,0,0,0,0]];
       $scope.isWeekly = false;
       $scope.isDaily = false;
@@ -313,7 +313,6 @@ angular.module('tracktr.controllers')
           $scope.data[0][month] += $scope.task.progress[i].progress;
         }
       }
-    });
   };
   
   
