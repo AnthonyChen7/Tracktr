@@ -9,49 +9,49 @@ angular.module('tracktr.controllers')
   //Month names
   $scope.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-  $scope.task_progress = [];
-  $scope.progress=[[]];
+  // $scope.task_progress = [];
+  // $scope.progress=[[]];
   $scope.data = [[]];
  
   
   ///pseudo code for displaying daily: go through every progress entry, put first one into a date, and a progressChart
   ///for every entry i, check if the date is the same as i-1, if it is, add the progress to it
   ///if not, append new element to the date (label) array, append new element to data array
-  $scope.loadDailyProgress_1 = function() {
-    TaskService.getTaskById($scope.taskId, function(err, task) { 
-      $scope.task = task;
+  // $scope.loadDailyProgress_1 = function() {
+  //   TaskService.getTaskById($scope.taskId, function(err, task) { 
+  //     $scope.task = task;
       
-      var previousDate = null;
-      var currentDate = null;
-      var previousIndex = null;
-      for(var i = 0; i < $scope.task.progress.length; i++) {
-        if(i === 0) {
-          previousDate = ($scope.task.progress[i].date.getMonth()+1) + "/" + $scope.task.progress[i].date.getDate();
-          console.log("Date: " + previousDate);
-          $scope.labels.push(previousDate);
-          $scope.progress[0][i] = $scope.task.progress[i].progress;
-          previousIndex = i;
-        }
-        else {
-          currentDate = ($scope.task.progress[i].date.getMonth()+1) + "/" + $scope.task.progress[i].date.getDate();
-          console.log("Date: " + currentDate);
-          if(currentDate === previousDate) {
-            $scope.progress[0][previousIndex] += $scope.task.progress[i].progress;
-            console.log("progress: " + $scope.progress[0][previousIndex] + "at index " + previousIndex);
-          }
-          else {
-            $scope.labels.push(currentDate);
-            $scope.progress[0][previousIndex + 1] = $scope.task.progress[i].progress;
-            console.log("second progress: " + $scope.progress[0][previousIndex + 1]);
-            previousIndex += 1;
-            previousDate = currentDate;
-          }
-        }
+  //     var previousDate = null;
+  //     var currentDate = null;
+  //     var previousIndex = null;
+  //     for(var i = 0; i < $scope.task.progress.length; i++) {
+  //       if(i === 0) {
+  //         previousDate = ($scope.task.progress[i].date.getMonth()+1) + "/" + $scope.task.progress[i].date.getDate();
+  //         console.log("Date: " + previousDate);
+  //         $scope.labels.push(previousDate);
+  //         $scope.progress[0][i] = $scope.task.progress[i].progress;
+  //         previousIndex = i;
+  //       }
+  //       else {
+  //         currentDate = ($scope.task.progress[i].date.getMonth()+1) + "/" + $scope.task.progress[i].date.getDate();
+  //         console.log("Date: " + currentDate);
+  //         if(currentDate === previousDate) {
+  //           $scope.progress[0][previousIndex] += $scope.task.progress[i].progress;
+  //           console.log("progress: " + $scope.progress[0][previousIndex] + "at index " + previousIndex);
+  //         }
+  //         else {
+  //           $scope.labels.push(currentDate);
+  //           $scope.progress[0][previousIndex + 1] = $scope.task.progress[i].progress;
+  //           console.log("second progress: " + $scope.progress[0][previousIndex + 1]);
+  //           previousIndex += 1;
+  //           previousDate = currentDate;
+  //         }
+  //       }
         
-      }
+  //     }
       
-    });
-  };
+  //   });
+  // };
   
   
   /*
@@ -218,13 +218,7 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * pseudo code for displaying progress by hours:
-   * get date of today, set hours to (0,0,0,0)
-   * 
-   * for every progress entry, checkDate = task.progress.date; checkDate.setHours(0,0,0,0);
-   * get date.getHours, if from 0-1 && checkDate.getTime() === today.getTime(), put into data[0][0]
-   * 1-2, data[0][1]
-   * 
+   * Load daily chart by hours for the whole day
    */
   $scope.loadDailyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
