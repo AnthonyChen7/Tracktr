@@ -18,7 +18,7 @@
       <div class="row">
         <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousWeek()">Previous week</a>
         <p class="col text-center">Week: {{currentWeek}}</p>
-        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextWeek()">Next week</a>
+        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextWeek()" ng-disabled="week<=0">Next week</a>
       </div>
       <br>
       <canvas id="bar" class="chart chart-line"
@@ -31,7 +31,7 @@
       <div class="row">
         <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousDay()">Previous Day</a>
         <p class="col text-center">Date: {{currentDay}}</p>
-        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextDay()">Next Day</a>
+        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextDay()" ng-disabled="days<=0">Next Day</a>
       </div>
       <br>
       <canvas id="bar" class="chart chart-line"
@@ -44,7 +44,7 @@
       <div class="row">
         <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousYear()">Previous Year</a>
         <p class="col text-center">Year: {{currentYear}}</p>
-        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextYear()">Next Year</a>
+        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextYear()" ng-disabled="years<=0">Next Year</a>
       </div>
       <br>
       <canvas id="bar" class="chart chart-line"
