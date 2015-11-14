@@ -290,8 +290,7 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * pseudo code:
-   * for every progress entry, check if the date is 
+   * Load monthly chart within the year
    */
   $scope.loadMonthlyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) {
