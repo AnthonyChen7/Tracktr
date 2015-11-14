@@ -245,88 +245,10 @@ angular.module('tracktr.controllers')
       for(var i = 0; i < $scope.task.progress.length; i++) {
         var progressDate = $scope.task.progress[i].date;
         if($scope.isSameDate(today,progressDate)) {
-        // var checkTime = checkDate.getTime();
-        // var actualDate = $scope.task.progress[i].date;
            var hours = progressDate.getHours();
            console.log('hour is: ' + hours);
            $scope.data[0][hours] += $scope.task.progress[i].progress;
            console.log('progress is: ' + $scope.task.progress[i].progress);
-          //  switch(hours) {
-          //    case 0:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 1:
-          //        $scope.data[0][1] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 2:
-          //        $scope.data[0][2] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 3:
-          //        $scope.data[0][3] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 4:
-          //        $scope.data[0][4] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 5:
-          //        $scope.data[0][5] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 6:
-          //        $scope.data[0][6] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 7:
-          //        $scope.data[0][] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 8:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 9:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 10:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 11:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 12:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 13:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 14:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 15:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 16:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 17:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 18:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 19:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 20:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 21:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 22:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-          //    case 23:
-          //        $scope.data[0][0] += $scope.task.progress[i].progress;
-          //        break;
-             
-          //  }
-        
         }
       }
       
@@ -368,8 +290,7 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * pseudo code:
-   * for every progress entry, check if the date is 
+   * Load monthly chart within the year
    */
   $scope.loadMonthlyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) {
@@ -431,33 +352,43 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * 3 different divs, for daily, weekly, monthly
-   * 3 scope variables: isDaily, isWeekly, isMonthly to identify which view user wants to see
-   * ng-show to check the 3 scope variables
-   * do on-swipe-left and right on the chart, also two buttons for previous/next
+   * Switch to daily chart view
    */
   $scope.showDaily = function() {
-    $scope.isWeekly = false;
-    $scope.isDaily = true;
-    $scope.isMonthly = false;
-    $scope.loadDailyProgress(0);
+    if(!$scope.isDaily){
+       $scope.isWeekly = false;
+       $scope.isDaily = true;
+       $scope.isMonthly = false;
+       $scope.loadDailyProgress(0);
+    }
   };
   
   
+  /**
+   * Switch to monthly chart view
+   */
   $scope.showMonthly = function() {
-    $scope.isWeekly = false;
-    $scope.isDaily = false;
-    $scope.isMonthly = true;
-    $scope.loadMonthlyProgress(0);
+    if(!$scope.isMonthly){
+       $scope.isWeekly = false;
+       $scope.isDaily = false;
+       $scope.isMonthly = true;
+       $scope.loadMonthlyProgress(0);
+    }
   };
   
   
+  /**
+   * Switch to weekly chart view
+   */
   $scope.showWeekly = function() {
-    $scope.isWeekly = true;
-    $scope.isDaily = false;
-    $scope.isMonthly = false;
-    $scope.loadWeeklyProgress(0);
+    if(!$scope.isWeekly) {
+       $scope.isWeekly = true;
+       $scope.isDaily = false;
+       $scope.isMonthly = false;
+       $scope.loadWeeklyProgress(0);
+    }
   };
+  
   
   /**
    * Return back to the previous page
