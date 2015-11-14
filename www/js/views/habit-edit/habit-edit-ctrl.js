@@ -164,6 +164,14 @@ angular.module('tracktr.controllers')
 		$scope.closeDaysModal();
 	};
 	
+	//Add Progress Modal
+	$ionicModal.fromTemplateUrl('addProgressModal.html',{
+		scope:$scope,
+		animation: 'slide-in-up'
+	}).then(function(addProgressModal){
+		$scope.addProgressModal = addProgressModal;
+	});
+		
 	//Edit Progress Modal
 	$ionicModal.fromTemplateUrl('editProgressModal.html',{
 		scope:$scope,
@@ -202,6 +210,29 @@ angular.module('tracktr.controllers')
 	});
 	// Execute action on remove modal
 	$scope.$on('daysModal.removed', function() {
+		// Execute action
+	});
+	
+	//Modal Helpers - Add Progress
+	$scope.openAddProgressModal = function(){
+		$scope.addProgressModal.show();
+	};
+	
+	$scope.closeAddProgressModal = function(){
+		$scope.addProgressModal.hide();
+	};
+	
+	//Clean up edit progress modal when we're done with it
+	$scope.$on('$destroy',function(){
+		$scope.addProgressModal.remove();
+	});
+	
+	// Execute action on hide modal
+	$scope.$on('addProgressModal.hidden', function() {
+		// Execute action
+	});
+	// Execute action on remove modal
+	$scope.$on('addProgressModal.removed', function() {
 		// Execute action
 	});
 	
