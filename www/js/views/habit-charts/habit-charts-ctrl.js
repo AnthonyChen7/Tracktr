@@ -352,10 +352,7 @@ angular.module('tracktr.controllers')
   
   
   /**
-   * 3 different divs, for daily, weekly, monthly
-   * 3 scope variables: isDaily, isWeekly, isMonthly to identify which view user wants to see
-   * ng-show to check the 3 scope variables
-   * do on-swipe-left and right on the chart, also two buttons for previous/next
+   * Switch to daily chart view
    */
   $scope.showDaily = function() {
     $scope.isWeekly = false;
@@ -365,6 +362,9 @@ angular.module('tracktr.controllers')
   };
   
   
+  /**
+   * Switch to monthly chart view
+   */
   $scope.showMonthly = function() {
     $scope.isWeekly = false;
     $scope.isDaily = false;
@@ -373,12 +373,16 @@ angular.module('tracktr.controllers')
   };
   
   
+  /**
+   * Switch to weekly chart view
+   */
   $scope.showWeekly = function() {
     $scope.isWeekly = true;
     $scope.isDaily = false;
     $scope.isMonthly = false;
     $scope.loadWeeklyProgress(0);
   };
+  
   
   /**
    * Return back to the previous page
