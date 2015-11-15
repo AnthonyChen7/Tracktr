@@ -186,11 +186,17 @@
         <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'yyyy/MM/dd'}}</button>
         </ionic-datepicker>
          </label> 
-        
-        
-          
-        
-        
+       
+       <label class="item item-input">
+            <span class="input-label">Progress Time</span>
+       <ionic-timepicker input-obj="timePickerObject">
+  <button class="button button-block button-positive overflowShow">
+    <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
+    {{progressHour}}:{{progressMinute}}
+  </button>
+</ionic-timepicker>
+</label>
+       
         <div class="padding-left padding-right">
           <button class="button button-block button-dark">
             Save

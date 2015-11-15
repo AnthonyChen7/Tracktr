@@ -4,6 +4,10 @@ angular.module('tracktr.controllers')
 	
 	$scope.habitId = $stateParams.habitId;
 	
+	var today = new Date();
+	$scope.progressHour = pad(today.getHours());
+	$scope.progressMinute = pad(today.getMinutes());
+	
 	$scope.habitTypes = [
 		{name: "Time", code: 0},
 		{name: "Count", code: 1}
@@ -86,7 +90,34 @@ angular.module('tracktr.controllers')
     console.log('Selected date is : ', val)
 	$scope.datepickerObject.inputDate = val;
   }
-};		
+};
+
+$scope.timePickerObject = {
+  inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
+  step: 1,  //Optional
+  format: 24,  //Optional
+  titleLabel: 'Progress Time',  //Optional
+  setLabel: 'Set',  //Optional
+  closeLabel: 'Close',  //Optional
+  setButtonType: 'button-positive',  //Optional
+  closeButtonType: 'button-stable',  //Optional
+  callback: function (val) {    //Mandatory
+    timePickerCallback(val);
+  }
+};
+
+//Mandatory callback for time picker object
+function timePickerCallback(val) {
+  if (typeof (val) === 'undefined') {
+    console.log('Time not selected');
+  } else {
+    var selectedTime = new Date(val * 1000);
+    console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
+	$scope.timePickerObject.inputEpochTime = val;
+	$scope.progressHour = pad(selectedTime.getUTCHours());
+	$scope.progressMinute = pad(selectedTime.getUTCMinutes());
+  }
+}		
 		
 	$scope.range = function(start, end) {
 		var result = [];
