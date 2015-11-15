@@ -179,11 +179,24 @@
         
         <ion-content>
         
+        <label class="item item-input">
+            <span class="input-label">Progress Date</span>
+            <!-- Progress Date  -->
+        <ionic-datepicker input-obj="datepickerObject">
+        <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'yyyy/MM/dd'}}</button>
+        </ionic-datepicker>
+         </label> 
+        
+        
+          
+        
+        
         <div class="padding-left padding-right">
           <button class="button button-block button-dark">
             Save
           </button>
         </div>
+        
         
         </ion-content> 
         </ion-modal-view>  

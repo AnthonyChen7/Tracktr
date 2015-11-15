@@ -46,7 +46,47 @@ angular.module('tracktr.controllers')
 		{class: "icon ion-trophy icon-custom", code: 17, value: false},
 		{class: "icon ion-bonfire icon-custom", code: 18, value: false},
 		{class: "icon ion-lightbulb icon-custom", code: 19, value: true},
-		];		
+		];
+		
+	//For ionic date picker
+	var weekDaysList = ["Su", "M", "Tu", "W", "Th", "F", "Sa"];
+		
+	// For the Ionic date picker	
+	 $scope.datepickerObject = {
+      titleLabel: 'Select Progress Date',  //Optional
+      todayLabel: 'Today',  //Optional
+      closeLabel: 'Close',  //Optional
+      setLabel: 'Set',  //Optional
+      setButtonType : 'button-assertive',  //Optional
+      todayButtonType : 'button-assertive',  //Optional
+      closeButtonType : 'button-assertive',  //Optional
+       inputDate: new Date(),  //Optional
+      mondayFirst: false,  //Optional
+    //   disabledDates: disabledDates, //Optional
+      weekDaysList: weekDaysList, //Optional
+    //   monthList: monthList, //Optional
+      templateType: 'popup', //Optional
+      showTodayButton: 'true', //Optional
+      modalHeaderColor: 'bar-positive', //Optional
+      modalFooterColor: 'bar-positive', //Optional
+    //   from: new Date(2012, 8, 2), //Optional
+      to: new Date(),  //Optional
+      callback: function (val) {  //Mandatory
+        datePickerCallback(val);
+      },
+      dateFormat: 'YYYY/MM/DD', //Optional
+      closeOnSelect: false, //Optional
+    };
+	
+	//Mandatory callback object for datepicker
+	var datePickerCallback = function (val) {
+  if (typeof(val) === 'undefined') {
+    console.log('No date selected');
+  } else {
+    console.log('Selected date is : ', val)
+	$scope.datepickerObject.inputDate = val;
+  }
+};		
 		
 	$scope.range = function(start, end) {
 		var result = [];
@@ -393,13 +433,14 @@ angular.module('tracktr.controllers')
 	 */
 	$scope.displayFormattedDate = function(date){
 		var yyyy= date.getFullYear().toString();
-		var mm = (date.getMonth()+1).toString(); //getMonth() is zero based
+		var mmm = (date.getMonth()+1).toString(); //getMonth() is zero based
 		var dd = date.getDate().toString();
 		
 		var hours = date.getHours();
 		var minutes = date.getMinutes();
 		
-		return  yyyy+"/"+(mm[1]?mm:"0"+mm[0])+"/"+(dd[1]?dd:"0"+dd[0]) + " "+ pad(hours)+":"+pad(minutes);
+		 return  yyyy+"/"+(mmm[1]?mmm:"0"+mmm[0])+"/"+(dd[1]?dd:"0"+dd[0]) + " "+ pad(hours)+":"+pad(minutes);
+		//return  (mmm[1]?mmm:"0"+mmm[0])+"/"+(dd[1]?dd:"0"+dd[0])+"/"+yyyy + " "+ pad(hours)+":"+pad(minutes);
 	};
 	
 	/**
