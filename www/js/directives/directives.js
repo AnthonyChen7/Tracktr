@@ -38,6 +38,15 @@ appDirs.directive('taskIcon', function() {
 appDirs.directive('taskInfo',function(){
 	return{
 		restrict: 'E',
-		templateUrl: 'js/directives/task-info/task-info.html'
+		templateUrl: 'js/directives/task-info/task-info.html',
+		controller: 'TaskInfoController'
+	};
+});
+
+appDirs.directive('sharedTaskInfo',function(){
+	return{
+		restrict: 'E',
+		templateUrl: 'js/directives/shared-task-info/shared-task-info.html',
+		controller: 'SharedTaskInfoController'
 	};
 });

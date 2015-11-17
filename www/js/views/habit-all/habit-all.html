@@ -1,5 +1,5 @@
 
-<ion-view view-title="Habit All">
+<ion-view view-title="Habits">
   <!-- Create new task button -->
   <ion-nav-buttons side="secondary">
     <button class="button button-clear button-icon" ng-click="navCreateClick()">
@@ -17,18 +17,17 @@
     <input type="search" placeholder="Search..." ng-model="searchText">
     </label>
 
-<div class = "CurrentOrOther">
     
-    <div class="item item-divider">
-      <h1>Current</h1>
+    <div class="all-divider">
+      Current
     </div>
     
     <div ng-repeat= "task in tasks | filter:searchText" ng-show="shouldDisplayInCurrent(task)">
     <task-info></task-info>
     </div>
     
-    <div class="item item-divider">
-      <h1>Other</h1>
+    <div class="all-divider">
+      Other
     </div>
     
     <div ng-repeat= "task in tasks | filter:searchText" ng-hide="shouldDisplayInCurrent(task)">

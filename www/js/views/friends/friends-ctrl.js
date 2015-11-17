@@ -1,9 +1,9 @@
 angular.module('tracktr.controllers')
 
-.controller('SettingsController', function ($scope, $state, $ionicHistory, SharingService) {
-	var authKey = window.localStorage['FBAUTHKEY'];
+.controller('FriendsController', function ($scope, $state, $ionicHistory, SharingService) {
 	
-	$scope.isAuthenticated = (authKey != null);	
+	$scope.isAuthenticated = SharingService.isAuthenticated();
+	
 	
 	$scope.goBack = function() {
 		$ionicHistory.goBack();
@@ -16,6 +16,7 @@ angular.module('tracktr.controllers')
 			} else {
 				$scope.getName();
 				$scope.getProfileURL();
+				$scope.getFriends();
 				$scope.isAuthenticated = true;				
 			}
 		});
@@ -26,17 +27,12 @@ angular.module('tracktr.controllers')
 			
 			SharingService.logoutFB();
 			$scope.isAuthenticated = false;
-			window.localStorage['FBAUTHKEY'] = null;
 				
 		} catch (err) {
-			
-			console.log(err);
-			
+			console.log(err);		
 		}
 		
-		
 	}
-	
 	
 	$scope.getName = function() {
 		SharingService.getName(function(err, name) {
@@ -50,7 +46,7 @@ angular.module('tracktr.controllers')
 	};
 	
 	$scope.getProfileURL = function() {
-		SharingService.getPicture(function(err, url) {
+		SharingService.getPicture(SharingService.getAuthData().id, function(err, url) {
 			if(err) {
 				console.log(err);
 			} else {
@@ -60,9 +56,27 @@ angular.module('tracktr.controllers')
 		})
 	};
 	
-	if($scope.isAuthenticated) {
+	$scope.getFriends = function() {
+		SharingService.getFriends(function(err, friends) {
+			if(err) {
+				console.log(err);
+			} else {
+				$scope.friends = friends;
+				$scope.getFriendsTasks();
+			}
+		});
+	};
+	
+	$scope.getFriendsTasks = function() {
+		angular.forEach($scope.friends, function(friend) {
+			friend.sharedTasks = SharingService.getOneFriendsTasks(friend);
+		});
+	} 
+	
+	if(SharingService.isAuthenticated()) {
 		$scope.getName();
 		$scope.getProfileURL();
+		$scope.getFriends();
 	}
 
 	

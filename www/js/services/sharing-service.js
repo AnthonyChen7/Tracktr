@@ -1,13 +1,22 @@
 angular.module('tracktr.services') 
-.factory('SharingService', function($http) {
-	var FIREBASE_URL = "https://blazing-inferno-5411.firebaseio.com";
-	var FB_AUTH_KEY = "FBAUTHKEY";
-	var PROFILE_URL = "FBPROFILEURL";
-	var FB_NAME = "FBNAME";
-	
-	var ref = new Firebase(FIREBASE_URL);
-	
+.factory('SharingService', function($http, $firebaseArray, TaskService) {
 	var self = this;
+	
+	//============================================================//
+	//					Constants
+	//============================================================//
+	
+	// Authentication
+	var FIREBASE_URL = "https://blazing-inferno-5411.firebaseio.com";
+	var FB_AUTH_KEY  = "FBAUTHKEY";
+	var PROFILE_URL  = "FBPROFILEURL";
+	var FB_NAME      = "FBNAME";
+	var ref          = new Firebase(FIREBASE_URL);
+	
+	
+	// Sharing 
+	var tasksRef      = new Firebase("https://blazing-inferno-5411.firebaseio.com/tasks");
+  	var tasksRefArray = $firebaseArray(tasksRef);
 	
 	//============================================================//
 	//					Service Methods
@@ -15,32 +24,113 @@ angular.module('tracktr.services')
 	
 	/**
 	 * Retrieve FB friends' IDs in an array
+	 * @Param callback callback that takes err and response
 	 */
-	self.getFriends = function() {
+	self.getFriends = function(callback) {
 		// use fb api to get array of friends
 		// return array of friends
+		graphAPI("friends", {}, self.getAuthData().id,function(err, response) {
+			if(err) {
+				callback(err, null);
+				return;
+			}
+			
+			var friendsArray = response.data.data;
+			var friendsSize = friendsArray.length;
+			var receivedPicturesCount = 0;
+			angular.forEach(friendsArray, function(friend) {
+				self.getPicture(friend.id, function(err, url) {
+					friend.picture_url = url;
+					receivedPicturesCount++;
+					
+					if(receivedPicturesCount == friendsSize) {
+						callback(null, response.data.data);			
+					}	
+				});
+			});
+		});
 	};
 	
 	/**
 	 * Retreive a friend's shared tasks in an array
+	 * 
 	 */
 	self.getOneFriendsTasks = function(friend) {
 		// use the friend id to contact firebase and get their shared tasks
 		// return the shared tasks
+		var result = [];
+		// Wait until the reference to firebase has loaded. 
+		tasksRefArray.$loaded(function() {
+			angular.forEach(tasksRefArray, function(task) {
+				if(task.fbID == friend.id) {	
+					var fbTask = new Task(task);
+					result.push(fbTask);
+				}
+			});
+		});
+		
+		return result;
 	};
 	
 	/**
 	 * Upload a single task to share with friends
+	 * @Param callback callback method taking err as an argument if there is an error.
 	 */
-	self.uploadTask = function(task) {
-		// upload task with current user id to firebase 
+	self.uploadTask = function(task, callback) {
+		// upload task with current user id to firebase
+		if(!self.isAuthenticated()) {
+			callback("Not Authenticated while trying to upload to firebase");
+			return;
+		}
+		
+		var fbID = self.getAuthData().id;
+		
+		// Add our facebook ID to the task
+		task.fbID = fbID;
+		
+		// Convert all values firebase cannot use to usable values
+		task.prepareForFirebase();
+		
+		tasksRefArray.$add(task).then(function(ref) {
+			var id = ref.key();
+			// Add the key of the task in firebase to the task
+			task.firebaseRefID = id;
+			
+				
+			
+			// Update the task.
+			TaskService.updateTask(task, function(err) {
+				callback(null);
+			});
+		});	
+		
+		// Convert back to values app can understand.
+		task.parseFromFirebase();
 	};
 	
 	/**
 	 * Remove the task from being shared with friends
+	 * @Param callback callback method taking err as an argument if there is an error.
 	 */
-	self.removeTask = function(task) {
+	self.removeTask = function(task, callback) {
 		// remove the task if it exists in firebase
+		if(!self.isAuthenticated()) {
+			callback("Not Authenticated while trying to delete from firebase");
+			return;
+		}
+		
+		var taskToDelete;
+		// Find the task in tasksRefArray so we can delete it
+		angular.forEach(tasksRefArray, function(refTask) {
+			
+			if(refTask.$id === task.firebaseRefID) {
+				taskToDelete = refTask;
+			}
+		});
+		// Delete the found task 
+		tasksRefArray.$remove(taskToDelete).then(function(ref) {
+				callback(null);
+		});
 	};
 	
 	/**
@@ -75,12 +165,12 @@ angular.module('tracktr.services')
 	 * Throws exception if user is not logged in.
 	 */
 	self.logoutFB = function() {
-		if(window.localStorage[FB_AUTH_KEY] == null) {
+		if(window.localStorage[FB_AUTH_KEY] === "0") {
 			throw "Not logged in";
 		}
 		
 		ref.unauth();
-		window.localStorage[FB_AUTH_KEY] = null;
+		window.localStorage[FB_AUTH_KEY] = "0";
 	};
 	
 	//============================================================//
@@ -94,7 +184,7 @@ angular.module('tracktr.services')
 	 */
 	self.getName = function(callback){
 		/* make the API call */
-		graphAPI('/', {}, function(err, response) {
+		graphAPI('/', {}, self.getAuthData().id, function(err, response) {
 			if(response) {
 				window.localStorage[FB_NAME] = response.data.name;
 				callback(null, response.data.name);	
@@ -109,13 +199,13 @@ angular.module('tracktr.services')
 	 * Retrieve the url to user's profile photo and set it into local storage
 	 * calback(err, url: String)
 	 */
-	self.getPicture = function(callback) {
+	self.getPicture = function(id, callback) {
 		var params = 
 			{
 				redirect: false,
 				type: 'normal'
 			}
-		graphAPI('picture', params, function(err, response) {
+		graphAPI('picture', params, id, function(err, response) {
 			if(response) {
 				var url = response.data.data.url;
 				window.localStorage[PROFILE_URL] = url;
@@ -134,10 +224,11 @@ angular.module('tracktr.services')
 	/**
 	 * Make a call to the graph api.
 	 * redirect: whether or not to redirect: boolean
+	 * @Param id facebook id
 	 * Takes a callback(err, response)
 	 */
-	function graphAPI(path, params, callback) {
-		var authData = getAuthData();
+	function graphAPI(path, params, id, callback) {
+		var authData = self.getAuthData();
 		
 		// return if the user is not logged in
 		if(authData == null) {
@@ -158,8 +249,8 @@ angular.module('tracktr.services')
 			}
 		}   
 
-		var url = 'https://graph.facebook.com/'+ authData.id +'/'+ path;	
-		
+		var url = 'https://graph.facebook.com/'+ id +'/'+ path;	
+
 		// Perform the http GET request and callback
 		$http({
 			method: 'GET',
@@ -176,17 +267,20 @@ angular.module('tracktr.services')
 	 * Return a boolean determining whether or not
 	 * the current user is authenticated
 	 */
-	function isAuthenticated() {
-		return (window.localStorage[FB_AUTH_KEY] == null);
+	self.isAuthenticated = function() {
+		if(window.localStorage[FB_AUTH_KEY] === "0" || !window.localStorage[FB_AUTH_KEY]) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	
 	/**
 	 * Return the auth data
 	 */
-	function getAuthData() {
+	self.getAuthData = function() {
 		var authData = window.localStorage[FB_AUTH_KEY];
-		
 		if(authData) {
 			return JSON.parse(authData);
 		} else {

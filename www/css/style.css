@@ -1,4 +1,9 @@
 /* Empty. Add your own CSS if you like */
+* {
+    font-family: 'helvetica neue' !important;
+    font-weight: 300 !important;
+}
+
 .popup-vertical-buttons button
 {
      min-width: 100%;
@@ -54,4 +59,71 @@
 
 .bar-custom {
     background-color: #FC5B3F !important;
+}
+
+
+
+/* All Page */
+.all-divider{
+    font-family: helvetica neue;
+    margin: 10px;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 200;
+    color: gray;
+}
+
+
+.all-item.item.item-stable {
+    border-color: whitesmoke;
+    background-color: whitesmoke;
+    padding: 10px;
+}
+/* Authentication */
+.auth-container {
+    padding: 10px;
+    background-color: whitesmoke;
+}
+
+
+/* Facebook */
+.fb-profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 150px;
+}
+
+.fb-name {
+    display: inline-block;
+    margin-top: 16px;
+    color: gray;
+    font-size: 20px;
+    font-family: helvetica neue;
+    font-weight: 300;
+    float: right;
+    margin-right: 10px;
+}
+
+.friend-divider {
+    background: white;
+    margin: 10px;
+}
+
+#friend-label {
+    font-family: helvetica neue;
+    margin-left: 10px;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 200;
+    color: gray;
+}
+
+.no-share {
+    color: gray;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+ion-content {
+    background: whitesmoke;
 }
