@@ -178,37 +178,58 @@
         </ion-header-bar>
         
         <ion-content>
-        <form novalidate>
+        
+        <form name="addProgressForm" novalidate>
+        
+        <!-- Progress Date  -->
         <label class="item item-input">
             <span class="input-label">Progress Date</span>
-            <!-- Progress Date  -->
-        <ionic-datepicker input-obj="datepickerObject">
-        <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'yyyy/MM/dd'}}</button>
-        </ionic-datepicker>
+          <ionic-datepicker input-obj="datepickerObject">
+          <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'yyyy/MM/dd'}}</button>
+          </ionic-datepicker>
          </label> 
        
+       <!-- Progress Date  -->
        <label class="item item-input">
             <span class="input-label">Progress Time</span>
-       <ionic-timepicker input-obj="timePickerObject">
-  <button class="button button-block button-positive overflowShow">
-    <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
-    {{progressHour}}:{{progressMinute}}
-  </button>
-</ionic-timepicker>
-</label>
-
-      <label class="item item-input">
-      <span class="input-label">Progress Count</span>
-          <input type="number">
-          </label>
+             <ionic-timepicker input-obj="timePickerObject">
+              <button class="button button-block button-positive overflowShow">
+                <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
+                  {{progressHour}}:{{progressMinute}}
+              </button>
+              </ionic-timepicker>
+       </label>
+       
+       <!-- Progress Count for count based tasks  -->
+      <label class="item item-input" ng-show="task.isCount">
+          <span class="input-label">Progress Count</span>
+            <select ng-model="progressCount" ng-options="progressCount for progressCount in range(1, 999)"></select>
+      </label>
+      
+      <!-- Progress Count for time based tasks  -->
+      <label class="item item-input" ng-show="task.isTime">
+          <span class="input-label">Progress Count Hour</span>
+            <select ng-model="progressCountHour" ng-options="progressCountHour for progressCountHour in range(0, 999)"></select>
+      </label>
+      
+      <label class="item item-input" ng-show="task.isTime">
+          <span class="input-label">Progress Count Minute</span>
+            <select ng-model="progressCountMinute" ng-options="progressCountMinute for progressCountMinute in range(0, 999)"></select>
+      </label>
+      
+      <label class="item item-input" ng-show="task.isTime">
+          <span class="input-label">Progress Count Second</span>
+            <select ng-model="progressCountSecond" ng-options="progressCountSecond for progressCountSecond in range(0, 999)"></select>
+      </label>
        
         <div class="padding-left padding-right">
-          <button class="button button-block button-dark">
+          <button class="button button-block button-dark" ng-click="saveProgress(datepickerObject.inputDate,progressHour,progressMinute,progressCount,progressCountHour,progressCountMinute, progressCountSecond )">
             Save
           </button>
         </div>
         
         </form>
+        
         </ion-content> 
         </ion-modal-view>  
         </script>

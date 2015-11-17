@@ -8,6 +8,14 @@ angular.module('tracktr.controllers')
 	$scope.progressHour = pad(today.getHours());
 	$scope.progressMinute = pad(today.getMinutes());
 	
+	
+	$scope.progressCount = 1;
+	
+	$scope.progressCountHour = 0;
+	$scope.progressCountMinute = 0;
+	$scope.progressCountSecond = 0;
+	
+	
 	$scope.habitTypes = [
 		{name: "Time", code: 0},
 		{name: "Count", code: 1}
@@ -499,17 +507,59 @@ function timePickerCallback(val) {
 		
 		TaskService.removeProgressFromTask($scope.task, progressObject, function(err){
 			
-			TaskService.updateTask($scope.task, function(err){
+			 TaskService.updateTask($scope.task, function(err){
           		$scope.progress.splice(index,1);
-			});
+			 });
 			
-		} );
-		
-		
-		
-		
+		} );	
 	};
 	
+	/**
+	 * Saves the progress and adds it to the progress array of the task
+	 */
+	$scope.saveProgress = function(selectedDate,inputHour, inputMinute,progressCount, progressCountHour, progressCountMinute, progressCountSecond){
+		
+		var dateInput = selectedDate;
+		var parsedHour = parseInt(inputHour);
+		var parsedMinute = parseInt(inputMinute);
+		var newProgress = {};
+		
+		//Progress date
+		dateInput.setHours(parsedHour, parsedMinute, 0);
+		
+		if($scope.task.isCount){
+		//Count based task	
+		newProgress = {
+			id : 0,
+			task_id : $scope.task.id,
+			date : dateInput.getTime(),
+			progress : progressCount,
+			timerLastStarted : dateInput.getTime()
+		};
+	
+		}
+		
+		// else{
+		// 	//Time based task
+			
+		// 	//the progress timer
+		// 	var anotherDate = selectedDate;
+		// 	anotherDate.setHours(progressCountHour,progressCountMinute,progressCountSecond);
+			
+		// }
+	
+	//add the progress to the task array and save it
+	var aProgress = new Progress(newProgress);
+	
+	TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
+		 TaskService.updateTask($scope.task, function(err){
+          		$scope.progress.push(aProgress);
+				$scope.closeAddProgressModal();
+		});
+	});
+	
+	};
+		
 	/**
 	 * Return back to the previous page
 	 */
