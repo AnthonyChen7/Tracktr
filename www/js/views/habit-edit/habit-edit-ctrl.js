@@ -543,20 +543,28 @@ function timePickerCallback(val) {
 			//Time based task
 			
 			//the progress timer
-			var anotherDate = selectedDate;
-			anotherDate.setHours(progressCountHour,progressCountMinute,progressCountSecond);
+			//var anotherDate = selectedDate;
+			//anotherDate.setHours(progressCountHour,progressCountMinute,progressCountSecond);
+			
+			newProgress = {
+			id : 0,
+			task_id : $scope.task.id,
+			date : dateInput.getTime(),
+			progress : anotherDate.getTime(),
+			timerLastStarted : dateInput.getTime()
+		};
 			
 		}
 	
 	//add the progress to the task array and save it
-	// var aProgress = new Progress(newProgress);
+	var aProgress = new Progress(newProgress);
 	
-	// TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
-	// 	 TaskService.updateTask($scope.task, function(err){
-    //       		$scope.progress.push(aProgress);
-	// 			$scope.closeAddProgressModal();
-	// 	});
-	// });
+	TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
+		 TaskService.updateTask($scope.task, function(err){
+          		$scope.progress.push(aProgress);
+				$scope.closeAddProgressModal();
+		});
+	});
 	
 	};
 		
