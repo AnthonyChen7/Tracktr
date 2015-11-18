@@ -285,7 +285,8 @@ angular.module('tracktr.services')
 	 */
 	self.getAuthData = function() {
 		var authData = window.localStorage[FB_AUTH_KEY];
-		if(authData) {
+		console.log(authData);
+		if(authData !== "0" || authData) {
 			return JSON.parse(authData);
 		} else {
 			return null;
