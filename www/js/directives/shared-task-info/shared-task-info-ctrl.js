@@ -81,7 +81,7 @@ angular.module('tracktr.controllers')
   };
   
   $scope.confirmImport = function() {
-    $ionicPopup.confirm({
+    $ionicPopup.alert({
             title: 'Imported',
             template: 'This task has been imported, your friend\'s progress has been removed!'
           }).then(function(confirm) {
