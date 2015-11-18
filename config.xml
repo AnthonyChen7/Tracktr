@@ -3,12 +3,15 @@
   <name>tracktr</name>
   <description>
         An Ionic Framework and Cordova project.
-    </description>
+  </description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">
       Ionic Framework Team
-    </author>
+  </author>
   <content src="index.html"/>
   <access origin="*"/>
+  <allow-navigation href="http://*/*"/>
+  <allow-navigation href="https://*/*"/>
+  <allow-navigation href="data:*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
