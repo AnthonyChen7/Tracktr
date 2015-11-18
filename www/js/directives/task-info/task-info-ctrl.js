@@ -10,6 +10,19 @@ angular.module('tracktr.controllers')
   $scope.options= [EDIT, VIEW_REPORT, DELETE, SHARE];
   
   /**
+   * Retrieve the name based on the fbID field.
+   */
+  $scope.getImportedName = function(task) {
+    if(!task.isImported) {
+      return;
+    }
+    
+    SharingService.getName(task.fbID, function(err, name) {
+      task.friendName = name;
+    });
+  }
+  
+  /**
    * Returns boolean to tell us
    * if options for the specified task is shown
    */

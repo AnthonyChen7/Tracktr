@@ -19,6 +19,8 @@ var Task = function(task) {
   this.isShared = (task.isShared ? true : false);
   this.fbID = task.fbID;
   this.firebaseRefID = task.firebaseRefID;
+  this.isFromFB = (task.isFromFB ? true : false);
+  this.isImported = (task.isImported ? true : false);
 
   // Instantiate days 
   this.days = new Day(task.days);
