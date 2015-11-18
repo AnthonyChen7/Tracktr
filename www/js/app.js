@@ -73,7 +73,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
     cache: false,
     url: '/charts/:taskId',
     templateUrl: 'js/views/habit-charts/habit-charts.html',
-    controller: 'HabitChartsController'
+    controller: 'HabitChartsController',
   })
   
   .state('tab.friends', {

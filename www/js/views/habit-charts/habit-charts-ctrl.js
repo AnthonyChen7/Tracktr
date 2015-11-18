@@ -73,6 +73,7 @@ angular.module('tracktr.controllers')
   $scope.loadWeeklyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
+      console.log("TASK TASK: ", task);
       $scope.labels = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thur.', 'Fri.', 'Sat.'];
       $scope.week = option;
       $scope.isWeekly = true;
@@ -387,6 +388,12 @@ angular.module('tracktr.controllers')
    * Return back to the previous page
    */
   $scope.goBack = function() {
+    // Delete the task from the database if it's from facebook and wasn't imported.
+    if($scope.task.isFromFB && !$scope.task.isImported) {
+      TaskService.deleteTask($scope.task, function() {
+        console.log("charts: task deleted before going back");
+      });
+    }
     $ionicHistory.goBack();
   };
 });

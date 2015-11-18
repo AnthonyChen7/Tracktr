@@ -50,6 +50,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -86,6 +88,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -115,6 +119,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -158,6 +164,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -201,6 +209,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -237,6 +247,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -273,6 +285,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -309,6 +323,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -352,6 +368,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -395,6 +413,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -438,6 +458,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -481,6 +503,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -517,6 +541,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -553,6 +579,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -589,6 +617,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -625,6 +655,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -661,6 +693,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -697,6 +731,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -733,6 +769,8 @@ var tasks = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -776,6 +814,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -812,6 +852,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -841,6 +883,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -884,6 +928,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -927,6 +973,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -963,6 +1011,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -999,6 +1049,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1035,6 +1087,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1078,6 +1132,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1121,6 +1177,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1164,6 +1222,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1207,6 +1267,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1243,6 +1305,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1279,6 +1343,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1315,6 +1381,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1351,6 +1419,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1387,6 +1457,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1423,6 +1495,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
@@ -1459,6 +1533,8 @@ var tasks2 = [
      isShared: 0,
      fbID: '',
      firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
      days: {
        id: '1',
        task_id: '1',
