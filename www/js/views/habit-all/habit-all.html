@@ -21,7 +21,7 @@
     <div class="all-divider">
       Current
     </div>
-    <div ng-repeat= "task in tasks | filter:searchText" ng-show="shouldDisplayInCurrent(task)">
+    <div ng-repeat= "task in tasks | filter:searchText" ng-if="shouldDisplayInCurrent(task)">
       <task-info></task-info>
     </div>
     
@@ -29,7 +29,7 @@
     <div class="all-divider">
       Other
     </div>
-    <div ng-repeat= "task in tasks | filter:searchText" ng-hide="shouldDisplayInCurrent(task)">
+    <div ng-repeat= "task in tasks | filter:searchText" ng-if="!shouldDisplayInCurrent(task)">
       <task-info></task-info>
     </div>
 </div>
