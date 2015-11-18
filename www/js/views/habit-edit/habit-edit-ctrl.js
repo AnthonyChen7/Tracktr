@@ -542,15 +542,17 @@ function timePickerCallback(val) {
 		else{
 			//Time based task
 			
-			//the progress timer
-			//var anotherDate = selectedDate;
-			//anotherDate.setHours(progressCountHour,progressCountMinute,progressCountSecond);
+			//Convert all the input times to milliseconds
+			var hourMillisecond = progressCountHour * 3600000;
+			var minuteMillisecond = progressCountMinute * 60000;
+			var secondMillisecond = progressCountSecond * 1000;
+			var total = hourMillisecond + minuteMillisecond + secondMillisecond;
 			
 			newProgress = {
 			id : 0,
 			task_id : $scope.task.id,
 			date : dateInput.getTime(),
-			progress : anotherDate.getTime(),
+			progress : total,
 			timerLastStarted : dateInput.getTime()
 		};
 			
