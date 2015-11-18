@@ -214,12 +214,12 @@
       
       <label class="item item-input" ng-show="task.isTime">
           <span class="input-label">Progress Count Minute</span>
-            <select ng-model="progressCountMinute" ng-options="progressCountMinute for progressCountMinute in range(0, 999)"></select>
+            <select ng-model="progressCountMinute" ng-options="progressCountMinute for progressCountMinute in range(0, 59)"></select>
       </label>
       
       <label class="item item-input" ng-show="task.isTime">
           <span class="input-label">Progress Count Second</span>
-            <select ng-model="progressCountSecond" ng-options="progressCountSecond for progressCountSecond in range(0, 999)"></select>
+            <select ng-model="progressCountSecond" ng-options="progressCountSecond for progressCountSecond in range(0, 59)"></select>
       </label>
        
         <div class="padding-left padding-right">
