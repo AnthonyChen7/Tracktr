@@ -539,24 +539,24 @@ function timePickerCallback(val) {
 	
 		}
 		
-		// else{
-		// 	//Time based task
+		else{
+			//Time based task
 			
-		// 	//the progress timer
-		// 	var anotherDate = selectedDate;
-		// 	anotherDate.setHours(progressCountHour,progressCountMinute,progressCountSecond);
+			//the progress timer
+			var anotherDate = selectedDate;
+			anotherDate.setHours(progressCountHour,progressCountMinute,progressCountSecond);
 			
-		// }
+		}
 	
 	//add the progress to the task array and save it
-	var aProgress = new Progress(newProgress);
+	// var aProgress = new Progress(newProgress);
 	
-	TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
-		 TaskService.updateTask($scope.task, function(err){
-          		$scope.progress.push(aProgress);
-				$scope.closeAddProgressModal();
-		});
-	});
+	// TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
+	// 	 TaskService.updateTask($scope.task, function(err){
+    //       		$scope.progress.push(aProgress);
+	// 			$scope.closeAddProgressModal();
+	// 	});
+	// });
 	
 	};
 		
