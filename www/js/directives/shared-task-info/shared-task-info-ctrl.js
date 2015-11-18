@@ -47,18 +47,53 @@ angular.module('tracktr.controllers')
   $scope.buttonHandler = function(option, task){
     
     if(option === VIEW_REPORT){
-      $state.go('charts', {taskId:task.id});  
+      
+      task.isFromFB = true;
+      task.isImported = false; // temporary, so that charts will delete it.
+      
+      // Add the task to the database so the user can view it.
+      TaskService.createTask(task, function(err, id) {
+        
+        $state.go('charts', {taskId: id});  
+      });
+      
     } else if (option === IMPORT) {
+      task.isFromFB = true;
+      task.isImported = true;
+      task.isShared = false;
+      
+      var progress = task.progress;
+      task.progress = [];
+
+      TaskService.createTask(task, function(err, id) {
+        
+        $scope.confirmImport();
+        
+        // Restore values for share page.
+        task.isImported = false;
+        task.progress = progress;
+        task.isShared = true;
+      });
+      
+      
       
     }
   };
+  
+  $scope.confirmImport = function() {
+    $ionicPopup.alert({
+            title: 'Imported',
+            template: 'This task has been imported, your friend\'s progress has been removed!'
+          }).then(function(confirm) {
+            
+          });
+  }
   
     /**
    * Retrieves the data of the task
    */
   $scope.retrieveData=function(task){
     var result = "";
-    
     if(task.isCount === true && task.isTime === false){
     result += task.getProgress() +  "/" + task.goal;
     result += " | " + $scope.getFrequency(task.frequency);

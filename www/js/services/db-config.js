@@ -17,7 +17,9 @@ angular.module('tracktr.config', [])
         {name: 'creationDate',   type: 'text'},
         {name: 'isShared',       type: 'integer'},
         {name: 'fbID',           type: 'text'},
-        {name: 'firebaseRefID',  type: 'text'}
+        {name: 'firebaseRefID',  type: 'text'},
+        {name: 'isFromFB',       type: 'integer'},
+        {name: 'isImported',     type: 'integer'}
       ]
     },
     {

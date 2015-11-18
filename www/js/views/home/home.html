@@ -5,7 +5,7 @@
     </button>
   </ion-nav-buttons>
   <ion-content class="home-bg">
-    <div class="card" ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)">
+    <div class="card" ng-repeat="task in allTasks" ng-if="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)">
       <div class="item item-text-wrap">
         <div class="row"><div class="col">
           <task-icon></task-icon>
@@ -16,7 +16,7 @@
         <div class="row"><div class="col text-center">
           <h2 style="text-align: center;"><b>{{task.name}}</b></h2>
         </div></div>
-        <div class="row" ng-show="!task.isCount">
+        <div class="row" ng-if="!task.isCount">
           <div class="col col-25 col-offset-25 text-center">
             <p style="text-align: center;">
               <!--<b>Total:</b><br>{{countTime(task,3)}}:{{countTime(task,2)}}:{{countTime(task,1)}}-->
@@ -46,7 +46,7 @@
               </p>
           </div>-->
           <div class="col col-20"></div>
-          <div class="col col-20 col-offset-20 text-center" ng-show="task.isCount">
+          <div class="col col-20 col-offset-20 text-center" ng-if="task.isCount">
               <!--<p style="text-align: center;">
                 <button class="button button-outline button-minimal count-button">{{countProgress(task)}}</button>
               </p>-->

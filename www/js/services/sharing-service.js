@@ -55,7 +55,7 @@ angular.module('tracktr.services')
 	 * Retreive a friend's shared tasks in an array
 	 * 
 	 */
-	self.getOneFriendsTasks = function(friend) {
+	self.getOneFriendsTasks = function(friend, callback) {
 		// use the friend id to contact firebase and get their shared tasks
 		// return the shared tasks
 		var result = [];
@@ -67,9 +67,10 @@ angular.module('tracktr.services')
 					result.push(fbTask);
 				}
 			});
+			callback(null, result);
 		});
 		
-		return result;
+		
 	};
 	
 	/**
@@ -87,6 +88,9 @@ angular.module('tracktr.services')
 		
 		// Add our facebook ID to the task
 		task.fbID = fbID;
+		
+		// This task does not show up as imported in firebase
+		task.isImported = false;
 		
 		// Convert all values firebase cannot use to usable values
 		task.prepareForFirebase();
@@ -182,9 +186,9 @@ angular.module('tracktr.services')
 	 * Retrieve the name of the user logged in and set it into local storage
 	 * callback(err, name: String)
 	 */
-	self.getName = function(callback){
+	self.getName = function(fbID ,callback){
 		/* make the API call */
-		graphAPI('/', {}, self.getAuthData().id, function(err, response) {
+		graphAPI('/', {}, fbID, function(err, response) {
 			if(response) {
 				window.localStorage[FB_NAME] = response.data.name;
 				callback(null, response.data.name);	
