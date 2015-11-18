@@ -24,14 +24,14 @@ angular.module('tracktr.controllers')
     TaskService.getAll(function(err,tasks){
     $scope.tasks = tasks;
     
-    // // If nothing in the database.
-    // if($scope.tasks.length == 0) {
-    //     //Put in dummy data
-    //     for(var i = 0; i < tasks2.length; i++){
-    //       TaskService.createTask(tasks2[i], function(err,id){
-    //       });
-    //     }
-    // }
+    // If nothing in the database.
+    if($scope.tasks.length == 0) {
+        //Put in dummy data
+        for(var i = 0; i < tasks2.length; i++){
+          TaskService.createTask(tasks2[i], function(err,id){
+          });
+        }
+    }
     // for(var i = 0; i< $scope.tasks.length; i++){
     // TaskService.deleteTask($scope.tasks[i], function(err){});
     // }
