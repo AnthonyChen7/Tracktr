@@ -346,16 +346,19 @@ angular.module('tracktr.controllers')
   $scope.timeFormat = function(data2DArray) {
     var maxTime = Math.max.apply(Math,data2DArray[0]);
     if(maxTime < 60000) {
+      $scope.format = "sec.";
        for(var i = 0;i < data2DArray[0].length;i++) {
          $scope.data[0][i] = $scope.data[0][i]/1000;
        }
     }
     else if(maxTime >= 60000 && maxTime < 3600000) {
+      $scope.format = "min.";
       for(var i = 0;i < data2DArray[0].length;i++) {
          $scope.data[0][i] = $scope.data[0][i]/60000;
        }
     }
     else if(maxTime >= 3600000) {
+      $scope.format = "hr.";
       for(var i = 0;i < data2DArray[0].length;i++) {
          $scope.data[0][i] = $scope.data[0][i]/3600000;
        }
