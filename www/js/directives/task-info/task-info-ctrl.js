@@ -5,7 +5,7 @@ angular.module('tracktr.controllers')
   var EDIT = "Edit";
   var VIEW_REPORT = "View Report";
   var DELETE = "Delete";
-  var SHARE = "Share"
+  var SHARE = "Share";
   
   $scope.options= [EDIT, VIEW_REPORT, DELETE, SHARE];
   
