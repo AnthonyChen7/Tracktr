@@ -336,11 +336,24 @@ angular.module('tracktr.controllers')
    * 
    */
   $scope.timeFormat = function(data2DArray) {
-    for(var i = 0;i < data2DArray[0].length;i++) {
-      var progress = data2DArray[0][i];
-      // $scope.data[0][i] = ($scope.data[0][i]/60000) + "Min. " + Math.floor(progress/3600000) + ":" + (Math.floor(progress/60000) % 60) + ":" + (Math.floor(progress/1000) % 60);
-      $scope.data[0][i] = $scope.data[0][i]/60000;
-      console.log("hihihihihi time is: " + $scope.data[0][i] + "minutes");
+    var maxTime = Math.max.apply(Math,data2DArray[0]);
+    if(maxTime < 60000) {
+       for(var i = 0;i < data2DArray[0].length;i++) {
+         $scope.data[0][i] = $scope.data[0][i]/1000;
+         console.log("hihihihihi time is: " + $scope.data[0][i] + "seconds");
+       }
+    }
+    else if(maxTime >= 60000 && maxTime < 3600000) {
+      for(var i = 0;i < data2DArray[0].length;i++) {
+         $scope.data[0][i] = $scope.data[0][i]/60000;
+         console.log("hihihihihi time is: " + $scope.data[0][i] + "minutes");
+       }
+    }
+    else if(maxTime >= 3600000) {
+      for(var i = 0;i < data2DArray[0].length;i++) {
+         $scope.data[0][i] = $scope.data[0][i]/3600000;
+         console.log("hihihihihi time is: " + $scope.data[0][i] + "hours");
+       }
     }
   };
   
