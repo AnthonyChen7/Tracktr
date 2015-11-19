@@ -36,8 +36,10 @@ var Task = function(task) {
 /**
  * aTask is a task object
  * Returns the progress (integer) based on the frequency
+ * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
+ * For count tasks, simply use task.getProgress() with no parameters
  */
-Task.prototype.getProgress = function(){
+Task.prototype.getProgress = function(format){
   var aTask = this;
   var result = 0;
   
@@ -86,7 +88,17 @@ Task.prototype.getProgress = function(){
       } 
     }
   }
-    
+  switch(format) {
+       case 1: 
+         result = toSeconds(result);
+         break;   
+       case 2: 
+         result = toMinutes(result);
+         break;
+       case 3: 
+         result = toHours(result);
+         break;
+    }  
   return result;
 }
 
@@ -162,12 +174,12 @@ Task.prototype.countTime = function(format) {
    */
   Task.prototype.getTotalTime = function(){
     var aTask = this;
-    var hours = aTask.countTime(3);
-    var minutes = aTask.countTime(2);
-    var seconds = aTask.countTime(1);
+    var hours = aTask.getProgress(3);
+    var minutes = aTask.getProgress(2);
+    var seconds = aTask.getProgress(1);
     
     var result = hours + ":"+ pad(minutes) + ":" + pad(seconds);
-    
+    console.log("total time is: " + result);
     return result;
   }
   
