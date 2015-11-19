@@ -21,6 +21,7 @@
         <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextWeek()" ng-disabled="week<=0">Next week</a>
       </div>
       <br>
+      <p class="col text-left">{{format}}</p>
       <canvas id="bar" class="chart chart-line"
           chart-data="data" chart-labels="labels" on-swipe-right="previousWeek()" on-swipe-left="nextWeek()">
       </canvas>
@@ -34,6 +35,7 @@
         <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextDay()" ng-disabled="days<=0">Next Day</a>
       </div>
       <br>
+      <p class="col text-left">{{format}}</p>
       <canvas id="bar" class="chart chart-line"
           chart-data="data" chart-labels="labels" on-swipe-right="previousDay()" on-swipe-left="nextDay()">
       </canvas>
@@ -47,6 +49,7 @@
         <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextYear()" ng-disabled="years<=0">Next Year</a>
       </div>
       <br>
+      <p class="col text-left">{{format}}</p>
       <canvas id="bar" class="chart chart-line"
           chart-data="data" chart-labels="labels" on-swipe-right="previousYear()" on-swipe-left="nextYear()">
       </canvas>

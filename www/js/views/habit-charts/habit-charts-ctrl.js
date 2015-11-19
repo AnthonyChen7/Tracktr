@@ -225,8 +225,10 @@ angular.module('tracktr.controllers')
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
     });
-      $scope.labels = ['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00',
-                       '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+      // $scope.labels = ['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00',
+      //                  '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+      $scope.labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12',
+                       '13','14','15','16','17','18','19','20','21','22','23'];                 
       $scope.data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
       $scope.isWeekly = false;
       $scope.isDaily = true;
@@ -246,6 +248,9 @@ angular.module('tracktr.controllers')
            $scope.data[0][hours] += $scope.task.progress[i].progress;
            console.log('progress is: ' + $scope.task.progress[i].progress);
         }
+      }
+      if($scope.task.isTime) {
+        $scope.timeFormat($scope.data);
       }
   };
   
@@ -308,6 +313,9 @@ angular.module('tracktr.controllers')
           $scope.data[0][month] += $scope.task.progress[i].progress;
         }
       }
+      if($scope.task.isTime) {
+        $scope.timeFormat($scope.data);
+      }
   };
   
   
@@ -336,11 +344,24 @@ angular.module('tracktr.controllers')
    * 
    */
   $scope.timeFormat = function(data2DArray) {
-    for(var i = 0;i < data2DArray[0].length;i++) {
-      var progress = data2DArray[0][i];
-      // $scope.data[0][i] = ($scope.data[0][i]/60000) + "Min. " + Math.floor(progress/3600000) + ":" + (Math.floor(progress/60000) % 60) + ":" + (Math.floor(progress/1000) % 60);
-      $scope.data[0][i] = $scope.data[0][i]/60000;
-      console.log("hihihihihi time is: " + $scope.data[0][i] + "minutes");
+    var maxTime = Math.max.apply(Math,data2DArray[0]);
+    if(maxTime < 60000) {
+      $scope.format = "sec.";
+       for(var i = 0;i < data2DArray[0].length;i++) {
+         $scope.data[0][i] = $scope.data[0][i]/1000;
+       }
+    }
+    else if(maxTime >= 60000 && maxTime < 3600000) {
+      $scope.format = "min.";
+      for(var i = 0;i < data2DArray[0].length;i++) {
+         $scope.data[0][i] = $scope.data[0][i]/60000;
+       }
+    }
+    else if(maxTime >= 3600000) {
+      $scope.format = "hr.";
+      for(var i = 0;i < data2DArray[0].length;i++) {
+         $scope.data[0][i] = $scope.data[0][i]/3600000;
+       }
     }
   };
   
