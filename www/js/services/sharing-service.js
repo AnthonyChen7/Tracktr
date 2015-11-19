@@ -85,9 +85,14 @@ angular.module('tracktr.services')
 		}
 		
 		var fbID = self.getAuthData().id;
+		// Save old fbID
+		var oldFbID = task.fbID;
 		
 		// Add our facebook ID to the task
 		task.fbID = fbID;
+		
+		// Save old isImported
+		var oldIsImported = task.isImported;
 		
 		// This task does not show up as imported in firebase
 		task.isImported = false;
@@ -110,6 +115,13 @@ angular.module('tracktr.services')
 		
 		// Convert back to values app can understand.
 		task.parseFromFirebase();
+		
+		// Set the fbId back to the original sharers
+		task.fbID = oldFbID;
+		
+		// Set it as imported if it was imported
+		task.isImported = oldIsImported;
+		
 	};
 	
 	/**
