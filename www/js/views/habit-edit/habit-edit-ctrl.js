@@ -99,7 +99,7 @@ $scope.initTimePicker = function(){
 	$scope.progressMinute = pad(today.getMinutes());
 
 $scope.timePickerObject = {
-  inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
+  inputEpochTime: ( ((new Date()).getHours() * 60 * 60) + (new Date()).getMinutes() / 60 * 3600 ),  //Starting input time in Epoch
   step: 1,  //Optional
   format: 24,  //Optional
   titleLabel: 'Progress Time',  //Optional
