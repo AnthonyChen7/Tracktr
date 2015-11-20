@@ -34,8 +34,8 @@ angular.module('tracktr.controllers', [])
 
     $scope.$on('$ionicView.enter', function () {
       TaskService.getAll(function (err, tasks) {
-        $scope.allTasks = tasks;
-      });
+         $scope.allTasks = tasks;
+       });
     });
 
     $scope.drawCircle = function (task) {
@@ -229,7 +229,19 @@ angular.module('tracktr.controllers', [])
       return num;
     };
   
-  
+    
+    $scope.shouldShowTaskOnHome = function(task) {
+      
+      var shouldShow = 
+             task.isActive && ( 
+             $scope.isTaskActiveToday(task) ||
+             $scope.isTaskWeekly(task)      ||
+             $scope.isTaskMonthly(task) );
+      
+      return shouldShow;    
+    }
+    
+    
     /*
      * Determine if the task is active for the current day
      */
@@ -370,16 +382,6 @@ angular.module('tracktr.controllers', [])
         return 0;
       }
     };
-  
-  
-    /*
-     *Reload tasks every time home tab is entered
-     */
-    $scope.$on("$ionicView.enter", function () {
-      TaskService.getAll(function (err, tasks) {
-        $scope.allTasks = tasks;
-      });
-    });
   
   
     /*
