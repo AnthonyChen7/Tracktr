@@ -373,16 +373,6 @@ angular.module('tracktr.controllers', [])
   
   
     /*
-     *Reload tasks every time home tab is entered
-     */
-    $scope.$on("$ionicView.enter", function () {
-      TaskService.getAll(function (err, tasks) {
-        $scope.allTasks = tasks;
-      });
-    });
-  
-  
-    /*
      *Navigation for create button
      */
     $scope.navCreateClick = function () {
