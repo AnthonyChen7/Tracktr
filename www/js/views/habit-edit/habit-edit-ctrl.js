@@ -92,6 +92,12 @@ angular.module('tracktr.controllers')
   }
 };
 
+$scope.initTimePicker = function(){
+	
+	var today = new Date();
+	$scope.progressHour = pad(today.getHours());
+	$scope.progressMinute = pad(today.getMinutes());
+
 $scope.timePickerObject = {
   inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
   step: 1,  //Optional
@@ -104,6 +110,7 @@ $scope.timePickerObject = {
   callback: function (val) {    //Mandatory
     timePickerCallback(val);
   }
+};
 };
 
 //Mandatory callback for time picker object
@@ -358,20 +365,16 @@ function timePickerCallback(val) {
 	});
 	
 	$scope.init = function() {
-		
-	var today = new Date();
-	$scope.progressHour = pad(today.getHours());
-	$scope.progressMinute = pad(today.getMinutes());
 	
+		$scope.progressCount = 1;
 	
-	$scope.progressCount = 1;
-	
-	$scope.progressCountHour = 0;
-	$scope.progressCountMinute = 0;
-	$scope.progressCountSecond = 0;
+		$scope.progressCountHour = 0;
+		$scope.progressCountMinute = 0;
+		$scope.progressCountSecond = 0;
 		
 		$scope.initAddProgressModal();
 		$scope.initDatePicker();
+		$scope.initTimePicker();
 		
 		TaskService.getTaskById($scope.habitId, function(err, task) { 
 			$scope.task = task;
@@ -580,10 +583,11 @@ function timePickerCallback(val) {
           		$scope.progress.push(aProgress);
 				$scope.closeAddProgressModal();
 				
-				//Destroy the add progress modal and re-init it to reset most of the values
+				//Destroy the add progress modal and re-init/reset the field values
 				$scope.addProgressModal.remove();
 				$scope.initDatePicker();
 				$scope.initAddProgressModal();
+				$scope.initTimePicker();
 		});
 	});
 	
