@@ -3,19 +3,7 @@ angular.module('tracktr.controllers')
 .controller("HabitEditController", function($scope,$state,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
 	
 	$scope.habitId = $stateParams.habitId;
-	
-	var today = new Date();
-	$scope.progressHour = pad(today.getHours());
-	$scope.progressMinute = pad(today.getMinutes());
-	
-	
-	$scope.progressCount = 1;
-	
-	$scope.progressCountHour = 0;
-	$scope.progressCountMinute = 0;
-	$scope.progressCountSecond = 0;
-	
-	
+		
 	$scope.habitTypes = [
 		{name: "Time", code: 0},
 		{name: "Count", code: 1}
@@ -62,6 +50,8 @@ angular.module('tracktr.controllers')
 		
 	//For ionic date picker
 	var weekDaysList = ["Su", "M", "Tu", "W", "Th", "F", "Sa"];
+	
+	$scope.initDatePicker = function(){	
 		
 	// For the Ionic date picker	
 	 $scope.datepickerObject = {
@@ -89,6 +79,7 @@ angular.module('tracktr.controllers')
       dateFormat: 'YYYY/MM/DD', //Optional
       closeOnSelect: false, //Optional
     };
+	};
 	
 	//Mandatory callback object for datepicker
 	var datePickerCallback = function (val) {
@@ -97,6 +88,7 @@ angular.module('tracktr.controllers')
   } else {
     console.log('Selected date is : ', val)
 	$scope.datepickerObject.inputDate = val;
+	
   }
 };
 
@@ -244,12 +236,14 @@ function timePickerCallback(val) {
 	};
 	
 	$scope.initAddProgressModal = function(){
+	
 		//Add Progress Modal
 	$ionicModal.fromTemplateUrl('addProgressModal.html',{
 		scope:$scope,
 		animation: 'slide-in-up'
 	}).then(function(addProgressModal){
 		$scope.addProgressModal = addProgressModal;
+		
 	});
 	};
 		
@@ -303,8 +297,11 @@ function timePickerCallback(val) {
 		$scope.addProgressModal.hide();
 	};
 	
-	//Clean up edit progress modal when we're done with it
+	//Clean up add progress modal when we're done with it
 	$scope.$on('$destroy',function(){
+		var today = new Date();
+	$scope.progressHour = pad(today.getHours());
+	$scope.progressMinute = pad(today.getMinutes());
 		$scope.addProgressModal.remove();
 	});
 	
@@ -361,7 +358,20 @@ function timePickerCallback(val) {
 	});
 	
 	$scope.init = function() {
+		
+	var today = new Date();
+	$scope.progressHour = pad(today.getHours());
+	$scope.progressMinute = pad(today.getMinutes());
+	
+	
+	$scope.progressCount = 1;
+	
+	$scope.progressCountHour = 0;
+	$scope.progressCountMinute = 0;
+	$scope.progressCountSecond = 0;
+		
 		$scope.initAddProgressModal();
+		$scope.initDatePicker();
 		
 		TaskService.getTaskById($scope.habitId, function(err, task) { 
 			$scope.task = task;
@@ -570,8 +580,9 @@ function timePickerCallback(val) {
           		$scope.progress.push(aProgress);
 				$scope.closeAddProgressModal();
 				
-				//Destory the add progress modal and re-init it to reset most of the values
+				//Destroy the add progress modal and re-init it to reset most of the values
 				$scope.addProgressModal.remove();
+				$scope.initDatePicker();
 				$scope.initAddProgressModal();
 		});
 	});
