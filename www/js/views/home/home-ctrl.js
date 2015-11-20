@@ -38,25 +38,50 @@ angular.module('tracktr.controllers', [])
       });
     });
 
-    $scope.drawCircle = function (task) {
+    $scope.drawCircle = function(task) {
       var circleContainer = document.getElementById('circle-' + task.id);
       var circle = new ProgressBar.Circle(circleContainer, {
         color: '#FC5B3F',
+        // color: '#FFA07A',
         strokeWidth: 5,
-        fill: 'white',
+        // fill: '#FFA07A',
+        
         trailColor: '#eee',
         trailWidth: 5,
         duration: 500,
         // easing: 'easeInOut',
         text: {
-          value: '0'
+          // value: '0',
+          style: {
+            // color: '#FC5B3F' 
+            // color: '#FF8C00'
+            // color: 'white',
+            // background: 'white' 
+          }
         },
         step: function(state, bar) {
-            bar.setText((bar.value() * 100).toFixed(0));
+          if (task.isCount) {
+            // bar.setText((bar.value() * 100).toFixed(0));
+            bar.setText($scope.retrieveDataForCircle(task));
+            // bar.setText('+');
+          } else {
+            setInterval(function() {
+              var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60))/60;
+        
+              var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60))/60;
+        
+              if ((countTimeInSecs + progressTimerInSecs)/task.goal > 1) {
+                progressRatio = 1;
+              } else {
+                progressRatio = (countTimeInSecs + progressTimerInSecs)/task.goal;
+              }
+          }, 1000);
+          bar.setText($scope.displayProgressTimer(task));
+          }
         }
       });
       
-      circleContainer.onclick = function() {
+      circleContainer.onclick = function() { 
         if (!task.isCount && !task.isTimerRunning) {
           $scope.startTimer(task); 
         } else if (!task.isCount && task.isTimerRunning) {
@@ -388,6 +413,14 @@ angular.module('tracktr.controllers', [])
     $scope.navCreateClick = function () {
       $state.go('create');
     };
+    
+    $scope.clickCircleDiv = function(task) {
+      document.getElementById("icon-" + task.id).style.color = '#FC5B3F';
+    }
+    
+    $scope.releaseCircleDiv = function(task) {
+      document.getElementById("icon-" + task.id).style.color = '#eee';
+    }
     
     $scope.counter = 0;
 
