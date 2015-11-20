@@ -43,10 +43,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-  if (!ionic.Platform.isIOS()) {
-    //$ionicConfigProvider.scrolling.jsScrolling(false);
-  }
+.config(function($stateProvider, $urlRouterProvider) {
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
