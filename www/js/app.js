@@ -8,7 +8,7 @@
 
 angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives', 'chart.js', 'firebase'])
 
-.run(function($ionicPlatform, $cordovaSplashscreen, DB) {
+.run(function($ionicPlatform, $cordovaSplashscreen, DB, $animate) {
   $ionicPlatform.ready(function() {
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -33,7 +33,9 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
         $cordovaSplashscreen.hide();
       }, 1000);
     }, false);
-
+    
+    // Disable animations
+    $animate.enabled(false);
   });
     
   // Initialize the Database
