@@ -243,13 +243,15 @@ function timePickerCallback(val) {
 		$scope.closeDaysModal();
 	};
 	
-	//Add Progress Modal
+	$scope.initAddProgressModal = function(){
+		//Add Progress Modal
 	$ionicModal.fromTemplateUrl('addProgressModal.html',{
 		scope:$scope,
 		animation: 'slide-in-up'
 	}).then(function(addProgressModal){
 		$scope.addProgressModal = addProgressModal;
 	});
+	};
 		
 	//Edit Progress Modal
 	$ionicModal.fromTemplateUrl('editProgressModal.html',{
@@ -359,6 +361,8 @@ function timePickerCallback(val) {
 	});
 	
 	$scope.init = function() {
+		$scope.initAddProgressModal();
+		
 		TaskService.getTaskById($scope.habitId, function(err, task) { 
 			$scope.task = task;
 			
@@ -479,7 +483,7 @@ function timePickerCallback(val) {
 		var minutes = date.getMinutes();
 		
 		 return  yyyy+"/"+(mmm[1]?mmm:"0"+mmm[0])+"/"+(dd[1]?dd:"0"+dd[0]) + " "+ pad(hours)+":"+pad(minutes);
-		//return  (mmm[1]?mmm:"0"+mmm[0])+"/"+(dd[1]?dd:"0"+dd[0])+"/"+yyyy + " "+ pad(hours)+":"+pad(minutes);
+		
 	};
 	
 	/**
@@ -565,6 +569,8 @@ function timePickerCallback(val) {
 		 TaskService.updateTask($scope.task, function(err){
           		$scope.progress.push(aProgress);
 				$scope.closeAddProgressModal();
+				$scope.addProgressModal.remove();
+				$scope.initAddProgressModal();
 		});
 	});
 	
