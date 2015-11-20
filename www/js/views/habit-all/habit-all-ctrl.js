@@ -23,7 +23,6 @@ angular.module('tracktr.controllers')
   $scope.$on("$ionicView.enter", function(){
     TaskService.getAll(function(err,tasks){
       $scope.tasks = tasks;
-    
       // If nothing in the database.
       if($scope.tasks.length == 0) {
         //Put in dummy data

@@ -5,7 +5,7 @@
     </button>
   </ion-nav-buttons>
   <ion-content class="home-bg">
-    <div class="card" ng-repeat="task in allTasks" ng-if="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)">
+    <div class="card" ng-repeat="task in allTasks" ng-if="shouldShowTaskOnHome(task)">
       <div class="item item-text-wrap">
         <div class="row"><div class="col">
           <task-icon></task-icon>
