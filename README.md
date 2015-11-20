@@ -5,12 +5,13 @@
 ## How to run the code
 1. npm install
 2. bower install
-3. ionic serve
+3. ionic state restore
+4. ionic serve OR ionic emulate
 
 
 
 ## Using Bower
-please use the --save option, it will save you adding the package directly to bower.json
+
 1. bower install [dependency name] --save
 
 ## Running Tests
