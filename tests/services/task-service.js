@@ -68,7 +68,7 @@ describe('Task Service Unit Tests', function(){
             // Compare progress's task id
             expect(task.progress[0].task_id).toEqual(1);
             // Compare progress's progress value
-            expect(task.progress[0].progress).toEqual(11);
+            expect(task.progress[0].progress).toEqual(12);
             
             done();
           });
