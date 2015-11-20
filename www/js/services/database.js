@@ -52,7 +52,7 @@ angular.module('tracktr.services', ['tracktr.config'])
     self.db.transaction(function(transaction) {
       transaction.executeSql(query, bindings, function(transaction, result) {
         deferred.resolve(result);
-        //$rootScope.$apply();
+        $rootScope.$digest();
       }, function(transaction, error) {
         console.log(query, error);
         deferred.reject(error);
@@ -156,8 +156,6 @@ angular.module('tracktr.services', ['tracktr.config'])
       i++;
     });
   };
-  
-  
   
   return self;
   
