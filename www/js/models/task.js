@@ -108,12 +108,57 @@ Task.prototype.getProgress = function(format){
    * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
    */
 Task.prototype.countTime = function(format) {
-    var task = this;
+    var aTask = this;
     var result = 0;
-    if(task.isTime) {
-      for(var i = 0; i < task.progress.length; i++) {
-        result += task.progress[i].progress;
+    if(aTask.isTime) {
+      // for(var i = 0; i < task.progress.length; i++) {
+      //   result += task.progress[i].progress;
+      // }
+      if(aTask.frequency === 0){
+    //Daily
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var lastSecondOfToday = new Date();
+    lastSecondOfToday.setHours(23,59,59,999);   
+    for(var i = 0; i < aTask.progress.length ; i++){
+       if(today.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastSecondOfToday.getTime()) {
+         result += aTask.progress[i].progress;
+       }
+    }
+  }else if(aTask.frequency === 1){
+    //weekly
+    
+    var today = new Date();
+    
+    var lastSunday = new Date(today);
+    lastSunday.setDate(lastSunday.getDate() - lastSunday.getDay());
+    lastSunday.setHours(0,0,0,0);
+    
+    var nextSunday = new Date(today);
+    nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
+    nextSunday.setHours(23,59,59,999);  
+    
+    for(var i = 0; i < aTask.progress.length ; i++){
+      if(lastSunday.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= nextSunday.getTime()){
+      result += aTask.progress[i].progress;
       }
+    }
+  }
+  else if(aTask.frequency == 2){
+    //monthly
+    var today = new Date();
+    var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
+    firstDayOfMonth.setHours(0,0,0,0);
+    var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1);
+    lastDayOfMonth.setHours(23,59,59,999);  
+    
+    for(var i = 0; i < aTask.progress.length ; i++){
+      
+      if(firstDayOfMonth.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastDayOfMonth.getTime()){
+      result += aTask.progress[i].progress;
+      } 
+    }
+  }
     }
     switch(format) {
        case 1: 
@@ -180,7 +225,6 @@ Task.prototype.countTime = function(format) {
     var seconds = aTask.getProgress(1);
     
     var result = hours + ":"+ pad(minutes) + ":" + pad(seconds);
-    console.log("total time is: " + result);
     return result;
   }
   
@@ -275,3 +319,4 @@ function parseFromFirebase(task) {
     progress.timerLastStarted = new Date(progress.timerLastStarted);
   }
 }
+

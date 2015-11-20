@@ -30,9 +30,8 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "cordova-plugin-inappbrowser", 
+    "cordova-plugin-inappbrowser",
     "https://github.com/bez4pieci/Phonegap-Cookies-Plugin.git"
-
   ],
   "cordovaPlatforms": [
     "ios",

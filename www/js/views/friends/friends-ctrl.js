@@ -1,7 +1,6 @@
 angular.module('tracktr.controllers')
 
 .controller('FriendsController', function ($scope, $state, $ionicHistory, SharingService) {
-	
 	$scope.isAuthenticated = SharingService.isAuthenticated();
 	
 	
