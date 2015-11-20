@@ -27,7 +27,8 @@ var Task = function(task) {
   
   // Instantiate progress
   this.progress = [];
-  (task.progress).forEach(function(p) {
+  
+  angular.forEach(task.progress, function(p) {
     this.progress.push(new Progress(p));
   }, this);
   
