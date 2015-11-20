@@ -569,6 +569,8 @@ function timePickerCallback(val) {
 		 TaskService.updateTask($scope.task, function(err){
           		$scope.progress.push(aProgress);
 				$scope.closeAddProgressModal();
+				
+				//Destory the add progress modal and re-init it to reset most of the values
 				$scope.addProgressModal.remove();
 				$scope.initAddProgressModal();
 		});

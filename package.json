@@ -32,7 +32,6 @@
     "ionic-plugin-keyboard",
     "cordova-inapp-browser",
     "https://github.com/bez4pieci/Phonegap-Cookies-Plugin.git"
-
   ],
   "cordovaPlatforms": [
     "ios",
