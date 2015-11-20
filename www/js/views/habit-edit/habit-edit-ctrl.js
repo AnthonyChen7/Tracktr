@@ -586,8 +586,9 @@ function timePickerCallback(val) {
 				//Destroy the add progress modal and re-init/reset the field values
 				$scope.addProgressModal.remove();
 				$scope.initDatePicker();
-				$scope.initAddProgressModal();
 				$scope.initTimePicker();
+				$scope.initAddProgressModal();
+				
 		});
 	});
 	
