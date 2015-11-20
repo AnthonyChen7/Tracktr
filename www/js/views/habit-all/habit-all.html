@@ -17,24 +17,21 @@
     <input type="search" placeholder="Search..." ng-model="searchText">
     </label>
 
-    
+    <!-- Current -->
     <div class="all-divider">
       Current
     </div>
-    
-    <div ng-repeat= "task in tasks | filter:searchText" ng-show="shouldDisplayInCurrent(task)">
-    <task-info></task-info>
+    <div ng-repeat= "task in tasks | filter:searchText" ng-if="shouldDisplayInCurrent(task)">
+      <task-info></task-info>
     </div>
     
+    <!-- Other -->
     <div class="all-divider">
       Other
     </div>
-    
-    <div ng-repeat= "task in tasks | filter:searchText" ng-hide="shouldDisplayInCurrent(task)">
-      
-    <task-info></task-info>
+    <div ng-repeat= "task in tasks | filter:searchText" ng-if="!shouldDisplayInCurrent(task)">
+      <task-info></task-info>
     </div>
-
 </div>
     
 </ion-list>

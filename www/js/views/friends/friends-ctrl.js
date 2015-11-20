@@ -1,7 +1,6 @@
 angular.module('tracktr.controllers')
 
 .controller('FriendsController', function ($scope, $state, $ionicHistory, SharingService) {
-	
 	$scope.isAuthenticated = SharingService.isAuthenticated();
 	
 	
@@ -35,7 +34,7 @@ angular.module('tracktr.controllers')
 	}
 	
 	$scope.getName = function() {
-		SharingService.getName(function(err, name) {
+		SharingService.getName( SharingService.getAuthData().id ,function(err, name) {
 			if(err) {
 				console.log(err);
 			} else {
@@ -69,7 +68,10 @@ angular.module('tracktr.controllers')
 	
 	$scope.getFriendsTasks = function() {
 		angular.forEach($scope.friends, function(friend) {
-			friend.sharedTasks = SharingService.getOneFriendsTasks(friend);
+			SharingService.getOneFriendsTasks(friend, function(err, tasks) {
+				friend.sharedTasks = tasks;
+			});
+			
 		});
 	} 
 	

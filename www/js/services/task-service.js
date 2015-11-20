@@ -5,23 +5,24 @@ angular.module('tracktr.services')
 .factory('TaskService', function(DB) {
   
   var self = this;
+      self.allTasks = [];
 
   // TASK PREPARED STATEMENTS
   var SELECT_ALL_TASK_PREPARED_STATEMENT = 
-              'SELECT id, name, isActive, frequency, isTime, isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID ' + 
+              'SELECT id, name, isActive, frequency, isTime, isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID, isFromFB, isImported ' + 
               'FROM task';
   var SELECT_TASK_BY_ID_PREPARED_STATEMENT = 
-              'SELECT id, name, isActive, frequency, isTime, isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID ' + 
+              'SELECT id, name, isActive, frequency, isTime, isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID, isFromFB, isImported ' + 
               'FROM task ' + 
               'WHERE id=?';
   var INSERT_TASK_PREPARED_STATEMENT = 
               'INSERT INTO task (name, isActive, frequency, isTime, ' +
-              'isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID) ' + 
-              'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+              'isCount, goal, icon, isTimerRunning, creationDate, isShared, fbID, firebaseRefID, isFromFB, isImported) ' + 
+              'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   var UPDATE_TASK_PREPARED_STATEMENT = 
               'UPDATE task ' +
               'SET name=?, isActive=?, frequency=?, isTime=?, isCount=?, goal=?, icon=?, isTimerRunning=?, creationDate=?, isShared=?, ' +
-              'fbID=?, firebaseRefID=? ' +
+              'fbID=?, firebaseRefID=?, isFromFB=?, isImported=? ' +
               'WHERE id=?';
   var DELETE_TASK_PREPARED_STATEMENT = 
               'DELETE FROM task ' + 
@@ -82,12 +83,14 @@ angular.module('tracktr.services')
     DB.query(INSERT_TASK_PREPARED_STATEMENT, insertTaskQueryAttr(task))
       .then(function(task_result) { 
         var task_id = task_result.insertId;
+        task.id = task_id;
         task.days.task_id = task_id; // assign the task's new id to it's days.
         DB.query(INSERT_DAYS_PREPARED_STATEMENT, insertDaysQueryAttr(task.days))
           .then(function(days_result) {
             
             // No progress
             if(task.progress.length == 0) {
+              self.allTasks.push(new Task(task));
               callback(null, task_id);
               return;
             }
@@ -98,6 +101,7 @@ angular.module('tracktr.services')
                 .then(function(){
                   progressCnter++;
                   if(progressCnter === progressCount) {
+                    self.allTasks.push(new Task(task));
                     callback(null, task_id);
                   }    
                 });
@@ -133,6 +137,10 @@ angular.module('tracktr.services')
             .then(function(result) {
               // Update progress
               if(progressSize == 0) {
+                self.getTaskById(task.id, function(err, task) {
+                  setCachedTask(task);  
+                });
+                
                 if(callback) callback(null);
               }
               
@@ -145,6 +153,9 @@ angular.module('tracktr.services')
                     progressUpdatedCount++;
                       
                     if(progressUpdatedCount == progressSize) {
+                      self.getTaskById(task.id, function(err, task) {
+                        setCachedTask(task);  
+                      });
                       if(callback) callback(null);
                     }
                   });  
@@ -192,6 +203,15 @@ angular.module('tracktr.services')
    *  - task: The task to delete
    */
   self.deleteTask = function(task, callback) {
+    // Remove from the cache
+    for(var i = 0; i < self.allTasks.length; i++) {
+      
+      if(task.id == self.allTasks[i].id) {
+        self.allTasks.splice(i, 1);
+      }
+      
+    }
+    
     // Delete the task
     DB.query(DELETE_TASK_PREPARED_STATEMENT, [task.id])
       .then(function() {
@@ -209,7 +229,7 @@ angular.module('tracktr.services')
     
   };
 
-
+  
   /**
    * Retrieve all of the tasks from the database.
    * 
@@ -218,6 +238,12 @@ angular.module('tracktr.services')
    *  tasks: an array of all the tasks in the database.
    */
   self.getAll = function(callback) {
+    // Return Cached Tasks
+    if(self.allTasks.length != 0) {
+      callback(null, self.allTasks);
+      return;
+    }
+    
     var populatedCount = 0;
     var totalTaskCount = 0;
     
@@ -252,7 +278,8 @@ angular.module('tracktr.services')
                 if(populatedCount === totalTaskCount) {
                   // Construct new Tasks under the Task Prototypes
                   var newTasks = sqlTaskToTasks(allTasks);
-                  callback(null, newTasks);                
+                  self.allTasks = newTasks;
+                  callback(null, self.allTasks);           
                 }
               });
             });
@@ -271,6 +298,7 @@ angular.module('tracktr.services')
    *  task: the task identified by the id.
    */
   self.getTaskById = function(id, callback) {
+    
     var some_task;
                
     DB.query(SELECT_TASK_BY_ID_PREPARED_STATEMENT, [id])
@@ -319,6 +347,8 @@ angular.module('tracktr.services')
             task.isShared ? 1 : 0,
             task.fbID,
             task.firebaseRefID,
+            task.isFromFB ? 1 : 0,
+            task.isImported ? 1 : 0
             ];
   };
   
@@ -374,6 +404,14 @@ angular.module('tracktr.services')
     });
       
     return constructedTasks;
+  }
+  
+  var setCachedTask = function(task) {
+    for(var i = 0; i < self.allTasks.length; i++) {
+      if(self.allTasks[i].id == task.id) {
+        self.allTasks[i] = task;
+      }
+    }
   }
   
   return self;

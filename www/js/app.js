@@ -6,9 +6,9 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives', 'chart.js', 'firebase'])
+angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives', 'chart.js', 'firebase', 'ionic-datepicker','ionic-timepicker'])
 
-.run(function($ionicPlatform, $cordovaSplashscreen, DB) {
+.run(function($ionicPlatform, $cordovaSplashscreen, DB, $animate) {
   $ionicPlatform.ready(function() {
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -33,7 +33,9 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
         $cordovaSplashscreen.hide();
       }, 1000);
     }, false);
-
+    
+    // Disable animations
+    $animate.enabled(false);
   });
     
   // Initialize the Database
@@ -42,7 +44,6 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -73,7 +74,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
     cache: false,
     url: '/charts/:taskId',
     templateUrl: 'js/views/habit-charts/habit-charts.html',
-    controller: 'HabitChartsController'
+    controller: 'HabitChartsController',
   })
   
   .state('tab.friends', {

@@ -1,5 +1,5 @@
 <ion-view view-title="Habit Edit" ng-init="init()" cache-view="false">
-  <ion-nav-buttons id="10" side="primary">
+  <ion-nav-buttons id="10" side="left">
     <button class="button button-clear button-icon" ng-click="goBack()" nav-direction="back">
       <i class="ion-chevron-left"></i>
     </button>
@@ -42,7 +42,7 @@
           <label class="item item-input" ng-click="showFrequencyPopup(frequency)">
               <span class="input-label">Frequency</span>
               <p name="frequency" ng-model="frequency" required>{{frequency.name}}</p>
-              <i class="icon ion-alert col col-10" ng-show="createTask.frequency.$error.required"></i>
+              <i class="icon ion-alert col col-10" ng-if="createTask.frequency.$error.required"></i>
           </label>
           <label id="daysField" class="item item-input" ng-click="openDaysModal()">
               <span class="input-label">Days</span>
@@ -126,8 +126,113 @@
         </div>
         
         <div class="padding">
-            <p ng-show="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
+            <p ng-if="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
         </div>
+        
+        <div class="padding-left padding-right">
+          <button class="button button-block button-dark" ng-click="openEditProgressModal()">
+            Edit Progress
+          </button>
+        </div>
+        
+        <script id="editProgressModal.html" type="text/ng-template">
+        <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+                <h1 class="title" style="text-align: center;">Edit Progress</h1>
+                <button class="button button-clear" ng-click="closeEditProgressModal()"><i class="ion-chevron-left"></i></button>
+                <button class="button button-clear button-icon" ng-click="openAddProgressModal()"><i class="ion-edit"></i></button>
+              </ion-header-bar>
+        <ion-content>
+        
+        
+        
+        <div class="row header">
+        <div class="col" align='center'>Date</div>
+        <div class="col" align='center'>Progress Count</div>
+        <div class="col" align='center'></div>
+        </div>
+        
+        <div class="row" ng-repeat="p in progress" style="border:1px solid black;">
+        
+        <div class="col" align='center'>{{displayFormattedDate(p.date)}}</div>
+        <div class="col" align='center'>{{displayFormattedProgress(p.progress)}}</div>
+        
+    <div class="col" align='center'>
+    <button ng-click="deleteProgress(p)">
+      <i class="ion-close-circled"></i>
+    </button>
+     </div>
+
+        
+        </div>
+       
+        </ion-content>
+        </ion-modal-view>
+        </script>
+        
+        <script id="addProgressModal.html" type="text/ng-template">
+        <ion-modal-view>
+       <ion-header-bar class="bar bar-header bar-dark">
+       <button class="button button-clear align='left'" ng-click="closeAddProgressModal()"><i class="ion-chevron-left"></i></button>
+                <h1 class="title" style="text-align: center;">Add New Progress</h1>
+        </ion-header-bar>
+        
+        <ion-content>
+        
+        <form name="addProgressForm" novalidate>
+        
+        <!-- Progress Date  -->
+        <label class="item item-input">
+            <span class="input-label">Progress Date</span>
+          <ionic-datepicker input-obj="datepickerObject">
+          <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'yyyy/MM/dd'}}</button>
+          </ionic-datepicker>
+         </label> 
+       
+       <!-- Progress Date  -->
+       <label class="item item-input">
+            <span class="input-label">Progress Time</span>
+             <ionic-timepicker input-obj="timePickerObject">
+              <button class="button button-block button-positive overflowShow">
+                <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
+                  {{progressHour}}:{{progressMinute}}
+              </button>
+              </ionic-timepicker>
+       </label>
+       
+       <!-- Progress Count for count based tasks  -->
+      <label class="item item-input" ng-show="task.isCount">
+          <span class="input-label">Progress Count</span>
+            <select ng-model="progressCount" ng-options="progressCount for progressCount in range(1, 999)"></select>
+      </label>
+      
+      <!-- Progress Count for time based tasks  -->
+      <label class="item item-input" ng-show="task.isTime">
+          <span class="input-label">Progress Count Hour</span>
+            <select ng-model="progressCountHour" ng-options="progressCountHour for progressCountHour in range(0, 999)"></select>
+      </label>
+      
+      <label class="item item-input" ng-show="task.isTime">
+          <span class="input-label">Progress Count Minute</span>
+            <select ng-model="progressCountMinute" ng-options="progressCountMinute for progressCountMinute in range(0, 59)"></select>
+      </label>
+      
+      <label class="item item-input" ng-show="task.isTime">
+          <span class="input-label">Progress Count Second</span>
+            <select ng-model="progressCountSecond" ng-options="progressCountSecond for progressCountSecond in range(0, 59)"></select>
+      </label>
+       
+        <div class="padding-left padding-right">
+          <button class="button button-block button-dark" ng-click="saveProgress(datepickerObject.inputDate,progressHour,progressMinute,progressCount,progressCountHour,progressCountMinute, progressCountSecond )">
+            Save
+          </button>
+        </div>
+        
+        </form>
+        
+        </ion-content> 
+        </ion-modal-view>  
+        </script>
         
         <div class="padding-left padding-right">
           <button class="button button-block button-dark" ng-click="save(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress)" ng-disabled="createTask.$invalid">

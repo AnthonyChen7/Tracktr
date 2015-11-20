@@ -19,13 +19,16 @@ var Task = function(task) {
   this.isShared = (task.isShared ? true : false);
   this.fbID = task.fbID;
   this.firebaseRefID = task.firebaseRefID;
+  this.isFromFB = (task.isFromFB ? true : false);
+  this.isImported = (task.isImported ? true : false);
 
   // Instantiate days 
   this.days = new Day(task.days);
   
   // Instantiate progress
   this.progress = [];
-  (task.progress).forEach(function(p) {
+  
+  angular.forEach(task.progress, function(p) {
     this.progress.push(new Progress(p));
   }, this);
   
@@ -34,8 +37,10 @@ var Task = function(task) {
 /**
  * aTask is a task object
  * Returns the progress (integer) based on the frequency
+ * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
+ * For count tasks, simply use task.getProgress() with no parameters
  */
-Task.prototype.getProgress = function(){
+Task.prototype.getProgress = function(format){
   var aTask = this;
   var result = 0;
   
@@ -84,7 +89,17 @@ Task.prototype.getProgress = function(){
       } 
     }
   }
-    
+  switch(format) {
+       case 1: 
+         result = toSeconds(result);
+         break;   
+       case 2: 
+         result = toMinutes(result);
+         break;
+       case 3: 
+         result = toHours(result);
+         break;
+    }  
   return result;
 }
 
@@ -93,12 +108,57 @@ Task.prototype.getProgress = function(){
    * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
    */
 Task.prototype.countTime = function(format) {
-    var task = this;
+    var aTask = this;
     var result = 0;
-    if(task.isTime) {
-      for(var i = 0; i < task.progress.length; i++) {
-        result += task.progress[i].progress;
+    if(aTask.isTime) {
+      // for(var i = 0; i < task.progress.length; i++) {
+      //   result += task.progress[i].progress;
+      // }
+      if(aTask.frequency === 0){
+    //Daily
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var lastSecondOfToday = new Date();
+    lastSecondOfToday.setHours(23,59,59,999);   
+    for(var i = 0; i < aTask.progress.length ; i++){
+       if(today.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastSecondOfToday.getTime()) {
+         result += aTask.progress[i].progress;
+       }
+    }
+  }else if(aTask.frequency === 1){
+    //weekly
+    
+    var today = new Date();
+    
+    var lastSunday = new Date(today);
+    lastSunday.setDate(lastSunday.getDate() - lastSunday.getDay());
+    lastSunday.setHours(0,0,0,0);
+    
+    var nextSunday = new Date(today);
+    nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
+    nextSunday.setHours(23,59,59,999);  
+    
+    for(var i = 0; i < aTask.progress.length ; i++){
+      if(lastSunday.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= nextSunday.getTime()){
+      result += aTask.progress[i].progress;
       }
+    }
+  }
+  else if(aTask.frequency == 2){
+    //monthly
+    var today = new Date();
+    var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
+    firstDayOfMonth.setHours(0,0,0,0);
+    var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1);
+    lastDayOfMonth.setHours(23,59,59,999);  
+    
+    for(var i = 0; i < aTask.progress.length ; i++){
+      
+      if(firstDayOfMonth.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastDayOfMonth.getTime()){
+      result += aTask.progress[i].progress;
+      } 
+    }
+  }
     }
     switch(format) {
        case 1: 
@@ -160,12 +220,11 @@ Task.prototype.countTime = function(format) {
    */
   Task.prototype.getTotalTime = function(){
     var aTask = this;
-    var hours = aTask.countTime(3);
-    var minutes = aTask.countTime(2);
-    var seconds = aTask.countTime(1);
+    var hours = aTask.getProgress(3);
+    var minutes = aTask.getProgress(2);
+    var seconds = aTask.getProgress(1);
     
     var result = hours + ":"+ pad(minutes) + ":" + pad(seconds);
-    
     return result;
   }
   
@@ -260,3 +319,4 @@ function parseFromFirebase(task) {
     progress.timerLastStarted = new Date(progress.timerLastStarted);
   }
 }
+

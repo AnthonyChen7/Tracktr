@@ -1,8 +1,9 @@
 angular.module('tracktr.controllers')
 
 .controller("HabitEditController", function($scope,$state,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
-	$scope.habitId = $stateParams.habitId;
 	
+	$scope.habitId = $stateParams.habitId;
+		
 	$scope.habitTypes = [
 		{name: "Time", code: 0},
 		{name: "Count", code: 1}
@@ -45,8 +46,86 @@ angular.module('tracktr.controllers')
 		{class: "icon ion-trophy icon-custom", code: 17, value: false},
 		{class: "icon ion-bonfire icon-custom", code: 18, value: false},
 		{class: "icon ion-lightbulb icon-custom", code: 19, value: true},
-		];		
+		];
+		
+	//For ionic date picker
+	var weekDaysList = ["Su", "M", "Tu", "W", "Th", "F", "Sa"];
 	
+	$scope.initDatePicker = function(){	
+		
+	// For the Ionic date picker	
+	 $scope.datepickerObject = {
+      titleLabel: 'Select Progress Date',  //Optional
+      todayLabel: 'Today',  //Optional
+      closeLabel: 'Close',  //Optional
+      setLabel: 'Set',  //Optional
+      setButtonType : 'button-assertive',  //Optional
+      todayButtonType : 'button-assertive',  //Optional
+      closeButtonType : 'button-assertive',  //Optional
+       inputDate: new Date(),  //Optional
+      mondayFirst: false,  //Optional
+    //   disabledDates: disabledDates, //Optional
+      weekDaysList: weekDaysList, //Optional
+    //   monthList: monthList, //Optional
+      templateType: 'popup', //Optional
+      showTodayButton: 'true', //Optional
+      modalHeaderColor: 'bar-positive', //Optional
+      modalFooterColor: 'bar-positive', //Optional
+    //   from: new Date(2012, 8, 2), //Optional
+      to: new Date(),  //Optional
+      callback: function (val) {  //Mandatory
+        datePickerCallback(val);
+      },
+      dateFormat: 'YYYY/MM/DD', //Optional
+      closeOnSelect: false, //Optional
+    };
+	};
+	
+	//Mandatory callback object for datepicker
+	var datePickerCallback = function (val) {
+  if (typeof(val) === 'undefined') {
+    console.log('No date selected');
+  } else {
+    console.log('Selected date is : ', val)
+	$scope.datepickerObject.inputDate = val;
+	
+  }
+};
+
+$scope.initTimePicker = function(){
+	
+	var today = new Date();
+	$scope.progressHour = pad(today.getHours());
+	$scope.progressMinute = pad(today.getMinutes());
+
+$scope.timePickerObject = {
+  inputEpochTime: ( ((new Date()).getHours() * 60 * 60) + (new Date()).getMinutes() / 60 * 3600 ),  //Starting input time in Epoch
+  step: 1,  //Optional
+  format: 24,  //Optional
+  titleLabel: 'Progress Time',  //Optional
+  setLabel: 'Set',  //Optional
+  closeLabel: 'Close',  //Optional
+  setButtonType: 'button-positive',  //Optional
+  closeButtonType: 'button-stable',  //Optional
+  callback: function (val) {    //Mandatory
+    timePickerCallback(val);
+  }
+};
+};
+
+//Mandatory callback for time picker object
+function timePickerCallback(val) {
+  if (typeof (val) === 'undefined') {
+    console.log('Time not selected');
+  } else {
+    var selectedTime = new Date(val * 1000);
+    console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
+	$scope.timePickerObject.inputEpochTime = val;
+	$scope.progressHour = pad(selectedTime.getUTCHours());
+	$scope.progressMinute = pad(selectedTime.getUTCMinutes());
+  }
+}		
+		
 	$scope.range = function(start, end) {
 		var result = [];
 		for (var i = start; i <= end; i++) {
@@ -163,6 +242,26 @@ angular.module('tracktr.controllers')
 		$scope.closeDaysModal();
 	};
 	
+	$scope.initAddProgressModal = function(){
+	
+		//Add Progress Modal
+	$ionicModal.fromTemplateUrl('addProgressModal.html',{
+		scope:$scope,
+		animation: 'slide-in-up'
+	}).then(function(addProgressModal){
+		$scope.addProgressModal = addProgressModal;
+		
+	});
+	};
+		
+	//Edit Progress Modal
+	$ionicModal.fromTemplateUrl('editProgressModal.html',{
+		scope:$scope,
+		animation: 'slide-in-up'
+	}).then(function(editProgressModal){
+		$scope.editProgressModal = editProgressModal;
+	});
+	
 	// Icon Modal
 	$ionicModal.fromTemplateUrl('iconModal.html', {
 		scope: $scope,
@@ -196,6 +295,55 @@ angular.module('tracktr.controllers')
 		// Execute action
 	});
 	
+	//Modal Helpers - Add Progress
+	$scope.openAddProgressModal = function(){
+		$scope.addProgressModal.show();
+	};
+	
+	$scope.closeAddProgressModal = function(){
+		$scope.addProgressModal.hide();
+	};
+	
+	//Clean up add progress modal when we're done with it
+	$scope.$on('$destroy',function(){
+		var today = new Date();
+	$scope.progressHour = pad(today.getHours());
+	$scope.progressMinute = pad(today.getMinutes());
+		$scope.addProgressModal.remove();
+	});
+	
+	// Execute action on hide modal
+	$scope.$on('addProgressModal.hidden', function() {
+		// Execute action
+	});
+	// Execute action on remove modal
+	$scope.$on('addProgressModal.removed', function() {
+		// Execute action
+	});
+	
+	//Modal Helpers - Edit Progress
+	$scope.openEditProgressModal = function(){
+		$scope.editProgressModal.show();
+	};
+	
+	$scope.closeEditProgressModal = function(){
+		$scope.editProgressModal.hide();
+	};
+	
+	//Clean up edit progress modal when we're done with it
+	$scope.$on('$destroy',function(){
+		$scope.editProgressModal.remove();
+	});
+	
+	// Execute action on hide modal
+	$scope.$on('editProgressModal.hidden', function() {
+		// Execute action
+	});
+	// Execute action on remove modal
+	$scope.$on('editProgressModal.removed', function() {
+		// Execute action
+	});
+	
 	// Modal Helpers - Icon
 	$scope.openIconModal = function() {
 		$scope.iconModal.show();
@@ -217,6 +365,17 @@ angular.module('tracktr.controllers')
 	});
 	
 	$scope.init = function() {
+	
+		$scope.progressCount = 1;
+	
+		$scope.progressCountHour = 0;
+		$scope.progressCountMinute = 0;
+		$scope.progressCountSecond = 0;
+		
+		$scope.initAddProgressModal();
+		$scope.initDatePicker();
+		$scope.initTimePicker();
+		
 		TaskService.getTaskById($scope.habitId, function(err, task) { 
 			$scope.task = task;
 			
@@ -224,7 +383,7 @@ angular.module('tracktr.controllers')
 			$scope.isActive = task.isActive;
 			
 			$scope.frequency = $scope.frequencies[task.frequency];
-
+			
 			if ($scope.frequency.code == 0) {
 				document.getElementById('daysField').style.display = '';
 			} else {
@@ -232,6 +391,7 @@ angular.module('tracktr.controllers')
 			}
 			
 			if (task.isTime == 1) {
+				
 				$scope.habitType = $scope.habitTypes[0];
 				$scope.hoursAndMinutes = task.goal;
 				$scope.hours = Math.floor(task.goal/60);
@@ -241,6 +401,7 @@ angular.module('tracktr.controllers')
 				document.getElementById('minutesField').style.display = '';
 				document.getElementById('hoursField').style.display = '';
 			} else if (task.isCount == 1) {
+				
 				$scope.habitType = $scope.habitTypes[1];
 				$scope.goal = task.goal;
 				
@@ -322,6 +483,117 @@ angular.module('tracktr.controllers')
 		$ionicHistory.goBack();
 	}
 	
+	/**
+	 * Displays the date in an appropriate format
+	 * date is a javascript date object
+	 */
+	$scope.displayFormattedDate = function(date){
+		var yyyy= date.getFullYear().toString();
+		var mmm = (date.getMonth()+1).toString(); //getMonth() is zero based
+		var dd = date.getDate().toString();
+		
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		
+		 return  yyyy+"/"+(mmm[1]?mmm:"0"+mmm[0])+"/"+(dd[1]?dd:"0"+dd[0]) + " "+ pad(hours)+":"+pad(minutes);
+		
+	};
+	
+	/**
+	 * Displays the progress in an appropriate format
+	 * 
+	 */
+	$scope.displayFormattedProgress = function(progressCount){
+		if($scope.task.isTime === true){
+			var seconds = toSeconds(progressCount);
+			var minutes = toMinutes(progressCount);
+			var hours = toHours(progressCount);
+			return hours+":"+pad(minutes)+":"+pad(seconds);
+		}else{
+			return progressCount;
+		}
+	};
+	
+	/**
+	 * Deletes the specified progress from the progress array of the task object
+	 * progressObject is a valid progress object
+	 */
+	$scope.deleteProgress = function(progressObject){
+		
+		var index = $scope.progress.indexOf(progressObject);
+		
+		TaskService.removeProgressFromTask($scope.task, progressObject, function(err){
+			
+			 TaskService.updateTask($scope.task, function(err){
+          		$scope.progress.splice(index,1);
+			 });
+			
+		} );	
+	};
+	
+	/**
+	 * Saves the progress and adds it to the progress array of the task
+	 */
+	$scope.saveProgress = function(selectedDate,inputHour, inputMinute,progressCount, progressCountHour, progressCountMinute, progressCountSecond){
+		
+		var dateInput = selectedDate;
+		var parsedHour = parseInt(inputHour);
+		var parsedMinute = parseInt(inputMinute);
+		var newProgress = {};
+		
+		//Progress date
+		dateInput.setHours(parsedHour, parsedMinute, 0);
+		
+		if($scope.task.isCount){
+		//Count based task	
+		newProgress = {
+			id : 0,
+			task_id : $scope.task.id,
+			date : dateInput.getTime(),
+			progress : progressCount,
+			timerLastStarted : dateInput.getTime()
+		};
+	
+		}
+		
+		else{
+			//Time based task
+			
+			//Convert all the input times to milliseconds
+			var hourMillisecond = progressCountHour * 3600000;
+			var minuteMillisecond = progressCountMinute * 60000;
+			var secondMillisecond = progressCountSecond * 1000;
+			var total = hourMillisecond + minuteMillisecond + secondMillisecond;
+			
+			newProgress = {
+			id : 0,
+			task_id : $scope.task.id,
+			date : dateInput.getTime(),
+			progress : total,
+			timerLastStarted : dateInput.getTime()
+		};
+			
+		}
+	
+	//add the progress to the task array and save it
+	var aProgress = new Progress(newProgress);
+	
+	TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
+		 TaskService.updateTask($scope.task, function(err){
+          		$scope.progress.push(aProgress);
+				$scope.closeAddProgressModal();
+				
+				//Destroy the add progress modal and re-init/reset the field values
+				$scope.addProgressModal.remove();
+				$scope.initDatePicker();
+				$scope.initTimePicker();
+				$scope.initAddProgressModal();
+				
+		});
+	});
+	
+	};
+		
 	/**
 	 * Return back to the previous page
 	 */
