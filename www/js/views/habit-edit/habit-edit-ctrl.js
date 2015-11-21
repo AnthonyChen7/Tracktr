@@ -508,7 +508,7 @@ function timePickerCallback(val) {
 			var seconds = toSeconds(progressCount);
 			var minutes = toMinutes(progressCount);
 			var hours = toHours(progressCount);
-			return hours+":"+pad(minutes)+":"+pad(seconds);
+			return pad(hours)+":"+pad(minutes)+":"+pad(seconds);
 		}else{
 			return progressCount;
 		}
