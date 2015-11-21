@@ -14,10 +14,9 @@
         <div class="col" on-touch="clickCircleDiv(allTasks[$index])" on-release="releaseCircleDiv(allTasks[$index])">
           <progress-circle1><task-icon1></task-icon1></progress-circle1>
         </div>
-        <div class="row" ng-if="!(allTasks[$index].isCount)">
+        <div class="row">
           <div class="col text-center">
             <h6 class="home-subtext" ng-if="!(allTasks[$index].isCount)">Total Time: {{displayTotalTimer(task)}}</h6>
-            <h6 class="home-subtext-null" ng-if="(allTasks[$index].isCount)"></h6>
           </div>
         </div>
         <div class="row">
@@ -36,7 +35,6 @@
         <div class="row">
           <div class="col text-center">
             <h6 class="home-subtext" ng-if="!(allTasks[$index+1].isCount)">Total Time: {{displayTotalTimer(allTasks[$index + 1])}}</h6>
-            <h6 class="home-subtext-null" ng-if="(allTasks[$index+1].isCount)"></h6>
           </div>
         </div>
         <div class="row">
