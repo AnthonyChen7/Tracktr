@@ -17,7 +17,8 @@ module.exports = function(config) {
     files: [
       '../www/lib/angular/angular.js',
       '../www/lib/angular-mocks/angular-mocks.js',
-      
+      '../www/lib/firebase/firebase.js',
+      '../www/lib/angularfire/dist/angularfire.js',
       
       '../www/js/app.js',
       

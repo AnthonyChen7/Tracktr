@@ -64,7 +64,13 @@ gulp.task('test', function(done) {
   karma.start({
         configFile: __dirname + '/tests/my.conf.js',
         singleRun: true
-    }, function() {
-        done();
+    }, function(karmaResults) {
+      // Tests failed
+      if(karmaResults == 1) {
+        console.log("failed");
+        process.exit(1);
+      } else {
+        done();  
+      }
     });
 });

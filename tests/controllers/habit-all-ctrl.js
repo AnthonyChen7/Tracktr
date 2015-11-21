@@ -2,20 +2,23 @@ describe("Habit All Controller Tests", function(){
     
     var scope;
     var mockTaskService;
+    var mockSharingService;
     
     //create mock TaskService
     beforeEach(
         module('tracktr.services', function($provide){
               $provide.value('TaskService', mockTaskService);
+              $provide.value('SharingService', mockSharingService);
+              
         })    
     );
       
     // load the controller's module
-     beforeEach(module('tracktr.controllers'));
+    beforeEach(module('tracktr.controllers'));
 
     beforeEach(inject(function($rootScope, $controller) {
         scope = $rootScope.$new();
-        $controller('HabitAllController', {$scope: scope, $state: {}, $ionicPopup:{}, TaskService: mockTaskService });
+        $controller('HabitAllController', {$scope: scope, $state: {}, $ionicPopup:{}, TaskService: mockTaskService, SharingService: mockSharingService });
     }));
     
     it("Test count no progress", function(){ 

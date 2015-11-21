@@ -2,15 +2,18 @@ describe('Task Service Unit Tests', function(){
   
     var TaskService;
     var DB;
-
+    var applyTimer;
+    var $rootScope;
+    
     beforeEach(
         module('tracktr.services')    
     );
-
+    
 	  // Inject Task Service before each test 
-    beforeEach(inject(function(_TaskService_, _DB_) {
+    beforeEach(inject(function(_TaskService_, _DB_, _$rootScope_) {
       TaskService = _TaskService_;
       DB = _DB_;
+      $rootScope = _$rootScope_;
     }));
     
     // Initialize the database before each test
@@ -18,8 +21,7 @@ describe('Task Service Unit Tests', function(){
       DB.init(function() {
         done();
       });
-    })
-    
+    });
     
     // Nuke the database after each test
     afterEach(function(done) {
@@ -27,6 +29,7 @@ describe('Task Service Unit Tests', function(){
         done();
       });
     });
+    
 
 
 
@@ -401,7 +404,6 @@ describe('Task Service Unit Tests', function(){
           // Retrieve all of the tasks
           TaskService.getAll(function(err, tasks) {
             
-            console.log(tasks[1]);
             // Check the length of tasks returned
             expect(tasks.length).toEqual(2);
             
