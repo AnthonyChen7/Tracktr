@@ -1,6 +1,6 @@
 var appDirs = angular.module('tracktr.directives',[]);
 
-appDirs.directive('progressCircle', function() {
+appDirs.directive('progressCircle1', function() {
 	var directive = {};
 	directive.restrict = 'E';
 	directive.compile = function(element, attributes) {
@@ -17,7 +17,26 @@ appDirs.directive('progressCircle', function() {
 	return directive;
 });
 
-appDirs.directive('taskIcon', function() { 
+appDirs.directive('progressCircle2', function() {
+	var directive = {};
+	directive.restrict = 'E';
+	directive.compile = function(element, attributes) {
+		return {
+			pre: function($scope, element, attributes) {
+				var nextId = $scope.task.id + 1;
+				element.html("<div class='progress-circle' id='circle-" + nextId + "'></div>");
+			},
+			
+			post: function($scope, element, attributes) {
+				var nextId = $scope.task.id;
+				$scope.drawCircle($scope.allTasks[nextId]);
+        	}
+		};
+	}
+	return directive;
+});
+
+appDirs.directive('taskIcon1', function() { 
 	var directive = {};
 	directive.restrict = 'E';
 	directive.compile = function(element, attributes) {
@@ -28,7 +47,27 @@ appDirs.directive('taskIcon', function() {
 			
 			post: function($scope, element, attributes) {
 				var iconClass = $scope.getIconClass($scope.task.icon);
-				element.html("<i class='" + iconClass + " icon-colored'></i>");
+				element.html("<i class='" + iconClass + " icon-colored' id='icon-" + $scope.task.id + "'></i>");
+        	}
+		};
+	}
+	return directive;  
+});
+
+appDirs.directive('taskIcon2', function() { 
+	var directive = {};
+	directive.restrict = 'E';
+	directive.compile = function(element, attributes) {
+		return {
+			pre: function($scope, element, attributes) {
+				
+			},
+			
+			post: function($scope, element, attributes) {
+				var nextId = $scope.task.id;
+				var nextId2 = $scope.task.id + 1;
+				var iconClass = $scope.getIconClass($scope.allTasks[nextId].icon);
+				element.html("<i class='" + iconClass + " icon-colored' id='icon-" + nextId2 + "'></i>");
         	}
 		};
 	}

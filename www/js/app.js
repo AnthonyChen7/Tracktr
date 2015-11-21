@@ -98,6 +98,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
   })
   
   .state('create', {
+    cache: false,
     url: '/create',
     templateUrl: 'js/views/habit-create/habit-create.html',
     controller: 'HabitCreateController' 

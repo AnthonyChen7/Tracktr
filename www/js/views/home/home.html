@@ -1,67 +1,51 @@
 <ion-view view-title="Today">
   <ion-nav-buttons id="10" side="secondary">
-    <button class="button button-clear button-icon" ng-click="navCreateClick()">
-      <i class="ion-edit"></i>
+    <button class="button button-clear button-icon" ng-click="navCreateClick();">
+      <i class="ion-plus"></i>
     </button>
   </ion-nav-buttons>
-  <ion-content class="home-bg">
-    <div class="card" ng-repeat="task in allTasks" ng-if="shouldShowTaskOnHome(task)">
-      <div class="item item-text-wrap">
-        <div class="row"><div class="col">
-          <task-icon></task-icon>
-        </div></div>
-        <div class="row circle-wrapper"><div class="col">
-          <progress-circle></progress-circle>     
-        </div></div>
-        <div class="row"><div class="col text-center">
-          <h2 style="text-align: center;"><b>{{task.name}}</b></h2>
-        </div></div>
-        <div class="row" ng-if="!task.isCount">
-          <div class="col col-25 col-offset-25 text-center">
-            <p style="text-align: center;">
-              <!--<b>Total:</b><br>{{countTime(task,3)}}:{{countTime(task,2)}}:{{countTime(task,1)}}-->
-              <b>Total:</b><br>{{task.getTotalTime()}}
-            </p>
-          </div>
-          <div class="col col-25 text-center">
-              <p style="text-align: center;">
-                <!--<b>Current:</b><br>{{progressTimer(task,3)}}:{{progressTimer(task,2)}}:{{progressTimer(task,1)}}-->
-                <b>Current:</b><br>{{displayProgressTimer(task)}}
-                
-              </p>
+  
+  <ion-content id="home-bg">
+    <div class="row" ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)"
+    ng-if="$index % 2 == 0">
+    
+      <!-- First column of tasks -->
+      <div class="col col-50" ng-if="$index < allTasks.length">
+        <div class="col" on-touch="clickCircleDiv(allTasks[$index])" on-release="releaseCircleDiv(allTasks[$index])">
+          <progress-circle1><task-icon1></task-icon1></progress-circle1>
+        </div>
+        <div class="row" ng-if="!(allTasks[$index].isCount)">
+          <div class="col text-center">
+            <h6 class="home-subtext" ng-if="!(allTasks[$index].isCount)">Total Time: {{displayTotalTimer(task)}}</h6>
+            <h6 class="home-subtext-null" ng-if="(allTasks[$index].isCount)"></h6>
           </div>
         </div>
-        <!--<div class="row">
-          <div class="col text-center" ng-show="!task.isCount && !task.isTimerRunning">
-            <button class="button button-outline button-positive circle-button" ng-click="startTimer(task); $event.stopPropagation();">Start</button>
-          </div>
-        </div>-->
         <div class="row">
-          <!--<div class="col col-50 col-offset-25 text-center" ng-show="task.isCount">
-            <button class="button button-outline button-balanced circle-button count-button"  ng-click="incCount(task)">Count</button>
+          <div class="col text-center">
+            <h4 style="text-align: center; padding: 0px; margin:0px;"><b>{{task.name}}</b></h4>
           </div>
-          <div class="col col-10 text-center" ng-show="task.isCount">
-              <p style="text-align: center;">
-                <button class="button button-balanced count-button">{{countProgress(task)}}</button>
-              </p>
-          </div>-->
-          <div class="col col-20"></div>
-          <div class="col col-20 col-offset-20 text-center" ng-if="task.isCount">
-              <!--<p style="text-align: center;">
-                <button class="button button-outline button-minimal count-button">{{countProgress(task)}}</button>
-              </p>-->
-              <p style="text-align: center;">
-                <b>Count:</b><br>{{countProgress(task)}}
-              </p>
-          </div>
-        </div>
-        <!--<div class="row">
-          <div class="col text-center" ng-show="!task.isCount && task.isTimerRunning">
-            <button class="button button-outline button-assertive circle-button" ng-click="stopTimer(task); $event.stopPropagation();">Stop</button>
-          </div>
-         </div>-->
         </div>
       </div>
+      
+      <!-- Second column of tasks -->
+      <div class="col col-50" ng-if="$index+1 < allTasks.length">
+        <div class="row" on-touch="clickCircleDiv(allTasks[$index+1])" on-release="releaseCircleDiv(allTasks[$index+1])">
+          <progress-circle2><task-icon2></task-icon2></progress-circle2>
+        </div>
+        <div></div> <!-- This empty div needed for alignment -->
+        <div class="row">
+          <div class="col text-center">
+            <h6 class="home-subtext" ng-if="!(allTasks[$index+1].isCount)">Total Time: {{displayTotalTimer(allTasks[$index + 1])}}</h6>
+            <h6 class="home-subtext-null" ng-if="(allTasks[$index+1].isCount)"></h6>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <h4 style="text-align: center; padding:0px; margin:0px;"><b>{{allTasks[$index+1].name}}</b></h4>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </ion-content>
 </ion-view>

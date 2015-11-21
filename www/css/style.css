@@ -40,13 +40,14 @@
     width: 50%;
 }
 
-.home-bg {
+#home-bg {
     background-color: whitesmoke;
 }
 
 .icon-colored {
     /*color: darkgray;*/
-    color: #6FD57F;
+    /*color:  #6FD57F;*/
+    color: #eee;
     font-size: 30px;
     margin: 0px;
     position: absolute; 
@@ -126,4 +127,27 @@
 
 ion-content {
     background: whitesmoke;
+}
+
+.button-circle {
+    background: none;
+    border: none;
+}
+
+.button-circle:active {
+    background: none;
+    border: none;
+}
+
+.home-subtext {
+    color: lightgray;    
+    text-align: center; 
+    padding: 0px; 
+    margin: -10px 0px -10px 0px;
+}
+
+.home-subtext-null {
+    text-align: center; 
+    padding:0px; 
+    margin:0px 0px 2px 0px;
 }
