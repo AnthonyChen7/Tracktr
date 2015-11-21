@@ -1121,7 +1121,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: prevSunday.getTime(),
-         progress: 3600000,
+         progress: 60000,
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -1195,7 +1195,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: middleOfThisMonth.getTime(),
-         progress: 3600000,
+         progress: 3660000,
          timerLastStarted: someDate.getTime()
        }
      ]
