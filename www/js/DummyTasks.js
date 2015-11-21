@@ -791,6 +791,525 @@ var tasks = [
          timerLastStarted: someDate.getTime()
        }
      ]
+    }, 
+    {
+     //19
+     name: 'Daily Time No Progress',
+     isActive: 0,
+     frequency: 0,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+     ]
+    },
+    //20
+    {
+     
+     name: 'Daily Time 1 progress',
+     isActive: 0,
+     frequency: 0,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate.getTime(),
+         progress: 3661000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //21
+     name: 'Daily Time 2 progress',
+     isActive: 0,
+     frequency: 0,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate.getTime(),
+         progress: 3661000,
+         timerLastStarted: someDate.getTime()
+       },
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //22
+     name: 'Daily Time progress today at 00:00:00',
+     isActive: 0,
+     frequency: 0,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: today.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //23
+     name: 'Daily Time progress today at 23:59:99',
+     isActive: 0,
+     frequency: 0,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: lastSecondOfToday.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //24
+     name: 'Daily Time progress not today',
+     isActive: 0,
+     frequency: 0,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: firstDayOfMonth.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //25
+     name: 'weekly Time progress not today',
+     isActive: 0,
+     frequency: 1,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDayOfNextMonth.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //26
+     name: 'weekly Time progress occurs today',
+     isActive: 0,
+     frequency: 1,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDate.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //27
+     name: 'weekly Time progress prev Sunday',
+     isActive: 0,
+     frequency: 1,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: prevSunday.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //28
+     name: 'weekly Time progress next Sunday',
+     isActive: 0,
+     frequency: 1,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: nextSunday.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //29
+     name: 'monthly Time progress middle of this month',
+     isActive: 0,
+     frequency: 2,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: middleOfThisMonth.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //30
+     name: 'monthly Time progress first day of this month',
+     isActive: 0,
+     frequency: 2,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: firstDayOfMonth.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //31
+     name: 'monthly Time progress last day of this month',
+     isActive: 0,
+     frequency: 2,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: lastDayOfMonth.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
+    },
+    {
+     //32
+     name: 'monthly Time progress some day of next month',
+     isActive: 0,
+     frequency: 2,
+     isTime: 1,
+     isCount: 0, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: 0,
+     creationDate: someDate.getTime(),
+     isShared: 0,
+     fbID: '',
+     firebaseRefID: '',
+     isFromFB: 0,
+     isImported: 0,
+     days: {
+       id: '1',
+       task_id: '1',
+       sunday: 0,
+       monday: 0,
+       tuesday: 0,
+       wednesday: 0,
+       thursday: 0,
+       friday: 0,
+       saturday: 0
+     },
+     progress: [
+       {
+         id: '1',
+         task_id: '1',
+         date: someDayOfNextMonth.getTime(),
+         progress: 3600000,
+         timerLastStarted: someDate.getTime()
+       }
+     ]
     }
 ];
 
