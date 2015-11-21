@@ -36,6 +36,7 @@ angular.module('tracktr.controllers', [])
       TaskService.getAll(function (err, tasks) {
          $scope.allTasks = tasks;
        });
+      //  alert($scope.allTasks);
     });
 
     $scope.drawCircle = function(task) {
@@ -364,7 +365,15 @@ angular.module('tracktr.controllers', [])
      var minutes = $scope.progressTimer(task,2);
      var seconds = $scope.progressTimer(task,1);
      
-     return hours+":"+pad(minutes)+":"+pad(seconds);
+     return pad(hours)+":"+pad(minutes)+":"+pad(seconds);
+   };
+   
+   $scope.displayTotalTimer = function(task){
+     var hours = $scope.countTime(task,3);
+     var minutes = $scope.countTime(task,2);
+     var seconds = $scope.countTime(task,1);
+     
+     return pad(hours)+":"+pad(minutes)+":"+pad(seconds);
    };
 
     /*

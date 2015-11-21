@@ -13,14 +13,19 @@
         <div class="col" on-touch="clickCircleDiv(task)" on-release="releaseCircleDiv(task)">
           <progress-circle1><task-icon1></task-icon1></progress-circle1>
         </div>
-        <!--<div class="row">
+        <div class="row" ng-if="!(task.isCount)">
           <div class="col text-center">
-            <p style="text-align: center;" class="home-subtext" ng-if="">Total Time: {{countTime(task,3)}}:{{countTime(task,2)}}:{{countTime(task,1)}}</p>
+            <h6 style="text-align: center; padding: 0px; margin: -10px 0px -10px 0px;" class="home-subtext">Previous Time: {{displayTotalTimer(task)}}</h6>
           </div>
-        </div>-->
+        </div>
+        <div class="row" ng-if="(task.isCount)">
+          <div class="col text-center">
+            <h6 style="text-align: center; padding:0px; margin:0px 0px 2px 0px;" class="home-subtext"></h6>
+          </div>
+        </div>
         <div class="row">
           <div class="col text-center">
-            <h4 style="text-align: center;"><b>{{task.name}}</b></h4>
+            <h4 style="text-align: center; padding: 0px; margin:0px;"><b>{{task.name}}</b></h4>
           </div>
         </div>
       </div>
@@ -34,10 +39,20 @@
         </div>
         <div>
         </div>
+        <div class="row" ng-if="!(allTasks[$index + 1].isCount)">
+          <div class="col text-center">
+            <h6 style="text-align: center; padding:0px; margin: -10px 0px -10px 0px;" class="home-subtext">Previous Time: {{displayTotalTimer(allTasks[$index + 1])}}</h6>
+          </div>
+        </div>
+        <div class="row" ng-if="(allTasks[$index + 1].isCount)">
+          <div class="col text-center">
+            <h6 style="text-align: center; padding:0px; margin:0px 0px 2px 0px;" class="home-subtext"></h6>
+          </div>
+        </div>
         <div class="row">
           <div class="col text-center">
             <!--<h2 style="text-align: center;"><b>{{task.name}}</b></h2>-->
-            <h4 style="text-align: center;"><b>{{allTasks[$index + 1].name}}</b></h4>
+            <h4 style="text-align: center; padding:0px; margin:0px;"><b>{{allTasks[$index + 1].name}}</b></h4>
           </div>
         </div>
       </div>
