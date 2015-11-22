@@ -269,12 +269,26 @@ describe("Habit All Controller Tests", function(){
         expect(hours).toEqual(16);
     });
     
-    // it("test weekly time task 1 progress prev sunday", function(){
-    //     var task = new Task(tasks[27]);
+    it("test weekly time task 1 progress prev sunday", function(){
+        /**
+       * If today is Sunday. Previous Sunday will equate to previous Sunday from last week.
+       * This means that the progress won't be counted.
+       * 
+       * However, if today is not Sunday. Then progress will be counted, because it's
+       * technically within this week.
+       */
         
-    //     var minutes = task.countTime(2);
-    //     expect(minutes).toEqual(1);
-    // });
+        var task = new Task(tasks[27]);
+        var today = new Date();
+        var minutes = task.countTime(2);
+        if(today.getDay() != 0){
+        
+        expect(minutes).toEqual(1);
+        }
+        else{
+           expect(minutes).toEqual(0);
+        }
+    });
     
     it("test weekly time task 1 progress next sunday", function(){
         var task = new Task(tasks[28]);
