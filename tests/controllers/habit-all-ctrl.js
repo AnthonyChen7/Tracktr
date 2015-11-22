@@ -57,13 +57,13 @@ describe("Habit All Controller Tests", function(){
     it("Test count daily progress where date is today at time 00:00:00", function(){ 
       var task = new Task(tasks[15]);
       var result = task.getProgress();
-      expect(result).toBe(10);
+      expect(result).toBe(79);
     });
     
     it("Test count daily progress where date is today at time 23:59:99", function(){ 
       var task = new Task(tasks[16]);
       var result = task.getProgress();
-      expect(result).toBe(10);
+      expect(result).toBe(12);
     });
     
     it("Test count daily progress where date is next Sunday", function(){ 
@@ -85,9 +85,9 @@ describe("Habit All Controller Tests", function(){
     });
     
     it("Test weekly task; 1 progress in range & 1 progress out of range", function(){ 
-      var task = new Task(tasks[3]);
+      var task = new Task(tasks[8]);
       var result = task.getProgress();
-      expect(result).toBe(40);
+      expect(result).toBe(30);
     });
     
     it("Test weekly task; two progress at beginning Sundays at time 00:00:00", function(){ 
@@ -105,7 +105,7 @@ describe("Habit All Controller Tests", function(){
       var result = task.getProgress();
       
       if(today.getDay() != 0){
-      expect(result).toBe(40);
+      expect(result).toBe(54+84);
       }
       else{
          expect(result).toBe(0); 
@@ -115,19 +115,19 @@ describe("Habit All Controller Tests", function(){
     it("Test weekly task; two progress at end Sundays at time 23:59:99", function(){ 
       var task = new Task(tasks[10]);
       var result = task.getProgress();
-      expect(result).toBe(40);
+      expect(result).toBe(3+29);
     });
     
     it("Test monthly task; First day of month at time 00:00:00", function(){ 
       var task = new Task(tasks[11]);
       var result = task.getProgress();
-      expect(result).toBe(10);
+      expect(result).toBe(8);
     });
     
     it("Test monthly task; Last day of month at time 23:59:99", function(){ 
       var task = new Task(tasks[12]);
       var result = task.getProgress();
-      expect(result).toBe(10);
+      expect(result).toBe(99);
     });
     
     it("Test monthly task; Some day of next month", function(){ 
@@ -139,7 +139,7 @@ describe("Habit All Controller Tests", function(){
     it("Test monthly task; task progress in middle of month", function(){ 
       var task = new Task(tasks[18]);
       var result = task.getProgress();
-      expect(result).toBe(10);
+      expect(result).toBe(39);
     });
     
     it("test shouldDisplayInCurrent for daily inactive task", function(){
@@ -180,7 +180,14 @@ describe("Habit All Controller Tests", function(){
     
     it("test no progress time task", function(){
         var task = new Task(tasks[19]);
-        expect(task.countTime(1)).toEqual(0);
+         var seconds = task.countTime(1);
+        expect(seconds).toEqual(0);
+        
+        var minutes = task.countTime(2);
+        expect(minutes).toEqual(0);
+        
+        var hours = task.countTime(3);
+        expect(hours).toEqual(0);
     });
     
     it("test daily time task 1 progress", function(){
@@ -200,27 +207,39 @@ describe("Habit All Controller Tests", function(){
         var task = new Task(tasks[21]);
         
         var seconds = task.countTime(1);
-        expect(seconds).toEqual(1);
+        expect(seconds).toEqual(46);
         
         var minutes = task.countTime(2);
-        expect(minutes).toEqual(1);
+        expect(minutes).toEqual(35);
         
         var hours = task.countTime(3);
-        expect(hours).toEqual(2);
+        expect(hours).toEqual(10);
     });
     
     it("test daily time task 1 progress today at time 00:00:00", function(){
         var task = new Task(tasks[22]);
         
+        var seconds = task.countTime(1);
+        expect(seconds).toEqual(20);
+        
+        var minutes = task.countTime(2);
+        expect(minutes).toEqual(50);
+        
         var hours = task.countTime(3);
-        expect(hours).toEqual(1);
+        expect(hours).toEqual(11);
     });
     
     it("test daily time task 1 progress today at time 23:59:99", function(){
         var task = new Task(tasks[23]);
         
+        var seconds = task.countTime(1);
+        expect(seconds).toEqual(9);
+        
+        var minutes = task.countTime(2);
+        expect(minutes).toEqual(10);
+        
         var hours = task.countTime(3);
-        expect(hours).toEqual(1);
+        expect(hours).toEqual(15);
     });
     
     it("test daily time task 1 progress not today", function(){
@@ -240,46 +259,70 @@ describe("Habit All Controller Tests", function(){
     it("test weekly time task 1 progress today", function(){
         var task = new Task(tasks[26]);
         
-        var hours = task.countTime(3);
-        expect(hours).toEqual(1);
-    });
-    
-    it("test weekly time task 1 progress prev sunday", function(){
-        var task = new Task(tasks[27]);
+         var seconds = task.countTime(1);
+        expect(seconds).toEqual(47);
         
         var minutes = task.countTime(2);
-        expect(minutes).toEqual(1);
+        expect(minutes).toEqual(15);
+        
+        var hours = task.countTime(3);
+        expect(hours).toEqual(16);
     });
+    
+    // it("test weekly time task 1 progress prev sunday", function(){
+    //     var task = new Task(tasks[27]);
+        
+    //     var minutes = task.countTime(2);
+    //     expect(minutes).toEqual(1);
+    // });
     
     it("test weekly time task 1 progress next sunday", function(){
         var task = new Task(tasks[28]);
         
+         var seconds = task.countTime(1);
+        expect(seconds).toEqual(32);
+        
+        var minutes = task.countTime(2);
+        expect(minutes).toEqual(25);
+        
         var hours = task.countTime(3);
-        expect(hours).toEqual(1);
+        expect(hours).toEqual(12);
     });
     
     it("test monthly time task 1 progress middle day of this month", function(){
         var task = new Task(tasks[29]);
+         var seconds = task.countTime(1);
+        expect(seconds).toEqual(1);
+        
         var minutes = task.countTime(2);
+        expect(minutes).toEqual(20);
+        
         var hours = task.countTime(3);
-        expect(minutes).toEqual(1);
-        expect(hours).toEqual(1);
+        expect(hours).toEqual(16);
     });
     
      it("test monthly time task 1 progress first day of this month", function(){
         var task = new Task(tasks[30]);
+        var seconds = task.countTime(1);
+        expect(seconds).toEqual(52);
+        
         var minutes = task.countTime(2);
+        expect(minutes).toEqual(30);
+        
         var hours = task.countTime(3);
-        expect(minutes).toEqual(0);
-        expect(hours).toEqual(1);
+        expect(hours).toEqual(12);
     });
     
     it("test monthly time task 1 progress last day of this month", function(){
         var task = new Task(tasks[31]);
+        var seconds = task.countTime(1);
+        expect(seconds).toEqual(23);
+        
         var minutes = task.countTime(2);
+        expect(minutes).toEqual(20);
+        
         var hours = task.countTime(3);
-        expect(minutes).toEqual(0);
-        expect(hours).toEqual(1);
+        expect(hours).toEqual(14);
     });
     
     it("test monthly time task 1 progress some day of next month", function(){

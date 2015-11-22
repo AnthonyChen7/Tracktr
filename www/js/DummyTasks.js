@@ -431,14 +431,14 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: prevSunday.getTime(),
-         progress: 10,
+         progress: 54,
          timerLastStarted: someDate.getTime()
        },
         {
          id: '2',
          task_id: '2',
          date: prevSunday.getTime(),
-         progress: 30,
+         progress: 84,
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -476,14 +476,14 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: nextSunday.getTime(),
-         progress: 10,
+         progress: 3,
          timerLastStarted: someDate.getTime()
        },
         {
          id: '2',
          task_id: '2',
          date: nextSunday.getTime(),
-         progress: 30,
+         progress: 29,
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -521,7 +521,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: firstDayOfMonth.getTime(),
-         progress: 10,
+         progress: 8,
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -559,7 +559,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: lastDayOfMonth.getTime(),
-         progress: 10,
+         progress: 99,
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -673,7 +673,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: today.getTime(),
-         progress: 10,
+         progress: 79,
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -711,7 +711,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: lastSecondOfToday.getTime(),
-         progress: 10,
+         progress: 12,
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -719,7 +719,7 @@ var tasks = [
     //17
     {
       id: 5,
-     name: 'daily progress that occured today at time 23:59:99',
+     name: 'daily progress that occured next Sunday',
      isActive: 1,
      frequency: 0,
      isTime: 0,
@@ -787,7 +787,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: middleOfThisMonth.getTime(),
-         progress: 10,
+         progress: 39,
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -892,7 +892,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: someDate.getTime(),
-         progress: 3661000,
+         progress: (9*3600000)+(35*60000)+(46*1000),
          timerLastStarted: someDate.getTime()
        },
        {
@@ -936,7 +936,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: today.getTime(),
-         progress: 3600000,
+         progress: (11*3600000)+(50*60000)+(20*1000),
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -973,7 +973,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: lastSecondOfToday.getTime(),
-         progress: 3600000,
+         progress: (15*3600000)+(10*60000)+(9*1000),
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -1084,7 +1084,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: someDate.getTime(),
-         progress: 3600000,
+         progress: (16*3600000)+(15*60000)+(47*1000),
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -1158,7 +1158,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: nextSunday.getTime(),
-         progress: 3600000,
+         progress: (12*3600000)+(25*60000)+(32*1000),
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -1195,7 +1195,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: middleOfThisMonth.getTime(),
-         progress: 3660000,
+         progress: (16*3600000)+(20*60000)+(1*1000),
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -1232,7 +1232,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: firstDayOfMonth.getTime(),
-         progress: 3600000,
+         progress: (12*3600000)+(30*60000)+(52*1000),
          timerLastStarted: someDate.getTime()
        }
      ]
@@ -1269,7 +1269,7 @@ var tasks = [
          id: '1',
          task_id: '1',
          date: lastDayOfMonth.getTime(),
-         progress: 3600000,
+         progress: (14*3600000)+(20*60000)+(23*1000),
          timerLastStarted: someDate.getTime()
        }
      ]
