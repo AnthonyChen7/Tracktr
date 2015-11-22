@@ -13,20 +13,7 @@ angular.module('tracktr.controllers')
   
   
   /*
-   * get current week: getlast sunday, get next sunday
-   * put Sun Mon Tue Wed Thur Fri Sat in labels array
-   * for every progress entry, look if it's within lastSunday and lastMonday, put in first element of data array
-   * else if its within lastMonday to lastTuesday
-   * 
-   * 
-   * !!!!to view previous week, today.getDate() - 7 * 1
-   * current week: today.getDate() - 7 * 0
-   * 
-   * option is: 0 for current week,
-   *            1 for last week,
-   *            2 for two weeks ago etc
-   * 
-   * TODO: create helper to check if a date is on sun mon tues...etc
+   * Load daily progress within the week
    */
   $scope.loadWeeklyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
@@ -168,7 +155,6 @@ angular.module('tracktr.controllers')
    * Update the chart to display the next week
    */
   $scope.nextWeek = function() {
-    // console.log("!!week is: " + $scope.week);
     if($scope.week > 0)
        $scope.week-=1;
     console.log("week is: " + $scope.week);
