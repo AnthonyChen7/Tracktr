@@ -25,10 +25,6 @@ angular.module('tracktr.controllers', [])
       { class: "icon ion-lightbulb icon-custom", code: 19, value: true },
     ];
 
-    var DAILY = "Daily";
-    var MONTHLY = "Monthly";
-    var WEEKLY = "Weekly";
-
     $scope.allTasks;
     $scope.date = new Date().getDate();
 
@@ -39,7 +35,6 @@ angular.module('tracktr.controllers', [])
     });
 
     $scope.drawCircle = function (task) {
-      var oldCircle = 0;
       var circleContainer = document.getElementById('circle-' + task.id);
       var circle = new ProgressBar.Circle(circleContainer, {
         color: '#FC5B3F',
@@ -62,91 +57,55 @@ angular.module('tracktr.controllers', [])
                 progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
               }
             }, 1000);
+
             bar.setText($scope.displayProgressTimer(task));
           }
         }
       });
 
       circleContainer.onclick = function () {
-        oldCircle++;
-        // alert(oldCircle);
         if (!task.isCount && !task.isTimerRunning) {
           $scope.startTimer(task);
         } else if (!task.isCount && task.isTimerRunning) {
           $scope.stopTimer(task);
         } else {
-
           $scope.incCount(task);
           var progressRatio = 0;
+
           if ($scope.retrieveDataForCircle(task) / task.goal > 1) {
             progressRatio = 1;
           } else {
             progressRatio = $scope.retrieveDataForCircle(task) / task.goal;
           }
+
           circle.animate(progressRatio);
-          
-          // circle.set(progressRatio);
         }
       }
-      
-      // circleContainer.on = function() {
-      //   alert();
-      //         var progressRatio = 0;
-      //   if (task.isCount) {
-      //     if ($scope.retrieveDataForCircle(task)/task.goal > 1) {
-      //       progressRatio = 1;
-      //     } else {
-      //       progressRatio = $scope.retrieveDataForCircle(task)/task.goal;
-      //     }    
-          
-      //     circle.animate(progressRatio);  
-      //   } else {      
-      //     setInterval(function() {
-      //       var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60))/60;
-          
-      //       var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60))/60;
-          
-      //       if ((countTimeInSecs + progressTimerInSecs)/task.goal > 1) {
-      //         progressRatio = 1;
-      //       } else {
-      //         progressRatio = (countTimeInSecs + progressTimerInSecs)/task.goal;
-      //       }
-          
-      //       circle.animate(progressRatio);
-      //     }, 1000);
-          
-      //   }
-      // }
-      
-      // Phenomena happens here!
-      if (oldCircle == 0) {
-        var progressRatio = 0;
-        if (task.isCount) {
-          if ($scope.retrieveDataForCircle(task) / task.goal > 1) {
+
+      // Draws the circles every .1 seconds
+      var progressRatio = 0;
+      if (task.isCount) {
+        if ($scope.retrieveDataForCircle(task) / task.goal > 1) {
+          progressRatio = 1;
+        } else {
+          progressRatio = $scope.retrieveDataForCircle(task) / task.goal;
+        }    
+        
+        circle.set(progressRatio);
+      } else {
+        setInterval(function () {
+          var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
+
+          var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
+
+          if ((countTimeInSecs + progressTimerInSecs) / task.goal > 1) {
             progressRatio = 1;
           } else {
-            progressRatio = $scope.retrieveDataForCircle(task) / task.goal;
-          }    
-          // alert(1);
-          // circle.animate(progressRatio);
-          circle.set(progressRatio);  
-        } else {      
-          setInterval(function () {
-            var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
+            progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
+          }
 
-            var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
-
-            if ((countTimeInSecs + progressTimerInSecs) / task.goal > 1) {
-              progressRatio = 1;
-            } else {
-              progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
-            }
-
-            // circle.animate(progressRatio);
-            circle.set(progressRatio);
-          }, 100);
-
-        }
+          circle.set(progressRatio);
+        }, 100);
       }
     };
 
@@ -162,6 +121,9 @@ angular.module('tracktr.controllers', [])
       }
     };
 
+    var DAILY = "Daily";
+    var MONTHLY = "Monthly";
+    var WEEKLY = "Weekly";
     $scope.getFrequency = function (frequencyId) {
       if (frequencyId === 0) {
         return DAILY;
@@ -183,7 +145,6 @@ angular.module('tracktr.controllers', [])
       }
     };
     
-  
     /*
      * Start a new count progress for every count 
      */
@@ -195,21 +156,6 @@ angular.module('tracktr.controllers', [])
         timerLastStarted: null
       };
     };
-  
-  
-    // /*
-    //  * Count the total progress of the task 
-    //  */
-    // $scope.countProgress = function(task){
-    //   var result = 0;
-    //   if(task.isCount) {
-    //      for(var i = 0; i < task.progress.length; i++){
-    //        result += task.progress[i].progress;
-    //      }
-    //   }
-    //   return result;
-    // };
-  
   
     /*
      * Count the total progress of the task 
@@ -223,7 +169,6 @@ angular.module('tracktr.controllers', [])
       }
       return result;
     };
-  
   
     /*
      * Count the amount time spent on the task
@@ -250,7 +195,6 @@ angular.module('tracktr.controllers', [])
       return result;
     };
   
-  
     /*
      * Convert milliseconds into seconds
      */
@@ -258,7 +202,6 @@ angular.module('tracktr.controllers', [])
       num = Math.floor(num / 1000);
       return num % 60;
     };
-  
   
     /*
      * Convert milliseconds into minutes
@@ -268,7 +211,6 @@ angular.module('tracktr.controllers', [])
       return num % 60;
     };
   
-  
     /*
      * Convert milliseconds into hours
      */
@@ -277,9 +219,7 @@ angular.module('tracktr.controllers', [])
       return num;
     };
 
-
     $scope.shouldShowTaskOnHome = function (task) {
-
       var shouldShow =
         task.isActive && (
           $scope.isTaskActiveToday(task) ||
@@ -311,8 +251,6 @@ angular.module('tracktr.controllers', [])
       return false;
     };
   
-  
-  
     /*
      * Return true if it is a weekly task
      */
@@ -322,7 +260,6 @@ angular.module('tracktr.controllers', [])
       else
         return false;
     };
-  
   
     /*
      * Return true if it is a monthly task
@@ -341,7 +278,6 @@ angular.module('tracktr.controllers', [])
       return ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"][dayIndex];
     };
   
-  
     /*
      * update all the tasks
      */
@@ -351,7 +287,6 @@ angular.module('tracktr.controllers', [])
       }
     };
  
-  
     /*
      * Count the current progress, and express it in seconds
      * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
@@ -380,7 +315,7 @@ angular.module('tracktr.controllers', [])
    
     /**
      * Displays the current progress of time based task in format:
-     h:mm:ss
+     hh:mm:ss
      */
     $scope.displayProgressTimer = function (task) {
       var hours = $scope.progressTimer(task, 3);
@@ -411,7 +346,6 @@ angular.module('tracktr.controllers', [])
       }
     };
   
-  
     /*
      * Count the current progress, and express it in minutes
      */
@@ -424,8 +358,7 @@ angular.module('tracktr.controllers', [])
         return 0;
       }
     };
-  
-  
+   
     /*
      * Count the current progress, and express it in hours
      */
@@ -438,7 +371,6 @@ angular.module('tracktr.controllers', [])
         return 0;
       }
     };
-  
   
     /*
      *Navigation for create button
@@ -455,15 +387,10 @@ angular.module('tracktr.controllers', [])
       document.getElementById("icon-" + task.id).style.color = '#eee';
     }
 
-    $scope.counter = 0;
-
     var mytimeout = null; // the current timeoutID
-
-
     $scope.onTimeout = function () {
       mytimeout = $timeout($scope.onTimeout, 1000);
     };
- 
    
     /*
      * Start the timer, create a new progress array entry 
@@ -475,11 +402,7 @@ angular.module('tracktr.controllers', [])
         progress: 0,
         timerLastStarted: new Date()
       };
-      //  task.progress.push(progress);
-      //  task.isTimerRunning = true;
-      //  TaskService.updateTask(task);
-      // var newProgress = $scope.startProgress(task);
-      // newProgress.timerLastStarted = new Date();
+      
       task.progress.push(newProgress);
 
       TaskService.addProgressToTask(task, newProgress, function (progressId) {
@@ -491,11 +414,11 @@ angular.module('tracktr.controllers', [])
 
       mytimeout = $timeout($scope.onTimeout, 1000);
     };
- 
- 
+   
     /*
      * Stop and reset the current timer
      */
+    $scope.counter = 0;
     $scope.stopTimer = function (task) {
       var current_time = new Date();
       var last_started = task.progress[task.progress.length - 1].timerLastStarted;
@@ -508,7 +431,6 @@ angular.module('tracktr.controllers', [])
       $timeout.cancel(mytimeout);
     };
     
- 
     /*
      * Triggered when the timer stops
      */
