@@ -105,6 +105,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
   })
   
   .state('edit', {
+    cache: false,
     url: '/edit/:habitId',
     templateUrl: 'js/views/habit-edit/habit-edit.html',
     controller: 'HabitEditController'

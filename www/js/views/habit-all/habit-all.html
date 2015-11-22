@@ -1,40 +1,21 @@
-
 <ion-view view-title="Habits">
-  <!-- Create new task button -->
-  <ion-nav-buttons side="secondary">
-    <button class="button button-clear button-icon" ng-click="navCreateClick()">
-      <!-- <i class="ion-edit"></i> -->
-    </button>
-  </ion-nav-buttons>
-  
   <ion-content>
-           
-<ion-list>
-    
-    <!-- Search Button -->
-    <label class="item item-input">
-    <i class="icon ion-search placeholder-icon"></i>
-    <input type="search" placeholder="Search..." ng-model="searchText">
-    </label>
+    <div class="list">
 
-    <!-- Current -->
-    <div class="all-divider">
-      Current
-    </div>
-    <div ng-repeat= "task in tasks | filter:searchText" ng-if="shouldDisplayInCurrent(task)">
-      <task-info></task-info>
-    </div>
+      <!-- Search Box -->
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="searchText">
+      </label>
+
+      <!-- Current -->
+      <ion-item class="item item-divider">Current</ion-item>
+      <task-info ng-repeat="task in tasks | filter:searchText" ng-if="shouldDisplayInCurrent(task)"></task-info>
+
+      <!-- Other -->
+      <ion-item class="item item-divider">Other</ion-item>
+      <task-info ng-repeat="task in tasks | filter:searchText" ng-if="!shouldDisplayInCurrent(task)"></task-info>
     
-    <!-- Other -->
-    <div class="all-divider">
-      Other
     </div>
-    <div ng-repeat= "task in tasks | filter:searchText" ng-if="!shouldDisplayInCurrent(task)">
-      <task-info></task-info>
-    </div>
-</div>
-    
-</ion-list>
-</ion-content>
+  </ion-content>
 </ion-view>
-
