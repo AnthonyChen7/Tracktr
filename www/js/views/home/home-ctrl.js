@@ -312,6 +312,7 @@ angular.module('tracktr.controllers', [])
         return 0;
       }
     };
+    
    
     /**
      * Displays the current progress of time based task in format:
@@ -324,13 +325,13 @@ angular.module('tracktr.controllers', [])
 
       return pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
     };
-
+    
+    
+    /**
+     * Display the total progress according to the frequency (daily/weekly/monthly)
+     */
     $scope.displayTotalTimer = function (task) {
-      var hours = $scope.countTime(task, 3);
-      var minutes = $scope.countTime(task, 2);
-      var seconds = $scope.countTime(task, 1);
-
-      return pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+      return "0" + task.getTotalTime();
     };
 
     /*
