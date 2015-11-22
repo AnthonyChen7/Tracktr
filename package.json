@@ -34,7 +34,7 @@
     "https://github.com/bez4pieci/Phonegap-Cookies-Plugin.git"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }

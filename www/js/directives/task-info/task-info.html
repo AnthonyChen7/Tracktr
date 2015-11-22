@@ -1,30 +1,38 @@
-<!--Displays the information of a task along with options to view,edit, delete.-->
+<!-- Displays the information of a task along with options to view, edit, delete. -->
+<div class="item viewall-custom" ng-class="{active: isGroupShown(task)}">
 
-      <ion-item class="item-stable all-item" ng-click="toggleGroup(task)" ng-class="{active: isGroupShown(task)}">
-        <ion-toggle ng-model="task.isActive" ng-check="task.isActive" ng-change="updateIsActive(task)">
-        <i class="icon" ng-class="isGroupShown(task)? 'ion-minus' : 'ion-plus'"></i>
-        &nbsp;
-        <h2>{{task.name}}</h2>
-        <p>
-        
-        <div ng-if="task.isTime">
-        Total Time: {{task.getTotalTime()}}
-        <br>
-        Goal Time: {{task.getGoalTime()}}  
+        <!-- Text and Subtext -->
+        <div class="item item-toggle item-toggle-custom">
+                <h2>{{task.name}}</h2>
+                <h4 class="viewall-subtext">{{retrieveData(task)}}</h4>
+                <h4 class="viewall-subtext" ng-if="task.isImported" ng-init="getImportedName(task)">Imported from: {{task.friendName}}</h4>
+                <hr class="hr-viewall">
+                <hr class="hr-viewall2">
+
+                <!-- Active/Inactive Toggle -->
+                <label class="toggle toggle-balanced">
+                        <input type="checkbox" ng-model="task.isActive" ng-check="task.isActive" ng-change="updateIsActive(task)">
+                        <div class="track">
+                                <div class="handle"></div>
+                        </div>
+                </label>
         </div>
-        {{retrieveData(task)}}
-        </p>
-        <p ng-if="task.isImported" ng-init="getImportedName(task)">
-                Imported from: {{task.friendName}}
-        </p>      
-        <p></p> <!--Note: This needs to be here or else the options won't work.' -->
-        </ion-toggle>
-        
-      </ion-item>
-      
-      <!-- Displays options -->
-      
-      <ion-item class="item-accordion" ng-repeat="option in options" ng-show="isGroupShown(task)" ng-click="buttonHandler(option, task)">
-                {{option}}
-      </ion-item> 
- 
+
+        <!-- Edit, Chart, Share, Delete buttons -->
+        <div class="row button-viewall-custom">
+                <div class="col text-center">
+                        <button class="button button-small icon ion-edit button-balanced button-viewall-custom" ng-click="buttonHandler('Edit', task)"></button>
+                </div>
+                <div class="col text-center">
+                        <button class="button button-small icon ion-stats-bars button-energized button-viewall-custom" ng-click="buttonHandler('View Report', task)"></button>
+                </div>
+                <div class="col text-center">
+                        <button class="button button-small icon ion-trash-a button-assertive button-viewall-custom" ng-click="buttonHandler('Delete', task)"></button>
+                </div>
+                <div class="col text-center">
+                        <button class="button button-small icon ion-social-facebook button-positive button-viewall-custom" ng-click="buttonHandler('Share', task)" ng-if="task.isShared"></button>
+                        <button class="button button-small icon ion-social-facebook button-light button-viewall-custom" ng-click="buttonHandler('Share', task)" ng-if="!task.isShared"></button>
+                </div>
+        </div>
+
+</div>
