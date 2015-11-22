@@ -65,21 +65,21 @@
 
 
 /* All Page */
-.all-divider{
+/*.all-divider{
     font-family: helvetica neue;
     margin: 10px;
     margin-top: 20px;
     font-size: 24px;
     font-weight: 200;
     color: gray;
-}
+}*/
 
 
-.all-item.item.item-stable {
+/*.all-item.item.item-stable {
     border-color: whitesmoke;
     background-color: whitesmoke;
     padding: 10px;
-}
+}*/
 /* Authentication */
 .auth-container {
     padding: 10px;
@@ -144,4 +144,37 @@ ion-content {
     text-align: center; 
     padding: 0px; 
     margin: -10px 0px -10px 0px;
+}
+
+.viewall-subtext {
+    color: gray; 
+}
+
+.hr-viewall {
+    border: 0;
+    height: 0;
+    /*margin-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);*/
+    border: 1px solid white;
+}
+
+.hr-viewall2 {
+        padding: 0px;
+    margin: 0px;
+}
+
+.item-toggle-custom {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.viewall-custom {
+    padding-bottom: 0px;
+}
+
+.button-viewall-custom {
+    padding: 0px;
+    margin: 0px;
 }
