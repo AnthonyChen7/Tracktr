@@ -125,6 +125,12 @@
     margin-bottom: 30px;
 }
 
+/*Padding for chart*/
+.chart-line {
+    padding: 10px;
+}
+
+
 ion-content {
     background: whitesmoke;
 }
