@@ -21,10 +21,12 @@
         <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextWeek()" ng-disabled="week<=0">Next week</a>
       </div>
       <br>
-      <p class="col text-left">{{format}}</p>
-      <canvas id="bar" class="chart chart-line"
-          chart-data="data" chart-labels="labels" on-swipe-right="previousWeek()" on-swipe-left="nextWeek()">
-      </canvas>
+      <div class="panel-heading text-center"> Progress of {{currentWeek}} in {{format}}</div>
+      <div class="panel-body">
+         <canvas id="bar" class="chart chart-line"
+             chart-data="data" chart-labels="labels" on-swipe-right="previousWeek()" on-swipe-left="nextWeek()">
+         </canvas>
+      </div>
     </div>
     
     <div ng-if="isDaily">
@@ -35,10 +37,12 @@
         <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextDay()" ng-disabled="days<=0">Next Day</a>
       </div>
       <br>
-      <p class="col text-left">{{format}}</p>
-      <canvas id="bar" class="chart chart-line"
-          chart-data="data" chart-labels="labels" on-swipe-right="previousDay()" on-swipe-left="nextDay()">
-      </canvas>
+      <div class="panel-heading text-center"> Progress of {{currentDay}} in {{format}}</div>
+      <div class="panel-body">
+         <canvas id="bar" class="chart chart-line"
+             chart-data="data" chart-labels="labels" on-swipe-right="previousDay()" on-swipe-left="nextDay()">
+         </canvas>
+      </div>
     </div>
       
     <div ng-if="isMonthly">
@@ -49,10 +53,12 @@
         <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextYear()" ng-disabled="years<=0">Next Year</a>
       </div>
       <br>
-      <p class="col text-left">{{format}}</p>
-      <canvas id="bar" class="chart chart-line"
-          chart-data="data" chart-labels="labels" on-swipe-right="previousYear()" on-swipe-left="nextYear()">
-      </canvas>
+      <div class="panel-heading text-center"> Progress of {{currentYear}} in {{format}}</div>
+      <div class="panel-body">
+         <canvas id="bar" class="chart chart-line"
+             chart-data="data" chart-labels="labels" on-swipe-right="previousYear()" on-swipe-left="nextYear()">
+         </canvas>
+      </div>
     </div>
   </ion-content>
 </ion-view>
