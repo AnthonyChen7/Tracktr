@@ -9,6 +9,7 @@
      min-width: 100%;
      margin-bottom: 5px;
 }
+
 .popup-vertical-buttons .popup-buttons
 {
      display: block;
@@ -62,30 +63,44 @@
     background-color: #FC5B3F !important;
 }
 
-
-
 /* All Page */
-/*.all-divider{
-    font-family: helvetica neue;
-    margin: 10px;
-    margin-top: 20px;
-    font-size: 24px;
-    font-weight: 200;
-    color: gray;
-}*/
+.viewall-subtext {
+    color: gray; 
+}
 
+.hr-viewall {
+    border: 0;
+    height: 0;
+    border: 1px solid white;
+}
 
-/*.all-item.item.item-stable {
-    border-color: whitesmoke;
-    background-color: whitesmoke;
-    padding: 10px;
-}*/
+.hr-viewall2 {
+    padding: 0px;
+    margin: 0px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.item-toggle-custom {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.viewall-custom {
+    padding-bottom: 0px;
+}
+
+.button-viewall-custom {
+    padding: 0px;
+    margin: 0px;
+}
+
 /* Authentication */
 .auth-container {
     padding: 10px;
     background-color: whitesmoke;
 }
-
 
 /* Facebook */
 .fb-profile-picture {
@@ -146,37 +161,3 @@ ion-content {
     margin: -10px 0px -10px 0px;
 }
 
-.viewall-subtext {
-    color: gray; 
-}
-
-.hr-viewall {
-    border: 0;
-    height: 0;
-    /*margin-top: 15px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);*/
-    border: 1px solid white;
-}
-
-.hr-viewall2 {
-    padding: 0px;
-    margin: 0px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.item-toggle-custom {
-    border: none;
-    padding: 0px;
-    margin: 0px;
-}
-
-.viewall-custom {
-    padding-bottom: 0px;
-}
-
-.button-viewall-custom {
-    padding: 0px;
-    margin: 0px;
-}

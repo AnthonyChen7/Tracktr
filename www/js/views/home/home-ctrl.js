@@ -30,7 +30,13 @@ angular.module('tracktr.controllers', [])
 
     $scope.$on('$ionicView.enter', function () {
       TaskService.getAll(function (err, tasks) {
-        $scope.allTasks = tasks;
+        var taskArray = [];
+        for (var i = 0; i < tasks.length; i++) {
+          if ($scope.isTaskActiveToday(tasks[i]) || $scope.isTaskWeekly(tasks[i]) || $scope.isTaskMonthly(tasks[i])) {
+            taskArray.push(tasks[i]);
+          }
+        }
+        $scope.allTasks = taskArray;
       });
     });
 
@@ -90,8 +96,8 @@ angular.module('tracktr.controllers', [])
         } else {
           progressRatio = $scope.retrieveDataForCircle(task) / task.goal;
         }    
-        
-        circle.set(progressRatio);
+        circle.animate(progressRatio);
+        // circle.set(progressRatio);
       } else {
         setInterval(function () {
           var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
@@ -103,8 +109,8 @@ angular.module('tracktr.controllers', [])
           } else {
             progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
           }
-
-          circle.set(progressRatio);
+          circle.animate(progressRatio);
+          // circle.set(progressRatio);
         }, 100);
       }
     };

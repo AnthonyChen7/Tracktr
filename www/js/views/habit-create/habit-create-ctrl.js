@@ -85,18 +85,9 @@ angular.module('tracktr.controllers')
 		
 		typePopup.then(function(res) {
 			$scope.habitType = res;
-			if (res.name == "Time") {
-				document.getElementById('goalField').style.display = 'none';
-				document.getElementById('minutesField').style.display = '';
-				document.getElementById('hoursField').style.display = '';
-			} else {
-				document.getElementById('goalField').style.display = '';
-				document.getElementById('minutesField').style.display = 'none';
-				document.getElementById('hoursField').style.display = 'none';
-			}
 		});
 	};
-	
+
 	// Frequency Popup
 	$scope.showFrequencyPopup = function(frequency) {
 		if (frequency != null) {

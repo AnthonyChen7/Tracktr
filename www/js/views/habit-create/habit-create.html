@@ -3,7 +3,7 @@
     <button class="button button-clear button-icon" ng-click="goBack()">
       <i class="ion-chevron-left"></i>
     </button>
-  </ion-nav-buttons> 
+  </ion-nav-buttons>
   <ion-content>
     <form name="createTask" novalidate>
       <div>
@@ -12,43 +12,49 @@
           <label class="item item-input">
             <span class="input-label">Title</span>
             <input name="habitTitle" ng-model="habitTitle" type="text" ng-maxlength="20" placeholder="Required" required />
-          </label> 
-          
+          </label>
+
           <!-- Type -->
           <label class="item item-input icon-right" ng-click="showTypePopup(habitType)">
-              <span class="input-label">Type</span>
-              <p name="habitType" ng-model="habitType" required>{{habitType.name}}</p>
-          </label> 
-          
+            <span class="input-label">Type</span>
+            <p name="habitType" ng-model="habitType" required>{{habitType.name}}</p>
+          </label>
+
           <div class="item item-divider"></div>
-          
+
           <!-- Goal -->
-          <label id="hoursField" class="item item-input item-select">
+          <label id="hoursField" class="item item-input item-select" ng-if="habitType.name == 'Time'">
             <div class="input-label">Hours</div>
-            <select ng-model="hours" ng-options="hours for hours in range(0, 744)"></select>
+            <select id="hoursFieldSelect" ng-model="hours" ng-options="hours for hours in range(1, 744)">
+              <option></option>
+            </select>
           </label>
-          <label id="minutesField" class="item item-input item-select">
+          <label id="minutesField" class="item item-input item-select" ng-if="habitType.name == 'Time'">
             <div class="input-label">Minutes</div>
-            <select ng-model="minutes" ng-options="minutes for minutes in range(0, 59)"></select>
+            <select id="minutesFieldSelect" ng-model="minutes" ng-options="minutes for minutes in range(1, 59)">
+              <option></option>
+            </select>
           </label>
-          <label id="goalField" class="item item-input item-select" style="display: none;">
+          <label id="goalField" class="item item-input item-select" ng-if="habitType.name == 'Count'">
             <div class="input-label">Goal</div>
-            <select ng-model="goal" ng-options="goal for goal in range(0, 999)"></select>
+            <select id="goalFieldSelect" ng-model="goal" ng-options="goal for goal in range(1, 999)" required>
+              <option></option>
+            </select>
           </label>
-          
+
           <div class="item item-divider"></div>
-          
+
           <!-- Frequency -->
           <label class="item item-input" ng-click="showFrequencyPopup(frequency)">
-              <span class="input-label">Frequency</span>
-              <p name="frequency" ng-model="frequency" required>{{frequency.name}}</p>
-              <i class="icon ion-alert col col-10" ng-if="createTask.frequency.$error.required"></i>
+            <span class="input-label">Frequency</span>
+            <p name="frequency" ng-model="frequency" required>{{frequency.name}}</p>
+            <i class="icon ion-alert col col-10" ng-if="createTask.frequency.$error.required"></i>
           </label>
           <label id="daysField" class="item item-input" ng-click="openDaysModal()">
-              <span class="input-label">Days</span>
-              <p name="days" ng-model="days">{{daysString}}</p>         
-          </label>       
-         <script id="daysModal.html" type="text/ng-template">
+            <span class="input-label">Days</span>
+            <p name="days" ng-model="days">{{daysString}}</p>
+          </label>
+          <script id="daysModal.html" type="text/ng-template">
             <ion-modal-view>
               <ion-header-bar class="bar bar-header bar-dark">
                 <h1 class="title">Select days</h1>
@@ -61,7 +67,7 @@
                       <input type="checkbox" ng-model="day.value">
                     </label>
                     {{day.name}}
-                   </li>
+                  </li>
                 </ul>
                 <div class="row">
                   <div class="col col-50 col-offset-25">
@@ -73,21 +79,21 @@
           </script>
 
           <div class="item item-divider"></div>
-          
+
           <!-- Icon -->
           <div class="list">
-              <a class="item item-icon-right" ng-click="openIconModal()">
+            <a class="item item-icon-right" ng-click="openIconModal()">
                 Icon
                 <i name="icon" class="icon {{icon}}" ng-model="icon"></i>
               </a>
           </div>
-         <script id="iconModal.html" type="text/ng-template">
+          <script id="iconModal.html" type="text/ng-template">
             <ion-modal-view>
               <ion-header-bar class="bar bar-header bar-dark">
                 <h1 class="title">Select icon</h1>
                 <button class="button button-clear" ng-click="closeIconModal()">Cancel</button>
               </ion-header-bar>
-              <ion-content>  
+              <ion-content>
                 <div class="item item-divider"></div>
                 <div class="row icon-row">
                   <div class="col col-25 icon-col" ng-repeat="icon in icons" ng-if="icon.code < 4">
@@ -122,15 +128,18 @@
               </ion-content>
             </ion-modal-view>
           </script>
-              
+
         </div>
-        
+
         <div class="padding">
-            <p ng-if="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
+          <p ng-if="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
+          <!--<p ng-if="createTask.goal.$error.length">Please provide a goal for this task.</p>-->
         </div>
-        
+
+<!--<span ng-bind="createTask.$valid"></span>-->
         <div class="padding-left padding-right padding-bottom">
-          <button class="button button-block button-dark" ng-click="create(habitTitle,habitType,hours,minutes,goal,frequency,days,icon)" ng-disabled="createTask.$invalid">
+          <button class="button button-block button-dark" ng-click="create(habitTitle,habitType,hours,minutes,goal,frequency,days,icon)"
+          ng-disabled="createTask.$invalid">
             Create
           </button>
         </div>

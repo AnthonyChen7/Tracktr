@@ -6,8 +6,7 @@
   </ion-nav-buttons>
   
   <ion-content id="home-bg">
-    <div class="row" ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)"
-    ng-if="$index % 2 == 0">
+    <div class="row" ng-repeat="task in allTasks" ng-if="$index % 2 == 0">
     
       <!-- First column of tasks -->
       <div class="col col-50" ng-if="$index < allTasks.length">
