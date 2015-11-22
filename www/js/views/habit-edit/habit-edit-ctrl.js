@@ -520,14 +520,15 @@ function timePickerCallback(val) {
 	 */
 	$scope.deleteProgress = function(progressObject){
 		
-		var index = $scope.progress.indexOf(progressObject);
+		// var index = $scope.progress.indexOf(progressObject);
+		//$scope.progress.splice(index,1);
 		
 		TaskService.removeProgressFromTask($scope.task, progressObject, function(err){
 			
-			 TaskService.updateTask($scope.task, function(err){
+			  //TaskService.updateTask($scope.task, function(err){
+				 var index = $scope.progress.indexOf(progressObject);
           		$scope.progress.splice(index,1);
-			 });
-			
+			  //});			
 		} );	
 	};
 	
@@ -579,7 +580,7 @@ function timePickerCallback(val) {
 	var aProgress = new Progress(newProgress);
 	
 	TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
-		 TaskService.updateTask($scope.task, function(err){
+		//  TaskService.updateTask($scope.task, function(err){
           		$scope.progress.push(aProgress);
 				$scope.closeAddProgressModal();
 				
@@ -589,7 +590,7 @@ function timePickerCallback(val) {
 				$scope.initTimePicker();
 				$scope.initAddProgressModal();
 				
-		});
+		//});
 	});
 	
 	};
