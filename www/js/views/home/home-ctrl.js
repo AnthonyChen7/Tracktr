@@ -133,6 +133,7 @@ angular.module('tracktr.controllers', [])
         return MONTHLY;
       }
     };
+    
 
     /*
      * Increment the count for count tasks
@@ -145,6 +146,7 @@ angular.module('tracktr.controllers', [])
       }
     };
     
+    
     /*
      * Start a new count progress for every count 
      */
@@ -156,10 +158,10 @@ angular.module('tracktr.controllers', [])
         timerLastStarted: null
       };
     };
+    
   
     /*
      * Count the total progress of the task 
-     * TODO: implement to display count progress for current goal "period"
      */
     $scope.countProgress = function (task) {
       var result = 0;
@@ -169,6 +171,7 @@ angular.module('tracktr.controllers', [])
       }
       return result;
     };
+    
   
     /*
      * Count the amount time spent on the task
@@ -195,6 +198,7 @@ angular.module('tracktr.controllers', [])
       return result;
     };
   
+  
     /*
      * Convert milliseconds into seconds
      */
@@ -202,6 +206,7 @@ angular.module('tracktr.controllers', [])
       num = Math.floor(num / 1000);
       return num % 60;
     };
+    
   
     /*
      * Convert milliseconds into minutes
@@ -210,6 +215,7 @@ angular.module('tracktr.controllers', [])
       num = Math.floor(num / 60000);
       return num % 60;
     };
+    
   
     /*
      * Convert milliseconds into hours
@@ -251,6 +257,7 @@ angular.module('tracktr.controllers', [])
       return false;
     };
   
+  
     /*
      * Return true if it is a weekly task
      */
@@ -260,6 +267,7 @@ angular.module('tracktr.controllers', [])
       else
         return false;
     };
+  
   
     /*
      * Return true if it is a monthly task
@@ -271,12 +279,14 @@ angular.module('tracktr.controllers', [])
         return false;
     };
   
+  
     /*
      * Converts a day of week number to a string
      */
     $scope.dayOfWeekAsString = function (dayIndex) {
       return ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"][dayIndex];
     };
+ 
   
     /*
      * update all the tasks
@@ -286,6 +296,7 @@ angular.module('tracktr.controllers', [])
         TaskService.updateTask(allTasks[i]);
       }
     };
+
  
     /*
      * Count the current progress, and express it in seconds
@@ -334,6 +345,7 @@ angular.module('tracktr.controllers', [])
       return "0" + task.getTotalTime();
     };
 
+
     /*
      * Count the current progress, and express it in seconds
      */
@@ -346,6 +358,7 @@ angular.module('tracktr.controllers', [])
         return 0;
       }
     };
+ 
   
     /*
      * Count the current progress, and express it in minutes
@@ -359,6 +372,7 @@ angular.module('tracktr.controllers', [])
         return 0;
       }
     };
+ 
    
     /*
      * Count the current progress, and express it in hours
@@ -372,6 +386,7 @@ angular.module('tracktr.controllers', [])
         return 0;
       }
     };
+ 
   
     /*
      *Navigation for create button
@@ -392,6 +407,7 @@ angular.module('tracktr.controllers', [])
     $scope.onTimeout = function () {
       mytimeout = $timeout($scope.onTimeout, 1000);
     };
+ 
    
     /*
      * Start the timer, create a new progress array entry 
@@ -415,6 +431,7 @@ angular.module('tracktr.controllers', [])
 
       mytimeout = $timeout($scope.onTimeout, 1000);
     };
+  
    
     /*
      * Stop and reset the current timer
@@ -431,6 +448,7 @@ angular.module('tracktr.controllers', [])
       $scope.$broadcast('timer-stopped', $scope.counter);
       $timeout.cancel(mytimeout);
     };
+ 
     
     /*
      * Triggered when the timer stops
