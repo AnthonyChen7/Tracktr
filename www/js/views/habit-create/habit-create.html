@@ -133,10 +133,8 @@
 
         <div class="padding">
           <p ng-if="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
-          <!--<p ng-if="createTask.goal.$error.length">Please provide a goal for this task.</p>-->
         </div>
 
-<!--<span ng-bind="createTask.$valid"></span>-->
         <div class="padding-left padding-right padding-bottom">
           <button class="button button-block button-dark" ng-click="create(habitTitle,habitType,hours,minutes,goal,frequency,days,icon)"
           ng-disabled="createTask.$invalid">

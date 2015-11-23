@@ -210,6 +210,17 @@ angular.module('tracktr.controllers')
 	
 	// Create Task	
 	$scope.create = function(habitTitle,habitType,hours,minutes,goal,frequency, days,icon) {	
+		// alert(parseInt(hours)+':'+parseInt(minutes));
+		// if (parseInt(hours) == NaN && parseInt(minutes) == NaN) {
+        //     $scope.showAlert = function() {
+		// 		var alertPopup = $ionicPopup.alert({
+		// 			title: 'You must input a goal.',
+		// 			template: 'The \'Hours\' field and the \'Minutes\' field cannot both be empty.'
+		// 		});
+ 		// 	};
+		// 	 $scope.showAlert();
+		// 	 return;
+		// }
 		
 		// Habit Type
 		var aTime = 0;
@@ -233,6 +244,7 @@ angular.module('tracktr.controllers')
 		} else if (habitType.name == 'Count' && goal != null) {
 			aGoal = (parseInt(goal));
 		}
+		// alert(aGoal);
 		
 		// Days
 		var aDays = { sunday: days[0].value, monday: days[1].value, tuesday: days[2].value, wednesday: days[3].value, thursday: days[4].value, friday: days[5].value, saturday: days[6].value }
