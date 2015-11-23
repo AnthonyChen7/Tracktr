@@ -440,6 +440,26 @@ function timePickerCallback(val) {
 	};
 	
 	$scope.save = function(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress) {
+		if (habitType.name == 'Time' && (hours == null || parseInt(hours) == 0) && (minutes == null || parseInt(minutes) == 0)) {
+            $scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Please specify a goal.',
+					template: 'The \'Hours\' field and the \'Minutes\' field cannot both be zero.'
+				});
+ 			};
+			 $scope.showAlert();
+			 return;
+		} else if (habitType.name == 'Count' && (goal == null || parseInt(goal) == 0)) {
+			$scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Please specify a goal.',
+					template: 'The \'Goal\' field must have a value greater than zero.'
+				});
+ 			};
+			 $scope.showAlert();
+			 return;
+		}
+		
 		// Habit Type
 		var aTime = 0;
 		var aCount = 0;

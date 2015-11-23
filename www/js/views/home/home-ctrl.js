@@ -30,13 +30,7 @@ angular.module('tracktr.controllers', [])
 
     $scope.$on('$ionicView.enter', function () {
       TaskService.getAll(function (err, tasks) {
-        var taskArray = [];
-        for (var i = 0; i < tasks.length; i++) {
-          if ($scope.isTaskActiveToday(tasks[i]) || $scope.isTaskWeekly(tasks[i]) || $scope.isTaskMonthly(tasks[i])) {
-            taskArray.push(tasks[i]);
-          }
-        }
-        $scope.allTasks = taskArray;
+        $scope.allTasks = tasks;
       });
     });
 

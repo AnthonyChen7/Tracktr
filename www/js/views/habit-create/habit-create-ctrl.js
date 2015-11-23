@@ -85,6 +85,15 @@ angular.module('tracktr.controllers')
 		
 		typePopup.then(function(res) {
 			$scope.habitType = res;
+			if (res.name == "Time") {
+				document.getElementById('goalField').style.display = 'none';
+				document.getElementById('minutesField').style.display = '';
+				document.getElementById('hoursField').style.display = '';
+			} else {
+				document.getElementById('goalField').style.display = '';
+				document.getElementById('minutesField').style.display = 'none';
+				document.getElementById('hoursField').style.display = 'none';
+			}
 		});
 	};
 
@@ -210,17 +219,25 @@ angular.module('tracktr.controllers')
 	
 	// Create Task	
 	$scope.create = function(habitTitle,habitType,hours,minutes,goal,frequency, days,icon) {	
-		// alert(parseInt(hours)+':'+parseInt(minutes));
-		// if (parseInt(hours) == NaN && parseInt(minutes) == NaN) {
-        //     $scope.showAlert = function() {
-		// 		var alertPopup = $ionicPopup.alert({
-		// 			title: 'You must input a goal.',
-		// 			template: 'The \'Hours\' field and the \'Minutes\' field cannot both be empty.'
-		// 		});
- 		// 	};
-		// 	 $scope.showAlert();
-		// 	 return;
-		// }
+		if (habitType.name == 'Time' && (hours == null || parseInt(hours) == 0) && (minutes == null || parseInt(minutes) == 0)) {
+            $scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Please specify a goal.',
+					template: 'The \'Hours\' field and the \'Minutes\' field cannot both be zero.'
+				});
+ 			};
+			 $scope.showAlert();
+			 return;
+		} else if (habitType.name == 'Count' && (goal == null || parseInt(goal) == 0)) {
+			$scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Please specify a goal.',
+					template: 'The \'Goal\' field must have a value greater than zero.'
+				});
+ 			};
+			 $scope.showAlert();
+			 return;
+		}
 		
 		// Habit Type
 		var aTime = 0;
