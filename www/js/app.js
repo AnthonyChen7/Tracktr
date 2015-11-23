@@ -88,6 +88,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
   })
   
   .state('tab.home', {
+    cache: false,
     url: '/home',
     views: {
       'tab-home': {
