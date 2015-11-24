@@ -45,11 +45,12 @@ angular.module('tracktr.controllers')
         result += task.getProgress() + "/" + task.goal;
         result += " | " + $scope.getFrequency(task.frequency);
       } else if (task.isCount === false && task.isTime === true) {
-        result += $scope.properFormat(task.getTotalTime()) + "/" + $scope.properFormat(task.getGoalTime());
+        //task.getTotalTime is already been properly formatted
+        result += (task.getTotalTime()) + "/" + $scope.properFormat(task.getGoalTime());
         result += " | " + $scope.getFrequency(task.frequency);
       }
 
-      if ($scope.getDaysOfOccurence(task.days) != "") {
+      if ($scope.getDaysOfOccurence(task.days) != "" && task.frequency == 0) {
         result += " | " + $scope.getDaysOfOccurence(task.days);
       }
       return result;

@@ -90,8 +90,8 @@ angular.module('tracktr.controllers', [])
         } else {
           progressRatio = $scope.retrieveDataForCircle(task) / task.goal;
         }    
-        
-        circle.set(progressRatio);
+        circle.animate(progressRatio);
+        // circle.set(progressRatio);
       } else {
         setInterval(function () {
           var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
@@ -103,8 +103,8 @@ angular.module('tracktr.controllers', [])
           } else {
             progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
           }
-
-          circle.set(progressRatio);
+          circle.animate(progressRatio);
+          // circle.set(progressRatio);
         }, 100);
       }
     };
@@ -342,7 +342,7 @@ angular.module('tracktr.controllers', [])
      * Display the total progress according to the frequency (daily/weekly/monthly)
      */
     $scope.displayTotalTimer = function (task) {
-      return "0" + task.getTotalTime();
+      return task.getTotalTime();
     };
 
 

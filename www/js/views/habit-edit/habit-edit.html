@@ -179,8 +179,6 @@
         
         <ion-content>
         
-        
-        
         <!-- Progress Date  -->
         <label class="item item-select">
             <span class="input-label">Progress Date</span>
@@ -189,7 +187,7 @@
           </ionic-datepicker>
          </label> 
        
-       <!-- Progress Date  -->
+       <!-- Progress Time  -->
        <label class="item item-select">
             <span class="input-label">Progress Time</span>
              <ionic-timepicker input-obj="timePickerObject">
@@ -223,8 +221,8 @@
       </label>
        
         <div class="padding-left padding-right">
-          <button class="button button-block button-dark" ng-click="saveProgress(datepickerObject.inputDate,progressHour,progressMinute,progressCount,progressCountHour,progressCountMinute, progressCountSecond )">
-            Save
+          <button class="button button-block button-dark" ng-click="createProgress(datepickerObject.inputDate,progressHour,progressMinute,progressCount,progressCountHour,progressCountMinute, progressCountSecond )">
+            Create Progress
           </button>
         </div>
         
@@ -234,7 +232,7 @@
         </script>
         
         <div class="padding-left padding-right">
-          <button class="button button-block button-dark" ng-click="save(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress)" ng-disabled="createTask.$invalid">
+          <button class="button button-block button-dark" ng-click="save(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress,isShared)" ng-disabled="createTask.$invalid">
             Save
           </button>
         </div>
