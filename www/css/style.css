@@ -150,6 +150,10 @@
     padding: 10px;
 }
 
+.card {
+    background-color: lightskyblue;
+}
+
 #chart-task-name {
     padding-top: 15px;
 }
