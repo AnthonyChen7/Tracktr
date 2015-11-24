@@ -388,6 +388,7 @@ function timePickerCallback(val) {
 			
 			$scope.habitTitle = task.name;
 			$scope.isActive = task.isActive;
+			$scope.isShared = task.isShared;
 			
 			$scope.frequency = $scope.frequencies[task.frequency];
 			
@@ -447,7 +448,7 @@ function timePickerCallback(val) {
 		});
 	};
 	
-	$scope.save = function(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress) {
+	$scope.save = function(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress,isShared) {
 		if (habitType.name == 'Time' && (hours == null || parseInt(hours) == 0) && (minutes == null || parseInt(minutes) == 0)) {
             $scope.showAlert = function() {
 				var alertPopup = $ionicPopup.alert({
@@ -496,7 +497,7 @@ function timePickerCallback(val) {
 		
 		// Generate Task and make call to TaskService
 		var aTask = { id: habitId, name: habitTitle, isActive: isActive, 
-			frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: isTimerRunning, creationDate: creationDate, progress: progress };
+			frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: isTimerRunning, creationDate: creationDate, progress: progress, isShared: isShared };
 		
 		if(deletedProgress.length > 0){
 		// There are progresses to delete....
