@@ -2,6 +2,13 @@ angular.module('tracktr.controllers')
 
 .controller("HabitEditController", function($scope,$state,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
 	
+	/**
+	 * These arrays contains
+	 * the progress(es) we want to add/delete
+	 */
+	var deletedProgress = [];
+	var addedProgress = [];
+	
 	$scope.habitId = $stateParams.habitId;
 		
 	$scope.habitTypes = [
@@ -437,6 +444,7 @@ function timePickerCallback(val) {
 			$scope.isTimerRunning = task.isTimerRunning;
 			$scope.creationDate = task.creationDate;
 			$scope.progress = task.progress;
+			
 		});
 	};
 	
@@ -490,7 +498,42 @@ function timePickerCallback(val) {
 		// Generate Task and make call to TaskService
 		var aTask = { id: habitId, name: habitTitle, isActive: isActive, 
 			frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: isTimerRunning, creationDate: creationDate, progress: progress, isShared: isShared };
+		
+		if(deletedProgress.length > 0){
+		// There are progresses to delete....
+			
+		for (i = 0; i < deletedProgress.length; i++) { 
+    	
+		TaskService.removeProgressFromTask($scope.task, deletedProgress[i], function(err){	
+		TaskService.updateTask(aTask, function(err, id) {
+			 var index = $scope.progress.indexOf(deletedProgress[i]);
+			 $scope.progress.splice(index,1);
+		});
+          		
+		});
+		}
+		//Reset the deleted progress array
+		deletedProgress = [];
+		}
+		
+		if(addedProgress.length > 0){
+		//There are progresses to add
+		
+		for (i = 0; i < addedProgress.length; i++) { 
+		TaskService.addProgressToTask($scope.task, addedProgress[i], function(taskId){
+		TaskService.updateTask(aTask, function(err, id) {
+				$scope.progress.push(addedProgress[i]);
+				});
+				});
+		}
+		//Reset the added progress array
+		addedProgress = [];
+		}
+		
+		else{
+		//No progress to add/delete	
 		TaskService.updateTask(aTask, function(err, id) { });
+		}
 		// Return to Home View
 		$ionicHistory.goBack();
 	}
@@ -537,25 +580,20 @@ function timePickerCallback(val) {
 	
 	/**
 	 * Deletes the specified progress from the progress array of the task object
-	 * progressObject is a valid progress object
+	 * progressObject is a valid progress object. Note that we don't save this change to the database.
 	 */
 	$scope.deleteProgress = function(progressObject){
-		
 		var index = $scope.progress.indexOf(progressObject);
-		
-		TaskService.removeProgressFromTask($scope.task, progressObject, function(err){
-			
-			 TaskService.updateTask($scope.task, function(err){
-          		$scope.progress.splice(index,1);
-			 });
-			
-		} );	
+        $scope.progress.splice(index,1);
+				  
+		deletedProgress.push(progressObject);
+
 	};
 	
 	/**
-	 * Saves the progress and adds it to the progress array of the task
+	 * Create the progress and adds it to the progress array of the task. Note that we don't save it to the database
 	 */
-	$scope.saveProgress = function(selectedDate,inputHour, inputMinute,progressCount, progressCountHour, progressCountMinute, progressCountSecond){
+	$scope.createProgress = function(selectedDate,inputHour, inputMinute,progressCount, progressCountHour, progressCountMinute, progressCountSecond){
 		
 		var dateInput = selectedDate;
 		var parsedHour = parseInt(inputHour);
@@ -596,23 +634,17 @@ function timePickerCallback(val) {
 			
 		}
 	
-	//add the progress to the task array and save it
+	//add the progress to the task array but we don't save it
 	var aProgress = new Progress(newProgress);
+	addedProgress.push(aProgress);
+    $scope.progress.push(aProgress);
 	
-	TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
-		 TaskService.updateTask($scope.task, function(err){
-          		$scope.progress.push(aProgress);
-				$scope.closeAddProgressModal();
-				
-				//Destroy the add progress modal and re-init/reset the field values
-				$scope.addProgressModal.remove();
-				$scope.initDatePicker();
-				$scope.initTimePicker();
-				$scope.initAddProgressModal();
-				
-		});
-	});
-	
+	//Destroy the add progress modal and re-init/reset the field values			
+	$scope.closeAddProgressModal();
+	$scope.addProgressModal.remove();
+	$scope.initDatePicker();
+	$scope.initTimePicker();
+	$scope.initAddProgressModal();	
 	};
 		
 	/**

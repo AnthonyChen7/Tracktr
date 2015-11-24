@@ -224,7 +224,7 @@ Task.prototype.countTime = function(format) {
     var minutes = aTask.getProgress(2);
     var seconds = aTask.getProgress(1);
     
-    var result = hours + ":"+ pad(minutes) + ":" + pad(seconds);
+    var result = pad(hours) + ":"+ pad(minutes) + ":" + pad(seconds);
     return result;
   }
   
