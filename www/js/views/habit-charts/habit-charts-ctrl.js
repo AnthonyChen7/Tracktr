@@ -135,6 +135,7 @@ angular.module('tracktr.controllers')
       if($scope.task.isTime) {
         $scope.timeFormat($scope.data);
       }
+      $scope.amountFromGoal();
       console.log('data is: ' + $scope.data[0]);
     });
   };
@@ -347,6 +348,35 @@ angular.module('tracktr.controllers')
        $scope.loadWeeklyProgress(0);
     }
   };
+  
+  
+   /**
+   * Calculates the amount of time/count needed to achieve the goal
+   */
+  $scope.amountFromGoal = function() {
+    if($scope.task.isTime) {
+      $scope.goal = $scope.properFormat($scope.task.getGoalTime());
+      $scope.currentProgress = $scope.task.getTotalTime();
+      $scope.diff = ($scope.task.goal*60000) - $scope.task.getProgress();
+    }
+    else if($scope.task.isCount) {
+      $scope.goal = $scope.task.goal;
+      $scope.currentProgress = $scope.task.getProgress();
+      $scope.diff = $scope.goal - $scope.currentProgress;
+    }
+ };
+  
+  
+  $scope.properFormat = function(timeString) {
+      var timeArray = timeString.split(":");
+      var properTimeString = "";
+      properTimeString += pad(timeArray[0]);
+      properTimeString += ":" + timeArray[1];
+      properTimeString += ":" + timeArray[2]
+      return properTimeString;
+    };
+  
+  
   
   
   /**
