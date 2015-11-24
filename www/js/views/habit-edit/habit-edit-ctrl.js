@@ -3,6 +3,7 @@ angular.module('tracktr.controllers')
 .controller("HabitEditController", function($scope,$state,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
 	
 	var deletedProgress = [];
+	var addedProgress = [];
 	
 	$scope.habitId = $stateParams.habitId;
 		
@@ -494,7 +495,6 @@ function timePickerCallback(val) {
 			frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: isTimerRunning, creationDate: creationDate, progress: progress };
 		
 		if(deletedProgress.length > 0){
-			
 		for (i = 0; i < deletedProgress.length; i++) { 
     		TaskService.removeProgressFromTask($scope.task, deletedProgress[i], function(err){
 				
@@ -506,7 +506,22 @@ function timePickerCallback(val) {
 			});
 		}
 		deletedProgress = [];
-		}else{
+		}
+		
+		if(addedProgress.length > 0){
+			for (i = 0; i < addedProgress.length; i++) { 
+				TaskService.addProgressToTask($scope.task, addedProgress[i], function(taskId){
+					TaskService.updateTask(aTask, function(err, id) {
+						 $scope.progress.push(addedProgress[i]);
+					});
+				});
+			}
+			addedProgress = [];
+		}
+		
+		
+		
+		else{
 		TaskService.updateTask(aTask, function(err, id) { });
 		}
 		// Return to Home View
@@ -576,7 +591,7 @@ function timePickerCallback(val) {
 	/**
 	 * Saves the progress and adds it to the progress array of the task
 	 */
-	$scope.saveProgress = function(selectedDate,inputHour, inputMinute,progressCount, progressCountHour, progressCountMinute, progressCountSecond){
+	$scope.createProgress = function(selectedDate,inputHour, inputMinute,progressCount, progressCountHour, progressCountMinute, progressCountSecond){
 		
 		var dateInput = selectedDate;
 		var parsedHour = parseInt(inputHour);
@@ -619,8 +634,9 @@ function timePickerCallback(val) {
 	
 	//add the progress to the task array and save it
 	var aProgress = new Progress(newProgress);
+	addedProgress.push(aProgress);
 	
-	TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
+	// TaskService.addProgressToTask($scope.task, aProgress, function(taskId){
 		//  TaskService.updateTask($scope.task, function(err){
           		$scope.progress.push(aProgress);
 				$scope.closeAddProgressModal();
@@ -632,7 +648,7 @@ function timePickerCallback(val) {
 				$scope.initAddProgressModal();
 				
 		//});
-	});
+	// });
 	
 	};
 		
