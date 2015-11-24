@@ -96,7 +96,7 @@ angular.module('tracktr.controllers')
 			}
 		});
 	};
-	
+
 	// Frequency Popup
 	$scope.showFrequencyPopup = function(frequency) {
 		if (frequency != null) {
@@ -219,6 +219,25 @@ angular.module('tracktr.controllers')
 	
 	// Create Task	
 	$scope.create = function(habitTitle,habitType,hours,minutes,goal,frequency, days,icon) {	
+		if (habitType.name == 'Time' && (hours == null || parseInt(hours) == 0) && (minutes == null || parseInt(minutes) == 0)) {
+            $scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Please specify a goal.',
+					template: 'The \'Hours\' field and the \'Minutes\' field cannot both be zero.'
+				});
+ 			};
+			 $scope.showAlert();
+			 return;
+		} else if (habitType.name == 'Count' && (goal == null || parseInt(goal) == 0)) {
+			$scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Please specify a goal.',
+					template: 'The \'Goal\' field must have a value greater than zero.'
+				});
+ 			};
+			 $scope.showAlert();
+			 return;
+		}
 		
 		// Habit Type
 		var aTime = 0;
@@ -242,6 +261,7 @@ angular.module('tracktr.controllers')
 		} else if (habitType.name == 'Count' && goal != null) {
 			aGoal = (parseInt(goal));
 		}
+		// alert(aGoal);
 		
 		// Days
 		var aDays = { sunday: days[0].value, monday: days[1].value, tuesday: days[2].value, wednesday: days[3].value, thursday: days[4].value, friday: days[5].value, saturday: days[6].value }

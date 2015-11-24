@@ -4,46 +4,28 @@
       <i class="ion-plus"></i>
     </button>
   </ion-nav-buttons>
-  
   <ion-content id="home-bg">
-    <div class="row" ng-repeat="task in allTasks" ng-show="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)"
-    ng-if="$index % 2 == 0">
     
-      <!-- First column of tasks -->
-      <div class="col col-50" ng-if="$index < allTasks.length">
-        <div class="col" on-touch="clickCircleDiv(allTasks[$index])" on-release="releaseCircleDiv(allTasks[$index])">
-          <progress-circle1><task-icon1></task-icon1></progress-circle1>
+    <div class="row" ng-repeat="task in allTasks" ng-if="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)">   
+      <div class="col col-80 col-offset-10">
+        <div class="col" on-touch="clickCircleDiv(task)" on-release="releaseCircleDiv(task)">
+          <progress-circle><task-icon></task-icon></progress-circle>
         </div>
         <div class="row">
           <div class="col text-center">
-            <h6 class="home-subtext" ng-if="!(allTasks[$index].isCount)">Total Time: {{displayTotalTimer(task)}}</h6>
+            <h6 class="home-subtext" ng-if="!(task.isCount)">Total Time: {{displayTotalTimer(task)}}</h6>
           </div>
         </div>
         <div class="row">
           <div class="col text-center">
             <h4 style="text-align: center; padding: 0px; margin:0px;"><b>{{task.name}}</b></h4>
+            <div ng-if="$index != allTasks.length - 1">
+              <br><hr class="hr-viewall2" ng-if="$index != allTasks.length - 1">
+            </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Second column of tasks -->
-      <div class="col col-50" ng-if="$index+1 < allTasks.length">
-        <div class="row" on-touch="clickCircleDiv(allTasks[$index+1])" on-release="releaseCircleDiv(allTasks[$index+1])">
-          <progress-circle2><task-icon2></task-icon2></progress-circle2>
-        </div>
-        <div></div> <!-- This empty div needed for alignment -->
-        <div class="row">
-          <div class="col text-center">
-            <h6 class="home-subtext" ng-if="!(allTasks[$index+1].isCount)">Total Time: {{displayTotalTimer(allTasks[$index + 1])}}</h6>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            <h4 style="text-align: center; padding:0px; margin:0px;"><b>{{allTasks[$index+1].name}}</b></h4>
-          </div>
-        </div>
-      </div>
-      
+      </div>      
     </div>
+    
   </ion-content>
 </ion-view>

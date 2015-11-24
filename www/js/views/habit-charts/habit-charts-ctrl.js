@@ -9,66 +9,11 @@ angular.module('tracktr.controllers')
   //Month names
   $scope.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-  // $scope.task_progress = [];
-  // $scope.progress=[[]];
   $scope.data = [[]];
- 
-  
-  ///pseudo code for displaying daily: go through every progress entry, put first one into a date, and a progressChart
-  ///for every entry i, check if the date is the same as i-1, if it is, add the progress to it
-  ///if not, append new element to the date (label) array, append new element to data array
-  // $scope.loadDailyProgress_1 = function() {
-  //   TaskService.getTaskById($scope.taskId, function(err, task) { 
-  //     $scope.task = task;
-      
-  //     var previousDate = null;
-  //     var currentDate = null;
-  //     var previousIndex = null;
-  //     for(var i = 0; i < $scope.task.progress.length; i++) {
-  //       if(i === 0) {
-  //         previousDate = ($scope.task.progress[i].date.getMonth()+1) + "/" + $scope.task.progress[i].date.getDate();
-  //         console.log("Date: " + previousDate);
-  //         $scope.labels.push(previousDate);
-  //         $scope.progress[0][i] = $scope.task.progress[i].progress;
-  //         previousIndex = i;
-  //       }
-  //       else {
-  //         currentDate = ($scope.task.progress[i].date.getMonth()+1) + "/" + $scope.task.progress[i].date.getDate();
-  //         console.log("Date: " + currentDate);
-  //         if(currentDate === previousDate) {
-  //           $scope.progress[0][previousIndex] += $scope.task.progress[i].progress;
-  //           console.log("progress: " + $scope.progress[0][previousIndex] + "at index " + previousIndex);
-  //         }
-  //         else {
-  //           $scope.labels.push(currentDate);
-  //           $scope.progress[0][previousIndex + 1] = $scope.task.progress[i].progress;
-  //           console.log("second progress: " + $scope.progress[0][previousIndex + 1]);
-  //           previousIndex += 1;
-  //           previousDate = currentDate;
-  //         }
-  //       }
-        
-  //     }
-      
-  //   });
-  // };
   
   
   /*
-   * get current week: getlast sunday, get next sunday
-   * put Sun Mon Tue Wed Thur Fri Sat in labels array
-   * for every progress entry, look if it's within lastSunday and lastMonday, put in first element of data array
-   * else if its within lastMonday to lastTuesday
-   * 
-   * 
-   * !!!!to view previous week, today.getDate() - 7 * 1
-   * current week: today.getDate() - 7 * 0
-   * 
-   * option is: 0 for current week,
-   *            1 for last week,
-   *            2 for two weeks ago etc
-   * 
-   * TODO: create helper to check if a date is on sun mon tues...etc
+   * Load daily progress within the week
    */
   $scope.loadWeeklyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
@@ -210,7 +155,6 @@ angular.module('tracktr.controllers')
    * Update the chart to display the next week
    */
   $scope.nextWeek = function() {
-    // console.log("!!week is: " + $scope.week);
     if($scope.week > 0)
        $scope.week-=1;
     console.log("week is: " + $scope.week);
@@ -346,19 +290,19 @@ angular.module('tracktr.controllers')
   $scope.timeFormat = function(data2DArray) {
     var maxTime = Math.max.apply(Math,data2DArray[0]);
     if(maxTime < 60000) {
-      $scope.format = "sec.";
+      $scope.format = "Seconds";
        for(var i = 0;i < data2DArray[0].length;i++) {
          $scope.data[0][i] = $scope.data[0][i]/1000;
        }
     }
     else if(maxTime >= 60000 && maxTime < 3600000) {
-      $scope.format = "min.";
+      $scope.format = "Minutes";
       for(var i = 0;i < data2DArray[0].length;i++) {
          $scope.data[0][i] = $scope.data[0][i]/60000;
        }
     }
     else if(maxTime >= 3600000) {
-      $scope.format = "hr.";
+      $scope.format = "Hours";
       for(var i = 0;i < data2DArray[0].length;i++) {
          $scope.data[0][i] = $scope.data[0][i]/3600000;
        }
