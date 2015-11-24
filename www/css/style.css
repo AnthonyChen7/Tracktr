@@ -142,6 +142,11 @@
 
 /*Padding for chart*/
 .chart-line {
+    padding-right: 15px;
+    padding-left: 10px;
+}
+
+.button-bar {
     padding: 10px;
 }
 

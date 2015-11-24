@@ -23,6 +23,7 @@
       <br>
       <div class="panel-heading text-center" ng-if="task.isTime"> Progress of Week {{currentWeek}} in {{format}}</div>
       <div class="panel-heading text-center" ng-if="task.isCount"> Progress of Week {{currentWeek}}</div>
+      <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
              chart-data="data" chart-labels="labels" on-swipe-right="previousWeek()" on-swipe-left="nextWeek()">
@@ -40,6 +41,7 @@
       <br>
       <div class="panel-heading text-center" ng-if="task.isTime"> Progress of {{currentDay}} in {{format}}</div>
       <div class="panel-heading text-center" ng-if="task.isCount"> Progress of {{currentDay}}</div>
+      <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
              chart-data="data" chart-labels="labels" on-swipe-right="previousDay()" on-swipe-left="nextDay()">
@@ -57,6 +59,7 @@
       <br>
       <div class="panel-heading text-center" ng-if="task.isTime"> Progress of Year {{currentYear}} in {{format}}</div>
       <div class="panel-heading text-center" ng-if="task.isCount"> Progress of Year {{currentYear}}</div>
+      <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
              chart-data="data" chart-labels="labels" on-swipe-right="previousYear()" on-swipe-left="nextYear()">
