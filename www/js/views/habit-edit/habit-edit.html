@@ -12,16 +12,16 @@
           <label class="item item-input">
             <span class="input-label">Title</span>
             <input name="habitTitle" ng-model="habitTitle" type="text" ng-maxlength="20" placeholder="Required" required />
-          </label> 
-          
+          </label>
+
           <!-- Type -->
           <label class="item item-input icon-right" ng-click="showTypePopup(habitType)">
-              <span class="input-label">Type</span>
-              <p name="habitType" ng-model="habitType" required>{{habitType.name}}</p>
-          </label> 
-          
+            <span class="input-label">Type</span>
+            <p name="habitType" ng-model="habitType" required>{{habitType.name}}</p>
+          </label>
+
           <div class="item item-divider"></div>
-          
+
           <!-- Goal -->
           <label id="hoursField" class="item item-input item-select">
             <div class="input-label">Hours</div>
@@ -35,20 +35,20 @@
             <div class="input-label">Goal</div>
             <select ng-model="goal" ng-options="goal for goal in range(0, 999)"></select>
           </label>
-          
+
           <div class="item item-divider"></div>
-          
+
           <!-- Frequency -->
           <label class="item item-input" ng-click="showFrequencyPopup(frequency)">
-              <span class="input-label">Frequency</span>
-              <p name="frequency" ng-model="frequency" required>{{frequency.name}}</p>
-              <i class="icon ion-alert col col-10" ng-if="createTask.frequency.$error.required"></i>
+            <span class="input-label">Frequency</span>
+            <p name="frequency" ng-model="frequency" required>{{frequency.name}}</p>
+            <i class="icon ion-alert col col-10" ng-if="createTask.frequency.$error.required"></i>
           </label>
           <label id="daysField" class="item item-input" ng-click="openDaysModal()">
-              <span class="input-label">Days</span>
-              <p name="days" ng-model="days">{{daysString}}</p>         
-          </label>       
-         <script id="daysModal.html" type="text/ng-template">
+            <span class="input-label">Days</span>
+            <p name="days" ng-model="days">{{daysString}}</p>
+          </label>
+          <script id="daysModal.html" type="text/ng-template">
             <ion-modal-view>
               <ion-header-bar class="bar bar-header bar-dark">
                 <h1 class="title">Select days</h1>
@@ -61,7 +61,7 @@
                       <input type="checkbox" ng-model="day.value">
                     </label>
                     {{day.name}}
-                   </li>
+                  </li>
                 </ul>
                 <div class="row">
                   <div class="col col-50 col-offset-25">
@@ -71,23 +71,23 @@
               </ion-content>
             </ion-modal-view>
           </script>
-          
+
           <div class="item item-divider"></div>
-          
+
           <!-- Icon -->
           <div class="list">
-              <a class="item item-icon-right" ng-click="openIconModal()">
+            <a class="item item-icon-right" ng-click="openIconModal()">
                 Icon
                 <i name="icon" class="icon {{icon}}" ng-model="icon"></i>
               </a>
           </div>
-         <script id="iconModal.html" type="text/ng-template">
+          <script id="iconModal.html" type="text/ng-template">
             <ion-modal-view>
               <ion-header-bar class="bar bar-header bar-dark">
                 <h1 class="title">Select icon</h1>
                 <button class="button button-clear" ng-click="closeIconModal()">Cancel</button>
               </ion-header-bar>
-              <ion-content>  
+              <ion-content>
                 <div class="item item-divider"></div>
                 <div class="row icon-row">
                   <div class="col col-25 icon-col" ng-repeat="icon in icons" ng-if="icon.code < 4">
@@ -122,128 +122,129 @@
               </ion-content>
             </ion-modal-view>
           </script>
-              
+
         </div>
-        
+
         <div class="padding">
-            <p ng-if="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
+          <p ng-if="createTask.habitTitle.$error.maxlength">Habit Title max length is 20 characters.</p>
         </div>
-        
+
         <div class="padding-left padding-right">
           <button class="button button-block button-dark" ng-click="openEditProgressModal()">
             Edit Progress
           </button>
         </div>
-        
-        <script id="editProgressModal.html" type="text/ng-template">
-        <ion-modal-view>
-        <ion-header-bar class="bar bar-header bar-dark">
-                <h1 class="title" style="text-align: center;">Edit Progress</h1>
-                <button class="button button-clear" ng-click="closeEditProgressModal()"><i class="ion-chevron-left"></i></button>
-                <button class="button button-clear button-icon" ng-click="openAddProgressModal()"><i class="ion-plus"></i></button>
-              </ion-header-bar>
-        <ion-content>
-        
-        
-        
-        <div class="row header">
-        <div class="col" align='center'>Date</div>
-        <div class="col" align='center'>Progress Count</div>
-        <div class="col" align='center'></div>
-        </div>
-        
-        <div class="row" ng-repeat="p in progress" style="border:1px solid black;">
-        
-        <div class="col" align='center'>{{displayFormattedDate(p.date)}}</div>
-        <div class="col" align='center'>{{displayFormattedProgress(p.progress)}}</div>
-        
-    <div class="col" align='center' style="margin: auto;">
-    <button ng-click="deleteProgress(p)">
-      <i class="ion-close-circled"></i>
-    </button>
-     </div>
 
-        
-        </div>
-       
-        </ion-content>
-        </ion-modal-view>
+        <script id="editProgressModal.html" type="text/ng-template">
+          <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-dark">
+              <h1 class="title" style="text-align: center;">Edit Progress</h1>
+              <button class="button button-clear" ng-click="closeEditProgressModal()"><i class="ion-chevron-left"></i></button>
+              <button class="button button-clear button-icon" ng-click="openAddProgressModal()"><i class="ion-plus"></i></button>
+            </ion-header-bar>
+            <ion-content>
+              <div class="row header">
+                <div class="col text-center">
+                  <p>Date</p>
+                </div>
+                <div class="col text-center">
+                  <p>Progress Count</p>
+                </div>
+                <div class="col text-center"></div>
+              </div>
+              <div class="row" ng-repeat="p in progress" style="border-top:1px solid lightgray;">
+                <div class="col text-center">
+                  <p>{{displayFormattedDate(p.date)}}</p>
+                </div>
+                <div class="col text-center">
+                  <p>{{displayFormattedProgress(p.progress)}}</p>
+                </div>
+                <div class="col text-center">
+                  <button class="button button-small button-dark button-outline icon ion-close-circled" ng-click="deleteProgress(p)"></button>
+                </div>
+              </div>
+            </ion-content>
+          </ion-modal-view>
         </script>
-        
+
         <script id="addProgressModal.html" type="text/ng-template">
-        <ion-modal-view>
-       <ion-header-bar class="bar bar-header bar-dark">
-       <button class="button button-clear align='left'" ng-click="closeAddProgressModal()"><i class="ion-chevron-left"></i></button>
-                <h1 class="title" style="text-align: center;">Add New Progress</h1>
-        </ion-header-bar>
-        
-        <ion-content>
-        
-        <!-- Progress Date  -->
-        <label class="item item-select">
-            <span class="input-label">Progress Date</span>
-          <ionic-datepicker input-obj="datepickerObject">
-          <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'yyyy/MM/dd'}}</button>
-          </ionic-datepicker>
-         </label> 
-       
-       <!-- Progress Time  -->
-       <label class="item item-select">
-            <span class="input-label">Progress Time</span>
-             <ionic-timepicker input-obj="timePickerObject">
-              <button class="button button-block button-positive overflowShow">
-                <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
-                  {{progressHour}}:{{progressMinute}}
-              </button>
-              </ionic-timepicker>
-       </label>
-       
-       <!-- Progress Count for count based tasks  -->
-      <label class="item item-input item-select" ng-show="task.isCount">
-          <span class="input-label">Progress Count</span>
-            <select ng-model="progressCount" ng-options="progressCount for progressCount in range(1, 999)"></select>
-      </label>
-      
-      <!-- Progress Count for time based tasks  -->
-      <label class="item item-input item-select" ng-show="task.isTime">
-          <span class="input-label">Progress Count Hour</span>
-            <div class="padding-left padding-right"><select ng-model="progressCountHour" ng-options="progressCountHour for progressCountHour in range(0, 744)"></select></div>
-      </label>
-      
-      <label class="item item-input item-select" ng-show="task.isTime">
-          <span class="input-label">Progress Count Minute</span>
-            <select ng-model="progressCountMinute" ng-options="progressCountMinute for progressCountMinute in range(0, 59)"></select>
-      </label>
-      
-      <label class="item item-input item-select" ng-show="task.isTime">
-          <span class="input-label">Progress Count Second</span>
-         <select ng-model="progressCountSecond" ng-options="progressCountSecond for progressCountSecond in range(0, 59)"></select>
-      </label>
-       
-        <div class="padding-left padding-right">
-          <button class="button button-block button-dark" ng-click="createProgress(datepickerObject.inputDate,progressHour,progressMinute,progressCount,progressCountHour,progressCountMinute, progressCountSecond )">
-            Create Progress
-          </button>
-        </div>
-        
-        
-        </ion-content> 
-        </ion-modal-view>  
+          <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-dark">
+              <button class="button button-clear align='left'" ng-click="closeAddProgressModal()"><i class="ion-chevron-left"></i></button>
+              <h1 class="title" style="text-align: center;">Add New Progress</h1>
+            </ion-header-bar>
+
+            <ion-content>
+
+              <!-- Progress Date  -->
+              <label class="item item-select">
+                <span class="input-label">Progress Date</span>
+                <ionic-datepicker input-obj="datepickerObject">
+                  <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'yyyy/MM/dd'}}</button>
+                </ionic-datepicker>
+              </label>
+
+              <!-- Progress Time  -->
+              <label class="item item-select">
+                <span class="input-label">Progress Time</span>
+                <ionic-timepicker input-obj="timePickerObject">
+                  <button class="button button-block button-positive overflowShow">
+                    <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
+                    {{progressHour}}:{{progressMinute}}
+                  </button>
+                </ionic-timepicker>
+              </label>
+
+              <!-- Progress Count for count based tasks  -->
+              <label class="item item-input item-select" ng-show="task.isCount">
+                <span class="input-label">Progress Count</span>
+                <select ng-model="progressCount" ng-options="progressCount for progressCount in range(1, 999)"></select>
+              </label>
+
+              <!-- Progress Count for time based tasks  -->
+              <label class="item item-input item-select" ng-show="task.isTime">
+                <span class="input-label">Progress Count Hour</span>
+                <div class="padding-left padding-right">
+                  <select ng-model="progressCountHour" ng-options="progressCountHour for progressCountHour in range(0, 744)"></select>
+                </div>
+              </label>
+
+              <label class="item item-input item-select" ng-show="task.isTime">
+                <span class="input-label">Progress Count Minute</span>
+                <select ng-model="progressCountMinute" ng-options="progressCountMinute for progressCountMinute in range(0, 59)"></select>
+              </label>
+
+              <label class="item item-input item-select" ng-show="task.isTime">
+                <span class="input-label">Progress Count Second</span>
+                <select ng-model="progressCountSecond" ng-options="progressCountSecond for progressCountSecond in range(0, 59)"></select>
+              </label>
+
+              <br>
+              <div class="padding">
+                <button class="button button-block button-dark" ng-click="createProgress(datepickerObject.inputDate,progressHour,progressMinute,progressCount,progressCountHour,progressCountMinute, progressCountSecond )">
+                  Create Progress
+                </button>
+              </div>
+
+
+            </ion-content>
+          </ion-modal-view>
         </script>
-        
+
         <div class="padding-left padding-right">
-          <button class="button button-block button-dark" ng-click="save(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress,isShared)" ng-disabled="createTask.$invalid">
+          <button class="button button-block button-dark" ng-click="save(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress,isShared)"
+          ng-disabled="createTask.$invalid">
             Save
           </button>
         </div>
-                <div class="padding-left padding-right padding-bottom">
+        <div class="padding-left padding-right padding-bottom">
           <button class="button button-block button-dark" ng-click="delete(habitId,daysId)">
             Delete
           </button>
         </div>
       </div>
     </form>
-    
+
     <!-- For debugging only -->
     <!--<p>HabitId: {{habitId}}</p>
     <p>HabitTitle: {{habitTitle}}</p>
