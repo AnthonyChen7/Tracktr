@@ -350,23 +350,55 @@ angular.module('tracktr.controllers')
   };
   
   
-   /**
+  /**
    * Calculates the amount of time/count needed to achieve the goal
    */
   $scope.amountFromGoal = function() {
     if($scope.task.isTime) {
       $scope.goal = $scope.properFormat($scope.task.getGoalTime());
       $scope.currentProgress = $scope.task.getTotalTime();
-      $scope.diff = ($scope.task.goal*60000) - $scope.task.getProgress();
+      var diff = ($scope.task.goal*60000) - $scope.task.getProgress();
+      var diffString = pad(toHours(diff).toString()) + ":" + pad(toMinutes(diff).toString()) + ":" + pad(toSeconds(diff).toString());
+      $scope.diff = diffString;
     }
     else if($scope.task.isCount) {
       $scope.goal = $scope.task.goal;
       $scope.currentProgress = $scope.task.getProgress();
       $scope.diff = $scope.goal - $scope.currentProgress;
     }
- };
+  };
+ 
+ 
+  /**
+   * Convert milliseconds into seconds
+   */
+  function toSeconds(num) {
+    num = Math.floor(num / 1000);
+    return num % 60;
+  };
   
   
+  /**
+   * Convert milliseconds into minutes
+   */
+  function toMinutes(num) {
+    num = Math.floor(num / 60000);
+    return num % 60;
+  };
+  
+  
+  /**
+   * Convert milliseconds into hours
+   */
+  function toHours(num) {
+    num = Math.floor(num / 3600000);
+    return num;
+  };
+  
+  
+  /**
+   * Return proper format for time with necessary 0s added where appropriate
+   */
   $scope.properFormat = function(timeString) {
       var timeArray = timeString.split(":");
       var properTimeString = "";
@@ -374,9 +406,7 @@ angular.module('tracktr.controllers')
       properTimeString += ":" + timeArray[1];
       properTimeString += ":" + timeArray[2]
       return properTimeString;
-    };
-  
-  
+  };
   
   
   /**
