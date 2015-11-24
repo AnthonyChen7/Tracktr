@@ -342,7 +342,7 @@ angular.module('tracktr.controllers', [])
      * Display the total progress according to the frequency (daily/weekly/monthly)
      */
     $scope.displayTotalTimer = function (task) {
-      return "0" + task.getTotalTime();
+      return pad(task.getTotalTime());
     };
 
 

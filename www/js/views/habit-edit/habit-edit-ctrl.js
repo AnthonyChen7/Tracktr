@@ -2,6 +2,8 @@ angular.module('tracktr.controllers')
 
 .controller("HabitEditController", function($scope,$state,$stateParams,$ionicPopup,$ionicModal,$ionicHistory,TaskService) {
 	
+	var deletedProgress = [];
+	
 	$scope.habitId = $stateParams.habitId;
 		
 	$scope.habitTypes = [
@@ -436,6 +438,7 @@ function timePickerCallback(val) {
 			$scope.isTimerRunning = task.isTimerRunning;
 			$scope.creationDate = task.creationDate;
 			$scope.progress = task.progress;
+			
 		});
 	};
 	
@@ -489,7 +492,23 @@ function timePickerCallback(val) {
 		// Generate Task and make call to TaskService
 		var aTask = { id: habitId, name: habitTitle, isActive: isActive, 
 			frequency: frequency.code, days: aDays, isTime: aTime, isCount: aCount, goal: aGoal, icon: icon.code, isTimerRunning: isTimerRunning, creationDate: creationDate, progress: progress };
+		
+		if(deletedProgress.length > 0){
+			
+		for (i = 0; i < deletedProgress.length; i++) { 
+    		TaskService.removeProgressFromTask($scope.task, deletedProgress[i], function(err){
+				
+		TaskService.updateTask(aTask, function(err, id) {
+			 var index = $scope.progress.indexOf(deletedProgress[i]);
+				 $scope.progress.splice(index,1);
+		 });
+          		
+			});
+		}
+		deletedProgress = [];
+		}else{
 		TaskService.updateTask(aTask, function(err, id) { });
+		}
 		// Return to Home View
 		$ionicHistory.goBack();
 	}
@@ -543,13 +562,15 @@ function timePickerCallback(val) {
 		// var index = $scope.progress.indexOf(progressObject);
 		//$scope.progress.splice(index,1);
 		
-		TaskService.removeProgressFromTask($scope.task, progressObject, function(err){
+		// TaskService.removeProgressFromTask($scope.task, progressObject, function(err){
 			
 			  //TaskService.updateTask($scope.task, function(err){
 				 var index = $scope.progress.indexOf(progressObject);
           		$scope.progress.splice(index,1);
+				  
+				  deletedProgress.push(progressObject);
 			  //});			
-		} );	
+		// } );	
 	};
 	
 	/**
