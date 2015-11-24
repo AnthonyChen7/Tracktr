@@ -5,8 +5,7 @@
     </button>
   </ion-nav-buttons> 
   <ion-content ng-init="loadWeeklyProgress(0)">
-    <h3>Task Name: {{task.name}}</h3>
-    <br>
+    <h3 id="chart-task-name" class="text-center">{{task.name}}</h3>
     <div class="button-bar">
        <a class="button button-outline button-positive" ng-click="showDaily()" ng-disabled="isDaily"> Daily </a>
        <a class="button button-outline button-positive" ng-click="showWeekly()" ng-disabled="isWeekly"> Weekly </a>

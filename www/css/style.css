@@ -140,7 +140,7 @@
     margin-bottom: 30px;
 }
 
-/*Padding for chart*/
+/*Chart*/
 .chart-line {
     padding-right: 15px;
     padding-left: 10px;
@@ -150,6 +150,9 @@
     padding: 10px;
 }
 
+#chart-task-name {
+    padding-top: 15px;
+}
 
 ion-content {
     background: whitesmoke;
