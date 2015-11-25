@@ -47,14 +47,18 @@ angular.module('tracktr.controllers', [])
             bar.setText($scope.retrieveDataForCircle(task));
           } else {
             setInterval(function () {
-              var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
+              // var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
+              var countTimeInMins = task.getProgress()/60000;
+              // console.log("progress time is :"  + countTimeInMins);
 
-              var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
+              // var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
+              var progressTimerInMins = $scope.progressTimer(task)/60000;
 
-              if ((countTimeInSecs + progressTimerInSecs) / task.goal > 1) {
+              if ((countTimeInMins + progressTimerInMins) / task.goal > 1) {
                 progressRatio = 1;
               } else {
-                progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
+                progressRatio = (countTimeInMins + progressTimerInMins) / task.goal;
+                // console.log("ratio is: " + progressRatio);
               }
             }, 1000);
 
@@ -94,14 +98,16 @@ angular.module('tracktr.controllers', [])
         // circle.set(progressRatio);
       } else {
         setInterval(function () {
-          var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
+          // var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
+          var countTimeInMins = task.getProgress()/60000;
 
-          var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
+          // var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
+          var progressTimerInMins = $scope.progressTimer(task)/60000;
 
-          if ((countTimeInSecs + progressTimerInSecs) / task.goal > 1) {
+          if ((countTimeInMins + progressTimerInMins) / task.goal > 1) {
             progressRatio = 1;
           } else {
-            progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
+            progressRatio = (countTimeInMins + progressTimerInMins) / task.goal;
           }
           circle.animate(progressRatio);
           // circle.set(progressRatio);
