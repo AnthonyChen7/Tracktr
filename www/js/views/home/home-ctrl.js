@@ -180,7 +180,8 @@ angular.module('tracktr.controllers', [])
     
   
     /*
-     * Count the amount time spent on the task
+     * Count the amount of time spent on the task
+     * NOTE: This method counts ALL the progress for a task
      * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
      */
     $scope.countTime = function (task, format) {
@@ -305,7 +306,7 @@ angular.module('tracktr.controllers', [])
 
  
     /*
-     * Count the current progress, and express it in seconds
+     * Count the current time elapsed since the timer was last started
      * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
      */
     $scope.progressTimer = function (task, format) {
