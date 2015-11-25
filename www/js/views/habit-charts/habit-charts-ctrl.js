@@ -24,6 +24,7 @@ angular.module('tracktr.controllers')
       $scope.isWeekly = true;
       $scope.isDaily = false;
       $scope.isMonthly = false;
+      $scope.isWeeklyOrMonthly = $scope.task.frequency == 1 || $scope.task.frequency == 2;
       
       var today = new Date();
       
@@ -178,6 +179,7 @@ angular.module('tracktr.controllers')
       $scope.isWeekly = false;
       $scope.isDaily = true;
       $scope.isMonthly = false;
+      $scope.isWeeklyOrMonthly = $scope.task.frequency == 1 || $scope.task.frequency == 2;
       
       $scope.days = option;                
       var today = new Date();
@@ -244,6 +246,7 @@ angular.module('tracktr.controllers')
       $scope.isWeekly = false;
       $scope.isDaily = false;
       $scope.isMonthly = true;
+      $scope.isWeeklyOrMonthly = $scope.task.frequency == 1 || $scope.task.frequency == 2;
       
       $scope.labels = $scope.monthNames;
       $scope.years = option;
@@ -439,12 +442,21 @@ angular.module('tracktr.controllers')
   };
   
   
+  // /**
+  //  * Return true if the task is weekly or monthly
+  //  */
+  // $scope.isWeeklyOrMonthly = function() {
+  //   return $scope.task.frequency == 1 || $scope.task.frequency == 2;
+  // }
+  
+  
   /**
-   * Return true if the task is weekly or monthly
+   * go through each task.progress 
    */
-  $scope.isWeeklyOrMonthly = function() {
-    return $scope.task.frequency == 1 || $scope.task.frequency == 2;
-  }
+  $scope.detailHourlyProgress = function() {
+    
+  };
+  
   
   /**
    * Return back to the previous page
