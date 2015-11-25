@@ -11,6 +11,12 @@ angular.module('tracktr.controllers')
 
   $scope.data = [[]];
   
+  // $scope.$on('$ionicView.enter', function () {
+  //     TaskService.getTaskById($scope.taskId, function(err, task) { 
+  //       $scope.task = task;
+  //       console.log("entered!!!!")
+  //     });
+  //   });
   
   /*
    * Load daily progress within the week
