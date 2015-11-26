@@ -8,6 +8,11 @@
 3. ionic state restore
 4. ionic serve OR ionic emulate
 
+## If somehow Facebook authentication doesn't work on your phone:
+1. cordova plugin add org.apache.cordova.inappbrowser
+2. If console tells you to remove that plugin. Remove it then re-add it.
+3. ionic state restore
+4. use whatever command to install app on the phone.
 
 
 ## Using Bower
