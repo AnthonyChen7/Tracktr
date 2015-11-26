@@ -90,9 +90,20 @@ angular.module('tracktr.services')
             
             // No progress
             if(task.progress.length == 0) {
-              self.allTasks.push(new Task(task));
-              callback(null, task_id);
-              return;
+              var newTask;
+              
+              if(task.creationDate.getTime() == "undefined") {
+                newTask = new Task(task);
+                newTask.isShared = false;  
+              } else {
+                newTask = task;
+                newTask.isShared = false;
+              }
+              self.getTaskById(task_id, function(err, task) {
+                self.allTasks.push(task);
+                callback(null, task_id);
+                return;
+              }); 
             }
             
             angular.forEach(task.progress, function(progress) {
@@ -101,8 +112,10 @@ angular.module('tracktr.services')
                 .then(function(){
                   progressCnter++;
                   if(progressCnter === progressCount) {
-                    self.allTasks.push(new Task(task));
-                    callback(null, task_id);
+                    self.getTaskById(task_id, function(err, task) {
+                      self.allTasks.push(task);
+                      callback(null, task_id);
+                    });
                   }    
                 });
               
@@ -395,7 +408,6 @@ angular.module('tracktr.services')
    */
   var sqlTaskToTasks = function(tasks) {
     var constructedTasks = [];
-    
     // Take each task from the SQL retrieved tasks and 
     // use it to construct a new task under the Task prototype.
     angular.forEach(tasks, function(task) { 

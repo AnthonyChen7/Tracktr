@@ -58,6 +58,7 @@ angular.module('tracktr.controllers')
       });
       
     } else if (option === IMPORT) {
+      
       task.isFromFB = true;
       task.isImported = true;
       task.isShared = false;
@@ -66,7 +67,6 @@ angular.module('tracktr.controllers')
       task.progress = [];
       
       TaskService.createTask(task, function(err, id) {
-        
         $scope.confirmImport();
         
         // Restore values for share page.
