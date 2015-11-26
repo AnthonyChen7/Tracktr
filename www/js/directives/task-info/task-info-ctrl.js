@@ -99,32 +99,29 @@ angular.module('tracktr.controllers')
             $scope.notifyUnauthenticated();
           }
         }
-
-      } else {
-
-        var confirmPopup = $ionicPopup.confirm({
-          title: 'Delete Task?',
-          template: 'Are you sure you want to delete this task?'
-        });
-
-        confirmPopup.then(function (confirm) {
-
-          if (confirm) {
-            TaskService.deleteTask(task, function (err) {
-              var index = $scope.tasks.indexOf(task);
-              $scope.tasks.splice(index, 1);
-              $ionicPopup.alert({
-                title: 'Success!',
-                template: 'Task successfully deleted.'
-              });
-
-            });
-          }
-
+      
+    }else{
+    
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Delete Task?',
+      template: 'Are you sure you want to delete this task?'
+    });
+    
+    confirmPopup.then(function(confirm){
+      
+      if(confirm){
+        TaskService.deleteTask(task, function(err){
+          var index = $scope.tasks.indexOf(task);
+          $ionicPopup.alert({
+            title: 'Success!',
+            template: 'Task successfully deleted.'
+          });
         });
 
       }
-    };
+    })
+    }
+  };
   
     /**
    * This method is called when

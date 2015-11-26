@@ -398,7 +398,7 @@ angular.module('tracktr.services')
     
     // Take each task from the SQL retrieved tasks and 
     // use it to construct a new task under the Task prototype.
-    angular.forEach(tasks, function(task) {
+    angular.forEach(tasks, function(task) { 
       var constructedTask = new Task(task);
       constructedTasks.push(constructedTask);
     });

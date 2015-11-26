@@ -64,7 +64,7 @@ angular.module('tracktr.controllers')
       
       var progress = task.progress;
       task.progress = [];
-
+      
       TaskService.createTask(task, function(err, id) {
         
         $scope.confirmImport();
