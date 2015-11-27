@@ -158,11 +158,14 @@
 }
 
 .card {
-    background-color: lightskyblue;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: gray;
 }
 
 #chart-task-name {
     padding-top: 15px;
+    padding-left: 10px;
 }
 
 ion-content {
