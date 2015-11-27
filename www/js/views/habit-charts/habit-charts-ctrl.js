@@ -459,22 +459,6 @@ angular.module('tracktr.controllers')
   };
   
   
-  // /**
-  //  * Return true if the task is weekly or monthly
-  //  */
-  // $scope.isWeeklyOrMonthly = function() {
-  //   return $scope.task.frequency == 1 || $scope.task.frequency == 2;
-  // }
-  
-  
-  /**
-   * go through each task.progress 
-   */
-  $scope.detailHourlyProgress = function() {
-    
-  };
-  
-  
   /**
    * Return back to the previous page
    */
