@@ -32,6 +32,7 @@ angular.module('tracktr.controllers')
       $scope.isMonthly = false;
       $scope.isWeeklyOrMonthly = $scope.task.frequency == 1 || $scope.task.frequency == 2;
       $scope.goalReached = false;
+      $scope.emptyProgress = false;
       
       var today = new Date();
       
@@ -439,22 +440,29 @@ angular.module('tracktr.controllers')
       //Create an array to hold number of times progress happens for each day of the week
       var daysProgress = [0,0,0,0,0,0,0]; //sunday is at index 0
       var visited = [];
-      
-      for(var i = 0;i < $scope.task.progress.length; i++) { 
-        var progressDate = $scope.task.progress[i].date;
-        var day = progressDate.getDay();
-        var completeDate = Number(progressDate.getMonth().toString() + progressDate.getDate().toString()); 
-        //Check if this date is already visited
-        if(!(visited.indexOf(completeDate) > -1)) { 
-          visited.push(completeDate);
-          daysProgress[day] += 1; //+1 since there is a progress for this day
-        }
-        console.log("for day " + day + ", daysProgress is: " + daysProgress[day]);
+     
+      if($scope.task.progress.length == 0) {
+        $scope.emptyProgress = true;
+        return "You don't have any progress yet, "
       }
-      var d = daysProgress.indexOf(Math.max.apply(Math,daysProgress));
-      var mostFrequentDay = daysOfWeek[d];
-      console.log("most frequent day is: " + mostFrequentDay);
-      return mostFrequentDay;
+      else {
+        for(var i = 0;i < $scope.task.progress.length; i++) { 
+          var progressDate = $scope.task.progress[i].date;
+          var day = progressDate.getDay();
+          var completeDate = Number(progressDate.getMonth().toString() + progressDate.getDate().toString()); 
+          //Check if this date is already visited
+          if(!(visited.indexOf(completeDate) > -1)) { 
+            visited.push(completeDate);
+            daysProgress[day] += 1; //+1 since there is a progress for this day
+          }
+          console.log("for day " + day + ", daysProgress is: " + daysProgress[day]);
+        }
+        console.log("daysProgress is: " + daysProgress);
+        var d = daysProgress.indexOf(Math.max.apply(Math,daysProgress));
+        var mostFrequentDay = daysOfWeek[d];
+        console.log("most frequent day is: " + mostFrequentDay);
+        return mostFrequentDay;
+      }
     }
   };
   
