@@ -90,9 +90,20 @@ angular.module('tracktr.services')
             
             // No progress
             if(task.progress.length == 0) {
-              self.allTasks.push(new Task(task));
-              callback(null, task_id);
-              return;
+              var newTask;
+              
+              if(task.creationDate.getTime() == "undefined") {
+                newTask = new Task(task);
+                newTask.isShared = false;  
+              } else {
+                newTask = task;
+                newTask.isShared = false;
+              }
+              self.getTaskById(task_id, function(err, task) {
+                self.allTasks.push(task);
+                callback(null, task_id);
+                return;
+              }); 
             }
             
             angular.forEach(task.progress, function(progress) {
@@ -101,8 +112,10 @@ angular.module('tracktr.services')
                 .then(function(){
                   progressCnter++;
                   if(progressCnter === progressCount) {
-                    self.allTasks.push(new Task(task));
-                    callback(null, task_id);
+                    self.getTaskById(task_id, function(err, task) {
+                      self.allTasks.push(task);
+                      callback(null, task_id);
+                    });
                   }    
                 });
               
@@ -177,8 +190,70 @@ angular.module('tracktr.services')
     
     DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
       .then(function(result) {
+        self.getTaskById(task.id, function(err, task) {
+          setCachedTask(task);  
+        });
         if(callback) callback(result.insertId);
       });
+  }
+  
+  /**
+   * Add multiple new progress items to the task in the database.
+   * 
+   * Note: This method will not update the task argument.
+   * 
+   * Callback takes the inserted id.
+   */
+  self.addManyProgressToTask = function(task, progress, callback) {
+    
+    var progressLength = progress.length;
+    var addedCount = 0;
+    
+    angular.forEach(progress, function(progress) {
+      
+      var insertProgressQueryAttrs = insertProgressQueryAttr(progress);
+    
+      DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
+        .then(function(result) {
+          addedCount++;
+          if(addedCount == progressLength) {
+            self.getTaskById(task.id, function(err, task) {
+              setCachedTask(task);  
+            });
+            if(callback) callback(result.insertId);  
+          }
+        });
+    });
+    
+  }
+  
+  /**
+   * Remove multiple new progress items to the task in the database.
+   * 
+   * Note: This method will not update the task argument.
+   * 
+   */
+  self.removeManyProgressFromTask = function(task, progress, callback) {
+    
+    var progressLength = progress.length;
+    var removedCount = 0;
+    
+    angular.forEach(progress, function(progress) {
+    
+      var deleteProgressQueryAttrs = [task.id, progress.id];
+    
+      DB.query(DELETE_ONE_PROGRESS_PREPARED_STATEMENT, deleteProgressQueryAttrs)
+        .then(function(result) {
+          removedCount++;
+          if(removedCount == progressLength) {
+            self.getTaskById(task.id, function(err, task) {
+              setCachedTask(task);  
+            });
+            if(callback) callback(null);  
+          }
+        });
+    });
+    
   }
   
   /**
@@ -190,6 +265,9 @@ angular.module('tracktr.services')
     
     DB.query(DELETE_ONE_PROGRESS_PREPARED_STATEMENT, deleteProgressQueryAttrs)
       .then(function(result) {
+        self.getTaskById(task.id, function(err, task) {
+          setCachedTask(task);  
+        });
         if(callback) callback(null);
       });
   }
@@ -395,10 +473,9 @@ angular.module('tracktr.services')
    */
   var sqlTaskToTasks = function(tasks) {
     var constructedTasks = [];
-    
     // Take each task from the SQL retrieved tasks and 
     // use it to construct a new task under the Task prototype.
-    angular.forEach(tasks, function(task) {
+    angular.forEach(tasks, function(task) { 
       var constructedTask = new Task(task);
       constructedTasks.push(constructedTask);
     });

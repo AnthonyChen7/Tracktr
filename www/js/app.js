@@ -6,9 +6,9 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives', 'chart.js', 'firebase', 'ionic-datepicker','ionic-timepicker'])
+angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr.services','tracktr.directives', 'chart.js', 'firebase', 'ionic-datepicker','ionic-timepicker', 'ngIOS9UIWebViewPatch'])
 
-.run(function($ionicPlatform, $cordovaSplashscreen, DB, $animate) {
+.run(function($ionicPlatform, $cordovaSplashscreen, DB) {
   $ionicPlatform.ready(function() {
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -34,8 +34,6 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
       }, 1000);
     }, false);
     
-    // Disable animations
-    $animate.enabled(false);
   });
     
   // Initialize the Database
@@ -106,7 +104,7 @@ angular.module('tracktr', ['ionic', 'ngCordova', 'tracktr.controllers', 'tracktr
   })
   
   .state('edit', {
-    cache: false,
+    cache: true,
     url: '/edit/:habitId',
     templateUrl: 'js/views/habit-edit/habit-edit.html',
     controller: 'HabitEditController'

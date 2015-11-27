@@ -11,6 +11,12 @@ angular.module('tracktr.controllers')
 
   $scope.data = [[]];
   
+  // $scope.$on('$ionicView.enter', function () {
+  //     TaskService.getTaskById($scope.taskId, function(err, task) { 
+  //       $scope.task = task;
+  //       console.log("entered!!!!")
+  //     });
+  //   });
   
   /*
    * Load daily progress within the week
@@ -24,6 +30,9 @@ angular.module('tracktr.controllers')
       $scope.isWeekly = true;
       $scope.isDaily = false;
       $scope.isMonthly = false;
+      $scope.isWeeklyOrMonthly = $scope.task.frequency == 1 || $scope.task.frequency == 2;
+      $scope.goalReached = false;
+      $scope.emptyProgress = false;
       
       var today = new Date();
       
@@ -135,6 +144,7 @@ angular.module('tracktr.controllers')
       if($scope.task.isTime) {
         $scope.timeFormat($scope.data);
       }
+      $scope.amountFromGoal();
       console.log('data is: ' + $scope.data[0]);
     });
   };
@@ -177,6 +187,7 @@ angular.module('tracktr.controllers')
       $scope.isWeekly = false;
       $scope.isDaily = true;
       $scope.isMonthly = false;
+      $scope.isWeeklyOrMonthly = $scope.task.frequency == 1 || $scope.task.frequency == 2;
       
       $scope.days = option;                
       var today = new Date();
@@ -243,6 +254,7 @@ angular.module('tracktr.controllers')
       $scope.isWeekly = false;
       $scope.isDaily = false;
       $scope.isMonthly = true;
+      $scope.isWeeklyOrMonthly = $scope.task.frequency == 1 || $scope.task.frequency == 2;
       
       $scope.labels = $scope.monthNames;
       $scope.years = option;
@@ -345,6 +357,119 @@ angular.module('tracktr.controllers')
        $scope.isDaily = false;
        $scope.isMonthly = false;
        $scope.loadWeeklyProgress(0);
+    }
+  };
+  
+  
+  /**
+   * Calculates the amount of time/count needed to achieve the goal
+   */
+  $scope.amountFromGoal = function() {
+    if($scope.task.isTime) {
+      var hours = $scope.task.getProgress(3);
+      var minutes = $scope.task.getProgress(2);
+      var roundedMilliSeconds = Math.round($scope.task.getProgress()/1000)*1000;
+      var seconds = Math.floor(roundedMilliSeconds / 1000) % 60;
+      var result = pad(hours) + ":"+ pad(minutes) + ":" + pad(seconds);
+      
+      $scope.goal = $scope.properFormat($scope.task.getGoalTime());
+      $scope.currentProgress = result;
+      var progress = $scope.task.getProgress();
+      if(($scope.task.goal*60000) - progress > 0) {
+        var diff = ($scope.task.goal*60000) - (Math.round(progress / 1000) * 1000);
+        var diffString = pad(toHours(diff).toString()) + ":" + pad(toMinutes(diff).toString()) + ":" + pad(toSeconds(diff).toString());    
+        $scope.diff = diffString;
+      }
+      else {
+        $scope.goalReached = true;
+      }
+    }
+    else if($scope.task.isCount) {
+      $scope.goal = $scope.task.goal;
+      $scope.currentProgress = $scope.task.getProgress();
+      if($scope.goal - $scope.currentProgress > 0) {
+        $scope.diff = $scope.goal - $scope.currentProgress;
+      }
+      else {
+        $scope.goalReached = true;
+      }
+    }
+  };
+ 
+ 
+  /**
+   * Convert milliseconds into seconds
+   */
+  function toSeconds(num) {
+    num = Math.floor(num / 1000);
+    return num % 60;
+  };
+  
+  
+  /**
+   * Convert milliseconds into minutes
+   */
+  function toMinutes(num) {
+    num = Math.floor(num / 60000);
+    return num % 60;
+  };
+  
+  
+  /**
+   * Convert milliseconds into hours
+   */
+  function toHours(num) {
+    num = Math.floor(num / 3600000);
+    return num;
+  };
+  
+  
+  /**
+   * Return proper format for time with necessary 0s added where appropriate
+   */
+  $scope.properFormat = function(timeString) {
+      var timeArray = timeString.split(":");
+      var properTimeString = "";
+      properTimeString += pad(timeArray[0]);
+      properTimeString += ":" + timeArray[1];
+      properTimeString += ":" + timeArray[2]
+      return properTimeString;
+  };
+  
+  
+  /**
+   * Return the day of week that the task is most frequently "worked on"
+   */ 
+  $scope.mostFrequentDays = function() {
+    //Only look at weekly or monthly tasks
+    var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    if($scope.task.frequency === 1 || $scope.task.frequency === 2) {
+      //Create an array to hold number of times progress happens for each day of the week
+      var daysProgress = [0,0,0,0,0,0,0]; //sunday is at index 0
+      var visited = [];
+     
+      if($scope.task.progress.length == 0) {
+        $scope.emptyProgress = true;
+        return "You don't have any progress yet"
+      }
+      else {
+        for(var i = 0;i < $scope.task.progress.length; i++) { 
+          var progressDate = $scope.task.progress[i].date;
+          var day = progressDate.getDay();
+          var completeDate = Number(progressDate.getMonth().toString() + progressDate.getDate().toString()); 
+          //Check if this date is already visited
+          if(!(visited.indexOf(completeDate) > -1)) { 
+            visited.push(completeDate);
+            daysProgress[day] += 1; //+1 since there is a progress for this day
+          }
+          console.log("for day " + day + ", daysProgress is: " + daysProgress[day]);
+        }
+        console.log("daysProgress is: " + daysProgress);
+        var d = daysProgress.indexOf(Math.max.apply(Math,daysProgress));
+        var mostFrequentDay = daysOfWeek[d];
+        console.log("most frequent day is: " + mostFrequentDay);
+        return mostFrequentDay;
+      }
     }
   };
   

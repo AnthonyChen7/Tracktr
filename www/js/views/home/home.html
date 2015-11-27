@@ -6,25 +6,24 @@
   </ion-nav-buttons>
   <ion-content id="home-bg">
     
-    <div class="row" ng-repeat="task in allTasks" ng-if="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)">   
-      <div class="col col-80 col-offset-10">
-        <div class="col" on-touch="clickCircleDiv(task)" on-release="releaseCircleDiv(task)">
-          <progress-circle><task-icon></task-icon></progress-circle>
+    <div class="circle-container" ng-repeat="task in allTasks" ng-if="shouldDisplayInCurrent(task)">
+      <task-icon></task-icon>   
+      <div on-touch="clickCircleDiv(task)" on-release="releaseCircleDiv(task)">
+        <progress-circle></progress-circle>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <h6 class="home-subtext" ng-if="!(task.isCount)">Total Time: {{displayTotalTimer(task)}}</h6>
         </div>
-        <div class="row">
-          <div class="col text-center">
-            <h6 class="home-subtext" ng-if="!(task.isCount)">Total Time: {{displayTotalTimer(task)}}</h6>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <h4 class="home-circle-title" ><b>{{task.name}}</b></h4>
+          <!--<div ng-if="$index != allTasks.length - 1">-->
+            <br><hr class="hr-viewall2">
+          <!--</div>-->
         </div>
-        <div class="row">
-          <div class="col text-center">
-            <h4 style="text-align: center; padding: 0px; margin:0px;"><b>{{task.name}}</b></h4>
-            <div ng-if="$index != allTasks.length - 1">
-              <br><hr class="hr-viewall2" ng-if="$index != allTasks.length - 1">
-            </div>
-          </div>
-        </div>
-      </div>      
+      </div>   
     </div>
     
   </ion-content>

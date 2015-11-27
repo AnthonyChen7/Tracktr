@@ -371,7 +371,7 @@ function timePickerCallback(val) {
 		// Execute action
 	});
 	
-	$scope.init = function() {
+	$scope.$on("$ionicView.enter", function() {
 	
 		$scope.progressCount = 1;
 	
@@ -446,7 +446,7 @@ function timePickerCallback(val) {
 			$scope.progress = task.progress;
 			
 		});
-	};
+	});
 	
 	$scope.save = function(habitId,habitTitle,isActive,frequency,habitType,hours,minutes,goal,icon,days,daysId,creationDate,isTimerRunning,progress,isShared) {
 		if (habitType.name == 'Time' && (hours == null || parseInt(hours) == 0) && (minutes == null || parseInt(minutes) == 0)) {

@@ -5,24 +5,24 @@
     </button>
   </ion-nav-buttons> 
   <ion-content ng-init="loadWeeklyProgress(0)">
-    <h3>Task Name: {{task.name}}</h3>
-    <br>
+    <h3 id="chart-task-name">{{task.name}}</h3>
     <div class="button-bar">
-       <a class="button button-outline button-positive" ng-click="showDaily()" ng-disabled="isDaily"> Daily </a>
-       <a class="button button-outline button-positive" ng-click="showWeekly()" ng-disabled="isWeekly"> Weekly </a>
-       <a class="button button-outline button-positive" ng-click="showMonthly()" ng-disabled="isMonthly"> Monthly </a>       
+       <a class="button button-outline" ng-click="showDaily()" ng-disabled="isDaily"> Daily </a>
+       <a class="button button-outline" ng-click="showWeekly()" ng-disabled="isWeekly"> Weekly </a>
+       <a class="button button-outline" ng-click="showMonthly()" ng-disabled="isMonthly"> Monthly </a>       
     </div>
     
     <div ng-if="isWeekly">
       <br>
       <div class="row">
-        <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousWeek()">Previous week</a>
+        <a class="button icon-left ion-chevron-left button-small button-clear" ng-click="previousWeek()">Previous week</a>
         <p class="col text-center">Week: {{currentWeek}}</p>
-        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextWeek()" ng-disabled="week<=0">Next week</a>
+        <a class="button icon-right ion-chevron-right button-small button-clear" ng-click="nextWeek()" ng-disabled="week<=0">Next week</a>
       </div>
       <br>
       <div class="panel-heading text-center" ng-if="task.isTime"> Progress of Week {{currentWeek}} in {{format}}</div>
       <div class="panel-heading text-center" ng-if="task.isCount"> Progress of Week {{currentWeek}}</div>
+      <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
              chart-data="data" chart-labels="labels" on-swipe-right="previousWeek()" on-swipe-left="nextWeek()">
@@ -33,13 +33,14 @@
     <div ng-if="isDaily">
       <br>
       <div class="row">
-        <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousDay()">Previous Day</a>
+        <a class="button icon-left ion-chevron-left button-small button-clear" ng-click="previousDay()">Previous Day</a>
         <p class="col text-center">Date: {{currentDay}}</p>
-        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextDay()" ng-disabled="days<=0">Next Day</a>
+        <a class="button icon-right ion-chevron-right button-small button-clear" ng-click="nextDay()" ng-disabled="days<=0">Next Day</a>
       </div>
       <br>
       <div class="panel-heading text-center" ng-if="task.isTime"> Progress of {{currentDay}} in {{format}}</div>
       <div class="panel-heading text-center" ng-if="task.isCount"> Progress of {{currentDay}}</div>
+      <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
              chart-data="data" chart-labels="labels" on-swipe-right="previousDay()" on-swipe-left="nextDay()">
@@ -50,18 +51,29 @@
     <div ng-if="isMonthly">
       <br>
       <div class="row">
-        <a class="button icon-left ion-chevron-left button-small button-clear button-positive" ng-click="previousYear()">Previous Year</a>
+        <a class="button icon-left ion-chevron-left button-small button-clear button" ng-click="previousYear()">Previous Year</a>
         <p class="col text-center">Year: {{currentYear}}</p>
-        <a class="button icon-right ion-chevron-right button-small button-clear button-positive" ng-click="nextYear()" ng-disabled="years<=0">Next Year</a>
+        <a class="button icon-right ion-chevron-right button-small button-clear button" ng-click="nextYear()" ng-disabled="years<=0">Next Year</a>
       </div>
       <br>
       <div class="panel-heading text-center" ng-if="task.isTime"> Progress of Year {{currentYear}} in {{format}}</div>
       <div class="panel-heading text-center" ng-if="task.isCount"> Progress of Year {{currentYear}}</div>
+      <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
              chart-data="data" chart-labels="labels" on-swipe-right="previousYear()" on-swipe-left="nextYear()">
          </canvas>
       </div>
     </div>
+    <div class="card item item-text-wrap">
+      <div>Goal: {{goal}} {{goalFormat}}</div>
+      <div>Current Progress: {{currentProgress}}</div>
+      <div ng-if="!goalReached">You are {{diff}} away from your goal</div>
+      <div ng-if="goalReached">Congratulations, you have reached your goal!</div>
+    </div>
+    <div class="card item item-text-wrap" ng-if="isWeeklyOrMonthly">
+      <div ng-if="!emptyProgress">The day that you do this task most frequently is {{mostFrequentDays()}}</div>
+      <div ng-if="emptyProgress">{{mostFrequentDays()}}</div>
+    </div>   
   </ion-content>
 </ion-view>

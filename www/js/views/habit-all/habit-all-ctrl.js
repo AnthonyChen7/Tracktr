@@ -157,7 +157,7 @@ angular.module('tracktr.controllers')
         return result;
       } else {
         //not daily
-        return (true && isActive);
+        return isActive;
       }
     };
   

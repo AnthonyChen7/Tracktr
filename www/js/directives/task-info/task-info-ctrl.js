@@ -54,6 +54,7 @@ angular.module('tracktr.controllers')
         var newShareState = !task.isShared;
 
         if (newShareState) {
+          // Share
           if (SharingService.isAuthenticated()) {
             // prompt user to share          
             var sharePopup = $ionicPopup.confirm({
@@ -74,9 +75,10 @@ angular.module('tracktr.controllers')
               }
             });
           } else {
-            $scope.notifyUnauthenticated();
+            $scope.notifyUnauthenticated("Please Login through Facebook before sharing");
           }
         } else {
+          // Unshare
           if (SharingService.isAuthenticated()) {
             var sharePopup = $ionicPopup.confirm({
               title: 'Unshare',
@@ -96,35 +98,32 @@ angular.module('tracktr.controllers')
               }
             });
           } else {
-            $scope.notifyUnauthenticated();
+            $scope.notifyUnauthenticated("Please Login through Facebook before unsharing");
           }
         }
-
-      } else {
-
-        var confirmPopup = $ionicPopup.confirm({
-          title: 'Delete Task?',
-          template: 'Are you sure you want to delete this task?'
-        });
-
-        confirmPopup.then(function (confirm) {
-
-          if (confirm) {
-            TaskService.deleteTask(task, function (err) {
-              var index = $scope.tasks.indexOf(task);
-              $scope.tasks.splice(index, 1);
-              $ionicPopup.alert({
-                title: 'Success!',
-                template: 'Task successfully deleted.'
-              });
-
-            });
-          }
-
+      
+    }else{
+    
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Delete Task?',
+      template: 'Are you sure you want to delete this task?'
+    });
+    
+    confirmPopup.then(function(confirm){
+      
+      if(confirm){
+        TaskService.deleteTask(task, function(err){
+          var index = $scope.tasks.indexOf(task);
+          $ionicPopup.alert({
+            title: 'Success!',
+            template: 'Task successfully deleted.'
+          });
         });
 
       }
-    };
+    })
+    }
+  };
   
     /**
    * This method is called when
@@ -135,10 +134,10 @@ angular.module('tracktr.controllers')
       TaskService.updateTask(task, function (err) { });
     };
 
-    $scope.notifyUnauthenticated = function () {
+    $scope.notifyUnauthenticated = function (message) {
       $ionicPopup.confirm({
         title: "Authentication Error",
-        template: "Please Login through Facebook before sharing"
+        template: message
       }).then(function (confirm) {
         // TODO: navigate to authentication page;
       });

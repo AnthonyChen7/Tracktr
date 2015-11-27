@@ -34,40 +34,38 @@ angular.module('tracktr.controllers', [])
       });
     });
 
+    // Draw a new circle and set it up
     $scope.drawCircle = function (task) {
       var circleContainer = document.getElementById('circle-' + task.id);
+      
       var circle = new ProgressBar.Circle(circleContainer, {
         color: '#FC5B3F',
         strokeWidth: 5,
         trailColor: '#eee',
         trailWidth: 5,
         duration: 500,
-        step: function (state, bar) {
-          if (task.isCount) {
+        // Step gets called automatically on very short intervals to update the circle.
+        step: function(state, bar) {
+          if(task.isCount) {
+            // Update the count
             bar.setText($scope.retrieveDataForCircle(task));
           } else {
-            setInterval(function () {
-              var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
-
-              var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
-
-              if ((countTimeInSecs + progressTimerInSecs) / task.goal > 1) {
-                progressRatio = 1;
-              } else {
-                progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
-              }
-            }, 1000);
-
+            // Update the total time
             bar.setText($scope.displayProgressTimer(task));
           }
         }
       });
 
       circleContainer.onclick = function () {
+        // Task is time based and timer isn't running
         if (!task.isCount && !task.isTimerRunning) {
           $scope.startTimer(task);
+          
+        // Task is time based and timer is running
         } else if (!task.isCount && task.isTimerRunning) {
           $scope.stopTimer(task);
+        
+        // Task is count based
         } else {
           $scope.incCount(task);
           var progressRatio = 0;
@@ -82,7 +80,7 @@ angular.module('tracktr.controllers', [])
         }
       }
 
-      // Draws the circles every .1 seconds
+      // Set up the initial progress ring's arc
       var progressRatio = 0;
       if (task.isCount) {
         if ($scope.retrieveDataForCircle(task) / task.goal > 1) {
@@ -93,19 +91,19 @@ angular.module('tracktr.controllers', [])
         circle.animate(progressRatio);
         // circle.set(progressRatio);
       } else {
+        // Time based task, start a new thread to update the arc every 500 milliseconds
         setInterval(function () {
-          var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
+          var countTimeInMins = task.getProgress()/60000;
 
-          var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
+          var progressTimerInMins = $scope.progressTimer(task)/60000;
 
-          if ((countTimeInSecs + progressTimerInSecs) / task.goal > 1) {
+          if ((countTimeInMins + progressTimerInMins) / task.goal > 1) {
             progressRatio = 1;
           } else {
-            progressRatio = (countTimeInSecs + progressTimerInSecs) / task.goal;
+            progressRatio = (countTimeInMins + progressTimerInMins) / task.goal;
           }
           circle.animate(progressRatio);
-          // circle.set(progressRatio);
-        }, 100);
+        }, 250);
       }
     };
 
@@ -174,7 +172,8 @@ angular.module('tracktr.controllers', [])
     
   
     /*
-     * Count the amount time spent on the task
+     * Count the amount of time spent on the task
+     * NOTE: This method counts ALL the progress for a task
      * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
      */
     $scope.countTime = function (task, format) {
@@ -299,7 +298,7 @@ angular.module('tracktr.controllers', [])
 
  
     /*
-     * Count the current progress, and express it in seconds
+     * Count the current time elapsed since the timer was last started
      * @Param format is the output format, 1:seconds, 2:minutes, 3:hours
      */
     $scope.progressTimer = function (task, format) {
@@ -456,4 +455,46 @@ angular.module('tracktr.controllers', [])
     $scope.$on('timer-stopped', function (event, remaining) {
       console.log('You stopped!!');
     });
+    
+    /**
+     * days is an object
+     * Checks if the selected task is
+     * supposed to occur today.
+     */
+    $scope.doesTaskOccurToday = function (days) {
+      var today = new Date();
+      var dayIndex = today.getDay();
+
+      var dayOfWeek = $scope.dayOfWeekAsString(dayIndex);
+      for (var field in days) {
+        if (field === dayOfWeek) {
+          if (days[field] === true) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+      return false;
+    };
+    
+    /**
+     * Returns boolean to tell whether task should be displayed in current.
+     * 
+     * aTask is a valid task object
+     */
+    $scope.shouldDisplayInCurrent = function (aTask) {
+
+      var isActive = (aTask.isActive == 1);
+    
+      //If task is weekly or monthly, it should automatically be displayed in current
+      if (aTask.frequency === 0) {
+        //daily
+        var result = $scope.doesTaskOccurToday(aTask.days) && isActive;
+        return result;
+      } else {
+        //not daily
+        return isActive;
+      }
+    };
   });
