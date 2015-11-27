@@ -72,7 +72,8 @@
       <div ng-if="goalReached">Congratulations, you have reached your goal!</div>
     </div>
     <div class="card item item-text-wrap" ng-if="isWeeklyOrMonthly">
-      <div>The day that you do this task most frequently is {{mostFrequentDays()}}</div>
+      <div ng-if="!emptyProgress">The day that you do this task most frequently is {{mostFrequentDays()}}</div>
+      <div ng-if="emptyProgress">{{mostFrequentDays()}}</div>
     </div>   
   </ion-content>
 </ion-view>
