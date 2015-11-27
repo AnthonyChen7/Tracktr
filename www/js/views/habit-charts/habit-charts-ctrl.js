@@ -31,6 +31,7 @@ angular.module('tracktr.controllers')
       $scope.isDaily = false;
       $scope.isMonthly = false;
       $scope.isWeeklyOrMonthly = $scope.task.frequency == 1 || $scope.task.frequency == 2;
+      $scope.goalReached = false;
       
       var today = new Date();
       
@@ -366,14 +367,24 @@ angular.module('tracktr.controllers')
     if($scope.task.isTime) {
       $scope.goal = $scope.properFormat($scope.task.getGoalTime());
       $scope.currentProgress = $scope.task.getTotalTime();
-      var diff = ($scope.task.goal*60000) - $scope.task.getProgress();
-      var diffString = pad(toHours(diff).toString()) + ":" + pad(toMinutes(diff).toString()) + ":" + pad(toSeconds(diff).toString());
-      $scope.diff = diffString;
+      if(($scope.task.goal*60000) - $scope.task.getProgress() > 0) {
+        var diff = ($scope.task.goal*60000) - $scope.task.getProgress();
+        var diffString = pad(toHours(diff).toString()) + ":" + pad(toMinutes(diff).toString()) + ":" + pad(toSeconds(diff).toString());
+        $scope.diff = diffString;
+      }
+      else {
+        $scope.goalReached = true;
+      }
     }
     else if($scope.task.isCount) {
       $scope.goal = $scope.task.goal;
       $scope.currentProgress = $scope.task.getProgress();
-      $scope.diff = $scope.goal - $scope.currentProgress;
+      if($scope.goal - $scope.currentProgress > 0) {
+        $scope.diff = $scope.goal - $scope.currentProgress;
+      }
+      else {
+        $scope.goalReached = true;
+      }
     }
   };
  
