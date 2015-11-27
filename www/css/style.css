@@ -236,5 +236,6 @@ ion-content {
     text-align: center; 
     padding: 0px; 
     margin:0px;
-    min-height:50px;
+    font-size: 16px;
+    min-height:80px;
 }
