@@ -55,8 +55,6 @@ angular.module('tracktr.controllers', [])
           }
         }
       });
-          
-    
 
       circleContainer.onclick = function () {
         // Task is time based and timer isn't running
@@ -105,7 +103,7 @@ angular.module('tracktr.controllers', [])
             progressRatio = (countTimeInMins + progressTimerInMins) / task.goal;
           }
           circle.animate(progressRatio);
-        }, 500);
+        }, 250);
       }
     };
 
