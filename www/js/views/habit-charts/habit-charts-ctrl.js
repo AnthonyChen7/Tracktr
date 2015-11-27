@@ -366,13 +366,18 @@ angular.module('tracktr.controllers')
    */
   $scope.amountFromGoal = function() {
     if($scope.task.isTime) {
+      var hours = $scope.task.getProgress(3);
+      var minutes = $scope.task.getProgress(2);
+      var roundedMilliSeconds = Math.round($scope.task.getProgress()/1000)*1000;
+      var seconds = Math.floor(roundedMilliSeconds / 1000) % 60;
+      var result = pad(hours) + ":"+ pad(minutes) + ":" + pad(seconds);
+      
       $scope.goal = $scope.properFormat($scope.task.getGoalTime());
-      $scope.currentProgress = $scope.task.getTotalTime();
-      console.log("current Progress is: " + $scope.currentProgress);
+      $scope.currentProgress = result;
       var progress = $scope.task.getProgress();
       if(($scope.task.goal*60000) - progress > 0) {
         var diff = ($scope.task.goal*60000) - (Math.round(progress / 1000) * 1000);
-        var diffString = pad(toHours(diff).toString()) + ":" + pad(toMinutes(diff).toString()) + ":" + pad(toSeconds(diff).toString());
+        var diffString = pad(toHours(diff).toString()) + ":" + pad(toMinutes(diff).toString()) + ":" + pad(toSeconds(diff).toString());    
         $scope.diff = diffString;
       }
       else {
