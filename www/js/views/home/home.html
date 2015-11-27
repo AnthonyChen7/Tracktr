@@ -6,7 +6,7 @@
   </ion-nav-buttons>
   <ion-content id="home-bg">
     
-    <div class="row" ng-repeat="task in allTasks" ng-if="isTaskActiveToday(task) || isTaskWeekly(task) || isTaskMonthly(task)">   
+    <div class="row" ng-repeat="task in allTasks" ng-if="shouldDisplayInCurrent(task)">   
       <div class="col col-80 col-offset-10">
         <div class="col" on-touch="clickCircleDiv(task)" on-release="releaseCircleDiv(task)">
           <progress-circle><task-icon></task-icon></progress-circle>
