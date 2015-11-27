@@ -443,7 +443,7 @@ angular.module('tracktr.controllers')
      
       if($scope.task.progress.length == 0) {
         $scope.emptyProgress = true;
-        return "You don't have any progress yet, "
+        return "You don't have any progress yet"
       }
       else {
         for(var i = 0;i < $scope.task.progress.length; i++) { 
