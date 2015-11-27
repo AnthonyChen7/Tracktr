@@ -463,4 +463,26 @@ angular.module('tracktr.controllers', [])
     $scope.$on('timer-stopped', function (event, remaining) {
       console.log('You stopped!!');
     });
+    
+    /**
+     * Returns boolean to tell whether task should be displayed in current.
+     * 
+     * aTask is a valid task object
+     */
+    $scope.shouldDisplayInCurrent = function (aTask) {
+
+      var isActive = (aTask.isActive == 1);
+    
+      //If task is weekly or monthly, it should automatically be displayed in current
+      if (aTask.frequency === 0) {
+        //daily
+        var result = $scope.doesTaskOccurToday(aTask.days) && isActive;
+        console.log(result);
+        return result;
+      } else {
+        //not daily
+        console.log(isActive);
+        return isActive;
+      }
+    };
   });
