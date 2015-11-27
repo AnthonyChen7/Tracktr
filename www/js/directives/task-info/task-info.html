@@ -1,13 +1,13 @@
 <!-- Displays the information of a task along with options to view, edit, delete. -->
-<div class="item viewall-custom" ng-class="{active: isGroupShown(task)}">
+<div class="my-item viewall-custom" ng-class="{active: isGroupShown(task)}">
 
         <!-- Text and Subtext -->
-        <div class="item item-toggle item-toggle-custom">
+        <div class="my-item item-toggle item-toggle-custom">
                 <h2>{{task.name}}</h2>
                 <h4 class="viewall-subtext">{{retrieveData(task)}}</h4>
                 <h4 class="viewall-subtext" ng-if="task.isImported" ng-init="getImportedName(task)">Imported from: {{task.friendName}}</h4>
-                <hr class="hr-viewall">
-                <hr class="hr-viewall2">
+                <!--<hr class="hr-viewall">
+                <hr class="hr-viewall2">-->
 
                 <!-- Active/Inactive Toggle -->
                 <label class="toggle toggle-balanced">
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Edit, Chart, Share, Delete buttons -->
-        <div class="row button-viewall-custom">
+        <div class="button-row row button-viewall-custom">
                 <div class="col text-center">
                         <button class="button button-small icon ion-edit button-balanced button-viewall-custom" ng-click="buttonHandler('Edit', task)"></button>
                 </div>

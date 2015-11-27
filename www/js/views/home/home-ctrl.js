@@ -465,6 +465,28 @@ angular.module('tracktr.controllers', [])
     });
     
     /**
+     * days is an object
+     * Checks if the selected task is
+     * supposed to occur today.
+     */
+    $scope.doesTaskOccurToday = function (days) {
+      var today = new Date();
+      var dayIndex = today.getDay();
+
+      var dayOfWeek = $scope.dayOfWeekAsString(dayIndex);
+      for (var field in days) {
+        if (field === dayOfWeek) {
+          if (days[field] === true) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+      return false;
+    };
+    
+    /**
      * Returns boolean to tell whether task should be displayed in current.
      * 
      * aTask is a valid task object

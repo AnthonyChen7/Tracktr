@@ -1,19 +1,19 @@
 <ion-view view-title="Habits">
   <ion-content>
-    <div class="list">
+    <div class="my-list">
 
       <!-- Search Box -->
-      <label class="item item-input">
+      <label class="my-item item-input">
         <i class="icon ion-search placeholder-icon"></i>
         <input type="search" placeholder="Search" ng-model="searchText">
       </label>
 
       <!-- Current -->
-      <ion-item class="item item-divider">Current</ion-item>
+      <div class="my-item my-item-divider">Current</div>
       <task-info ng-repeat="task in tasks | filter:searchText" ng-if="shouldDisplayInCurrent(task)"></task-info>
 
       <!-- Other -->
-      <ion-item class="item item-divider">Other</ion-item>
+      <div class="my-item my-item-divider">Other</div>
       <task-info ng-repeat="task in tasks | filter:searchText" ng-if="!shouldDisplayInCurrent(task)"></task-info>
     
     </div>
