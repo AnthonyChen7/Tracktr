@@ -190,6 +190,9 @@ angular.module('tracktr.services')
     
     DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
       .then(function(result) {
+        self.getTaskById(task.id, function(err, task) {
+          setCachedTask(task);  
+        });
         if(callback) callback(result.insertId);
       });
   }
@@ -214,6 +217,9 @@ angular.module('tracktr.services')
         .then(function(result) {
           addedCount++;
           if(addedCount == progressLength) {
+            self.getTaskById(task.id, function(err, task) {
+              setCachedTask(task);  
+            });
             if(callback) callback(result.insertId);  
           }
         });
@@ -240,6 +246,9 @@ angular.module('tracktr.services')
         .then(function(result) {
           removedCount++;
           if(removedCount == progressLength) {
+            self.getTaskById(task.id, function(err, task) {
+              setCachedTask(task);  
+            });
             if(callback) callback(null);  
           }
         });
@@ -256,6 +265,9 @@ angular.module('tracktr.services')
     
     DB.query(DELETE_ONE_PROGRESS_PREPARED_STATEMENT, deleteProgressQueryAttrs)
       .then(function(result) {
+        self.getTaskById(task.id, function(err, task) {
+          setCachedTask(task);  
+        });
         if(callback) callback(null);
       });
   }
