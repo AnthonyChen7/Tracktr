@@ -195,6 +195,59 @@ angular.module('tracktr.services')
   }
   
   /**
+   * Add multiple new progress items to the task in the database.
+   * 
+   * Note: This method will not update the task argument.
+   * 
+   * Callback takes the inserted id.
+   */
+  self.addManyProgressToTask = function(task, progress, callback) {
+    
+    var progressLength = progress.length;
+    var addedCount = 0;
+    
+    angular.forEach(progress, function(progress) {
+      
+      var insertProgressQueryAttrs = insertProgressQueryAttr(progress);
+    
+      DB.query(INSERT_PROGRESS_PREPARED_STATEMENT, insertProgressQueryAttrs)
+        .then(function(result) {
+          addedCount++;
+          if(addedCount == progressLength) {
+            if(callback) callback(result.insertId);  
+          }
+        });
+    });
+    
+  }
+  
+  /**
+   * Remove multiple new progress items to the task in the database.
+   * 
+   * Note: This method will not update the task argument.
+   * 
+   */
+  self.removeManyProgressFromTask = function(task, progress, callback) {
+    
+    var progressLength = progress.length;
+    var removedCount = 0;
+    
+    angular.forEach(progress, function(progress) {
+    
+      var deleteProgressQueryAttrs = [task.id, progress.id];
+    
+      DB.query(DELETE_ONE_PROGRESS_PREPARED_STATEMENT, deleteProgressQueryAttrs)
+        .then(function(result) {
+          removedCount++;
+          if(removedCount == progressLength) {
+            if(callback) callback(null);  
+          }
+        });
+    });
+    
+  }
+  
+  /**
    * Delete a progress item from the database
    * @Param callback err if there was an error.
    */

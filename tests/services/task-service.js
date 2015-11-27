@@ -112,6 +112,82 @@ describe('Task Service Unit Tests', function(){
       });
     });
     
+    it('can insert a task and add multiple progress', function(done) {
+      var taskWithNoProgress = allTasks[1];
+      var progressesToAdd = 
+          [
+            {
+              id: 1,
+              task_id: 1,
+              date: new Date(),
+              progress: 1,
+              timerLastStarted: new Date()
+            },
+            {
+              id: 2,
+              task_id: 1,
+              date: new Date(),
+              progress: 2,
+              timerLastStarted: new Date()
+            }
+          ];
+    
+      // Create task with no progress
+      TaskService.createTask(taskWithNoProgress, function(err, id) {
+        
+        // Retrieve the task from the database
+        TaskService.getTaskById(id, function(err, task) {
+          
+          // Add a task to the progress
+          TaskService.addManyProgressToTask(task, progressesToAdd, function() {
+            
+            // Retrieve the progress from the DB
+            TaskService.getTaskById(id, function(err, task) {
+              
+              // Compare Progress task_id
+              expect(task.progress[0].task_id).toEqual(task.id);
+              
+              // Compare Progress progress
+              expect(task.progress[0].progress).toEqual(1);
+              
+              // Compare Progress task_id
+              expect(task.progress[1].task_id).toEqual(task.id);
+              
+              // Compare Progress progress
+              expect(task.progress[1].progress).toEqual(2);
+              
+              done();
+            });
+          });
+        });
+      });
+    });
+          
+    it('can insert a task and remove multiple progress', function(done) {
+      var taskWithTwoProgress = allTasks[2];
+    
+      // Create task with no progress
+      TaskService.createTask(taskWithTwoProgress, function(err, id) {
+        
+        // Retrieve the task from the database
+        TaskService.getTaskById(id, function(err, task) {
+          
+          // Add a task to the progress
+          TaskService.removeManyProgressFromTask(task, task.progress, function() {
+            
+            // Retrieve the progress from the DB
+            TaskService.getTaskById(id, function(err, task) {
+              
+              // Compare Progress task_id
+              expect(task.progress.length).toEqual(0);
+              
+              done();
+            });
+          });
+        });
+      });
+    });
+    
     it('can insert a task and update isActive', function(done) {
       var taskWithNoProgress = allTasks[1];
       
@@ -481,6 +557,44 @@ var allTasks = [
        saturday: true
      },
      progress: [
+     ]
+    },
+    {
+     name: 'Multiple Progress',
+     isActive: false,
+     frequency: false,
+     isTime: false,
+     isCount: true, 
+     goal: 10,
+     icon: 0,
+     isTimerRunning: false,
+     creationDate: new Date(),
+     days: {
+       id: 1,
+       task_id: 1,
+       sunday: true,
+       monday: true,
+       tuesday: true,
+       wednesday: true,
+       thursday: true,
+       friday: true,
+       saturday: true
+     },
+     progress: [
+       {
+         id: 1,
+         task_id: 1,
+         date: new Date(),
+         progress: 11,
+         timerLastStarted: new Date()
+       },
+       {
+         id: 2,
+         task_id: 1,
+         date: new Date(),
+         progress: 12,
+         timerLastStarted: new Date()
+       }
      ]
     }
 ];
