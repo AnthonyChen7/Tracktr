@@ -34,44 +34,40 @@ angular.module('tracktr.controllers', [])
       });
     });
 
+    // Draw a new circle and set it up
     $scope.drawCircle = function (task) {
       var circleContainer = document.getElementById('circle-' + task.id);
+      
       var circle = new ProgressBar.Circle(circleContainer, {
         color: '#FC5B3F',
         strokeWidth: 5,
         trailColor: '#eee',
         trailWidth: 5,
         duration: 500,
-        step: function (state, bar) {
-          if (task.isCount) {
+        // Step gets called automatically on very short intervals to update the circle.
+        step: function(state, bar) {
+          if(task.isCount) {
+            // Update the count
             bar.setText($scope.retrieveDataForCircle(task));
           } else {
-            setInterval(function () {
-              // var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
-              var countTimeInMins = task.getProgress()/60000;
-              // console.log("progress time is :"  + countTimeInMins);
-
-              // var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
-              var progressTimerInMins = $scope.progressTimer(task)/60000;
-
-              if ((countTimeInMins + progressTimerInMins) / task.goal > 1) {
-                progressRatio = 1;
-              } else {
-                progressRatio = (countTimeInMins + progressTimerInMins) / task.goal;
-                // console.log("ratio is: " + progressRatio);
-              }
-            }, 1000);
-
+            // Update the total time
             bar.setText($scope.displayProgressTimer(task));
           }
         }
       });
+          
+    
 
       circleContainer.onclick = function () {
+        // Task is time based and timer isn't running
         if (!task.isCount && !task.isTimerRunning) {
           $scope.startTimer(task);
+          
+        // Task is time based and timer is running
         } else if (!task.isCount && task.isTimerRunning) {
           $scope.stopTimer(task);
+        
+        // Task is count based
         } else {
           $scope.incCount(task);
           var progressRatio = 0;
@@ -86,7 +82,7 @@ angular.module('tracktr.controllers', [])
         }
       }
 
-      // Draws the circles every .1 seconds
+      // Set up the initial progress ring's arc
       var progressRatio = 0;
       if (task.isCount) {
         if ($scope.retrieveDataForCircle(task) / task.goal > 1) {
@@ -97,11 +93,10 @@ angular.module('tracktr.controllers', [])
         circle.animate(progressRatio);
         // circle.set(progressRatio);
       } else {
+        // Time based task, start a new thread to update the arc every 500 milliseconds
         setInterval(function () {
-          // var countTimeInSecs = ($scope.countTime(task, 1) + ($scope.countTime(task, 2) * 60) + ($scope.countTime(task, 3) * 60 * 60)) / 60;
           var countTimeInMins = task.getProgress()/60000;
 
-          // var progressTimerInSecs = ($scope.progressTimer(task, 1) + ($scope.progressTimer(task, 2) * 60) + ($scope.progressTimer(task, 3) * 60 * 60)) / 60;
           var progressTimerInMins = $scope.progressTimer(task)/60000;
 
           if ((countTimeInMins + progressTimerInMins) / task.goal > 1) {
@@ -110,8 +105,7 @@ angular.module('tracktr.controllers', [])
             progressRatio = (countTimeInMins + progressTimerInMins) / task.goal;
           }
           circle.animate(progressRatio);
-          // circle.set(progressRatio);
-        }, 100);
+        }, 500);
       }
     };
 
