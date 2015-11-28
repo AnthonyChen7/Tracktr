@@ -510,27 +510,17 @@ function timePickerCallback(val) {
 		TaskService.updateTask(aTask, function(err, id) {
 		//Reset the deleted progress array
 		 deletedProgress = [];	
-				});
+			});
 		});
 		}
 		
 		if(addedProgress.length > 0){
 		//There are progresses to add
-		
-		// for (i = 0; i < addedProgress.length; i++) { 
-		// TaskService.addProgressToTask($scope.task, addedProgress[i], function(taskId){
-		// TaskService.updateTask(aTask, function(err, id) {
-		// 		$scope.progress.push(addedProgress[i]);
-		// 		});
-		// 		});
-		// }
-		// //Reset the added progress array
-		// addedProgress = [];
 		TaskService.addManyProgressToTask(aTask, addedProgress, function(err){
 		TaskService.updateTask(aTask, function(err, id) {
 		// //Reset the added progress array
 		 addedProgress = [];
-				});
+			});
 			
 		});
 		
