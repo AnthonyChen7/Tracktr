@@ -148,7 +148,7 @@
 }
 
 /*Chart*/
-.chart-line {
+canvas {
     padding-right: 15px;
     padding-left: 10px;
 }
