@@ -467,7 +467,17 @@ function timePickerCallback(val) {
  			};
 			 $scope.showAlert();
 			 return;
+		} else if (habitTitle == '') {
+			$scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Please specify a title.',
+					template: 'The \'Title\' field cannot be empty.'
+				});
+ 			};
+			 $scope.showAlert();
+			 return;
 		}
+		// alert(habitTitle);
 		
 		// Habit Type
 		var aTime = 0;

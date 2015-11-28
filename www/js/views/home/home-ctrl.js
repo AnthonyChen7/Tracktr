@@ -76,7 +76,8 @@ angular.module('tracktr.controllers', [])
             progressRatio = $scope.retrieveDataForCircle(task) / task.goal;
           }
 
-          circle.animate(progressRatio);
+          // circle.animate(progressRatio);
+          circle.set(progressRatio);
         }
       }
 
@@ -103,6 +104,7 @@ angular.module('tracktr.controllers', [])
             progressRatio = (countTimeInMins + progressTimerInMins) / task.goal;
           }
           circle.animate(progressRatio);
+          // circle.set(progressRatio);
         }, 250);
       }
     };

@@ -1,6 +1,29 @@
 <!--Displays the information of a task along with options to view,edit, delete.-->
 
-      <ion-item class="item-stable" ng-click="toggleGroup(task)" ng-class="{active: isGroupShown(task)}">        
+<div class="my-item viewall-custom" ng-class="{active: isGroupShown(task)}">
+
+        <!-- Text and Subtext -->
+        <div class="my-item item-toggle item-toggle-custom">
+                <h2>{{task.name}}</h2>
+                <h4 class="viewall-subtext">{{retrieveData(task)}}</h4>
+                <h4 class="viewall-subtext" ng-if="task.isImported" ng-init="getImportedName(task)">Imported from: {{task.friendName}}</h4>
+                <!--<hr class="hr-viewall">
+                <hr class="hr-viewall2">-->
+        </div>
+
+        <!-- Edit, Chart, Share, Delete buttons -->
+        <div class="button-row row button-viewall-custom">
+                <div class="col text-center">
+                        <button class="button button-small icon ion-stats-bars button-light button-viewall-custom" ng-click="buttonHandler('View Report', task)"></button>
+                </div>
+                <div class="col text-center">
+                        <button class="button button-small icon ion-social-facebook button-light button-viewall-custom" ng-click="buttonHandler('Share', task)"></button>
+                </div>
+        </div>
+
+</div>
+
+      <!--<ion-item class="item-stable" ng-click="toggleGroup(task)" ng-class="{active: isGroupShown(task)}">        
         <i class="icon" ng-class="isGroupShown(task)? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
         <h2>{{task.name}}</h2>
@@ -13,14 +36,15 @@
         </div>
         {{retrieveData(task)}}
         </p>              
-        <p></p> <!--Note: This needs to be here or else the options won't work.' -->
-        </ion-toggle>
+        <p></p> -->
+        <!--Note: This needs to be here or else the options won't work.' -->
+        <!--</ion-toggle>
         
-      </ion-item>
+      </ion-item>-->
       
       <!-- Displays options -->
       
-      <ion-item class="item-accordion" ng-repeat="option in options" ng-show="isGroupShown(task)" ng-click="buttonHandler(option, task)">
+      <!--<ion-item class="item-accordion" ng-repeat="option in options" ng-show="isGroupShown(task)" ng-click="buttonHandler(option, task)">
       {{option}}
-      </ion-item> 
+      </ion-item> -->
  
