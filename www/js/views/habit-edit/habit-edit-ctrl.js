@@ -372,6 +372,9 @@ function timePickerCallback(val) {
 	});
 	
 	$scope.$on("$ionicView.enter", function() {
+		
+		 deletedProgress = [];
+	 	addedProgress = [];
 	
 		$scope.progressCount = 1;
 	
@@ -502,18 +505,27 @@ function timePickerCallback(val) {
 		if(deletedProgress.length > 0){
 		// There are progresses to delete....
 			
-		for (i = 0; i < deletedProgress.length; i++) { 
+		// for (i = 0; i < deletedProgress.length; i++) { 
     	
-		TaskService.removeProgressFromTask($scope.task, deletedProgress[i], function(err){	
-		TaskService.updateTask(aTask, function(err, id) {
-			 var index = $scope.progress.indexOf(deletedProgress[i]);
-			 $scope.progress.splice(index,1);
-		});
+		// TaskService.removeProgressFromTask($scope.task, deletedProgress[i], function(err){	
+		// TaskService.updateTask(aTask, function(err, id) {
+		// 	 var index = $scope.progress.indexOf(deletedProgress[i]);
+		// 	 $scope.progress.splice(index,1);
+		// });
           		
-		});
-		}
+		// });
+		
+		// }
 		//Reset the deleted progress array
-		deletedProgress = [];
+		// deletedProgress = [];
+		
+		TaskService.removeManyProgressFromTask(aTask,deletedProgress, function(err){
+		
+		TaskService.updateTask(aTask, function(err, id) {
+		//Reset the deleted progress array
+		 deletedProgress = [];	
+				});
+		});
 		}
 		
 		if(addedProgress.length > 0){
