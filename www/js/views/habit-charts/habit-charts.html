@@ -25,7 +25,8 @@
       <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
-             chart-data="data" chart-labels="labels" on-swipe-right="previousWeek()" on-swipe-left="nextWeek()">
+             chart-data="data" chart-labels="labels" chart-options="{responsive: true, maintainAspectRatio: false}"
+             on-swipe-right="previousWeek()" on-swipe-left="nextWeek()">
          </canvas>
       </div>
     </div>
@@ -43,7 +44,8 @@
       <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
-             chart-data="data" chart-labels="labels" on-swipe-right="previousDay()" on-swipe-left="nextDay()">
+             chart-data="data" chart-labels="labels" chart-options="{responsive: true, maintainAspectRatio: false}"
+             on-swipe-right="previousDay()" on-swipe-left="nextDay()">
          </canvas>
       </div>
     </div>
@@ -61,7 +63,8 @@
       <br>
       <div class="panel-body">
          <canvas id="bar" class="chart chart-line"
-             chart-data="data" chart-labels="labels" on-swipe-right="previousYear()" on-swipe-left="nextYear()">
+             chart-data="data" chart-labels="labels" chart-options="{responsive: true, maintainAspectRatio: false}" 
+             on-swipe-right="previousYear()" on-swipe-left="nextYear()">
          </canvas>
       </div>
     </div>
