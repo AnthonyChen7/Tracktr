@@ -3,6 +3,12 @@
 
     <div class="list">
       
+      <!-- Search Box -->
+      <label class="my-item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Search for a friend..." ng-model="searchText">
+      </label>
+      
       <div id="friend-label">Me</div>        
       <!-- Authentication -->
       <div class="auth-container">
@@ -29,7 +35,7 @@
     
     <div id="friend-label" ng-show="isAuthenticated">Facebook Friends</div>
     <div class="list" ng-show="isAuthenticated">
-      <div ng-repeat="friend in friends">
+      <div ng-repeat="friend in friends | filter:searchText">
         <div class="item item-divider friend-divider">
           <img class="fb-profile-picture" ng-src="{{friend.picture_url}}"/>
           <div class="fb-name">{{ friend.name }}</div>
@@ -37,7 +43,7 @@
         <div class="no-share" ng-show="friend.sharedTasks.length == 0">
           {{friend.name}} is not sharing any habits right now.
         </div>
-        <div ng-repeat= "task in friend.sharedTasks | filter:searchText">
+        <div ng-repeat= "task in friend.sharedTasks">
           <shared-task-info></shared-task-info>
         </div> 
       </div>
