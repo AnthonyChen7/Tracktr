@@ -474,6 +474,15 @@ angular.module('tracktr.controllers')
   
   
   /**
+   * Should the smart tip card be displayed,
+   * depending on if imported or not
+   */ 
+  $scope.shouldDisplayCard = function() {
+    return ($scope.task.isFromFB && $scope.task.isImported) || (!$scope.task.isFromFB && !$scope.isImported);
+  }
+  
+  
+  /**
    * Return back to the previous page
    */
   $scope.goBack = function() {
