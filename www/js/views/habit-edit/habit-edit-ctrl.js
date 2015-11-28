@@ -467,7 +467,7 @@ function timePickerCallback(val) {
  			};
 			 $scope.showAlert();
 			 return;
-		} else if (habitTitle == '') {
+		} else if (habitTitle == '' || habitTitle == null) {
 			$scope.showAlert = function() {
 				var alertPopup = $ionicPopup.alert({
 					title: 'Please specify a title.',
