@@ -24,7 +24,6 @@ angular.module('tracktr.controllers')
   $scope.loadWeeklyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
-      console.log("TASK TASK: ", task);
       $scope.labels = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thur.', 'Fri.', 'Sat.'];
       $scope.week = option;
       $scope.isWeekly = true;
@@ -44,7 +43,7 @@ angular.module('tracktr.controllers')
       lastSunday.setHours(0,0,0,0);
       var sundayDateString = (lastSunday.getMonth()+1) + "/" + lastSunday.getDate();
       $scope.labels[0] = $scope.labels[0] + " " + sundayDateString;
-      console.log("lastSunday is " + lastSunday.getDate());
+      // console.log("lastSunday is " + lastSunday.getDate());
       
       //monday date object
       var monday = new Date();
@@ -52,7 +51,7 @@ angular.module('tracktr.controllers')
       monday.setHours(0,0,0,0);
       var mondayDateString = (monday.getMonth()+1) + "/" + monday.getDate();
       $scope.labels[1] = $scope.labels[1] + " " + mondayDateString;
-      console.log("Monday is " + monday.getDate());
+      // console.log("Monday is " + monday.getDate());
       
       //tuesday date object
       var tuesday = new Date();
@@ -60,7 +59,7 @@ angular.module('tracktr.controllers')
       tuesday.setHours(0,0,0,0);
       var tuesdayDateString = (tuesday.getMonth()+1) + "/" + tuesday.getDate();
       $scope.labels[2] = $scope.labels[2] + " " + tuesdayDateString;
-      console.log("Tuesday is " + tuesday.getDate());
+      // console.log("Tuesday is " + tuesday.getDate());
       
       //wednesday date object
       var wednesday = new Date();
@@ -68,7 +67,7 @@ angular.module('tracktr.controllers')
       wednesday.setHours(0,0,0,0);
       var wednesdayDateString = (wednesday.getMonth()+1) + "/" + wednesday.getDate();
       $scope.labels[3] = $scope.labels[3] + " " + wednesdayDateString;
-      console.log("Wednesday is " + wednesday.getDate());
+      // console.log("Wednesday is " + wednesday.getDate());
       
       //thursday date object
       var thursday = new Date();
@@ -76,7 +75,7 @@ angular.module('tracktr.controllers')
       thursday.setHours(0,0,0,0);
       var thursdayDateString = (thursday.getMonth()+1) + "/" + thursday.getDate();
       $scope.labels[4] = $scope.labels[4] + " " + thursdayDateString;
-      console.log("Thursday is " + thursday.getDate());
+      // console.log("Thursday is " + thursday.getDate());
       
       //friday date object
       var friday = new Date();
@@ -84,7 +83,7 @@ angular.module('tracktr.controllers')
       friday.setHours(0,0,0,0);
       var fridayDateString = (friday.getMonth()+1) + "/" + friday.getDate();
       $scope.labels[5] = $scope.labels[5] + " " + fridayDateString;
-      console.log("Friday is " + friday.getDate());
+      // console.log("Friday is " + friday.getDate());
       
       //saturday date object
       var saturday = new Date();
@@ -92,13 +91,13 @@ angular.module('tracktr.controllers')
       saturday.setHours(0,0,0,0);
       var saturdayDateString = (saturday.getMonth()+1) + "/" + saturday.getDate();
       $scope.labels[6] = $scope.labels[6] + " " + saturdayDateString;
-      console.log("Saturday is " + saturday.getDate());
+      // console.log("Saturday is " + saturday.getDate());
       
       //nextSunday date object
       var nextSunday = new Date();
       nextSunday.setDate(today.getDate() - (7*option) - today.getDay() + 7);
       nextSunday.setHours(0,0,0,0);
-      console.log("NextSunday is " + nextSunday.getDate());
+      // console.log("NextSunday is " + nextSunday.getDate());
       
       $scope.currentWeek = sundayDateString + " - " + saturdayDateString;
       
@@ -108,37 +107,37 @@ angular.module('tracktr.controllers')
         //the progress is on Sunday
         if(lastSunday.getTime() <= progressTime && progressTime < monday.getTime()) {
           $scope.data[0][0] += $scope.task.progress[i].progress;
-          console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][0]);
+          // console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][0]);
         }
         
         else if(monday.getTime() <= progressTime && progressTime < tuesday.getTime()) {
           $scope.data[0][1] += $scope.task.progress[i].progress;
-          console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][1]);
+          // console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][1]);
         }
         
         else if(tuesday.getTime() <= progressTime && progressTime < wednesday.getTime()) {
           $scope.data[0][2] += $scope.task.progress[i].progress;
-          console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][2]);
+          // console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][2]);
         }
         
         else if(wednesday.getTime() <= progressTime && progressTime < thursday.getTime()) {
           $scope.data[0][3] += $scope.task.progress[i].progress;
-          console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][3]);
+          // console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][3]);
         }
         
         else if(thursday.getTime() <= progressTime && progressTime < friday.getTime()) {
           $scope.data[0][4] += $scope.task.progress[i].progress;
-          console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][4]);
+          // console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][4]);
         }
         
         else if(friday.getTime() <= progressTime && progressTime < saturday.getTime()) {
           $scope.data[0][5] += $scope.task.progress[i].progress;
-          console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][5]);
+          // console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][5]);
         }
         
         else if(saturday.getTime() <= progressTime && progressTime < nextSunday.getTime()) {
           $scope.data[0][6] += $scope.task.progress[i].progress;
-          console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][6]);
+          // console.log('progress is: ' + $scope.task.progress[i].progress + 'data is: ' + $scope.data[0][6]);
         }
       }
       if($scope.task.isTime) {
@@ -462,12 +461,12 @@ angular.module('tracktr.controllers')
             visited.push(completeDate);
             daysProgress[day] += 1; //+1 since there is a progress for this day
           }
-          console.log("for day " + day + ", daysProgress is: " + daysProgress[day]);
+          // console.log("for day " + day + ", daysProgress is: " + daysProgress[day]);
         }
-        console.log("daysProgress is: " + daysProgress);
+        // console.log("daysProgress is: " + daysProgress);
         var d = daysProgress.indexOf(Math.max.apply(Math,daysProgress));
         var mostFrequentDay = daysOfWeek[d];
-        console.log("most frequent day is: " + mostFrequentDay);
+        // console.log("most frequent day is: " + mostFrequentDay);
         return mostFrequentDay;
       }
     }
