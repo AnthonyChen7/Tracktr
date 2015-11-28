@@ -76,7 +76,8 @@ angular.module('tracktr.controllers', [])
             progressRatio = $scope.retrieveDataForCircle(task) / task.goal;
           }
 
-          circle.animate(progressRatio);
+          // circle.animate(progressRatio);
+          circle.set(progressRatio);
         }
       }
 
@@ -88,8 +89,8 @@ angular.module('tracktr.controllers', [])
         } else {
           progressRatio = $scope.retrieveDataForCircle(task) / task.goal;
         }    
-        circle.animate(progressRatio);
-        // circle.set(progressRatio);
+        // circle.animate(progressRatio);
+        circle.set(progressRatio);
       } else {
         // Time based task, start a new thread to update the arc every 500 milliseconds
         setInterval(function () {
@@ -102,7 +103,8 @@ angular.module('tracktr.controllers', [])
           } else {
             progressRatio = (countTimeInMins + progressTimerInMins) / task.goal;
           }
-          circle.animate(progressRatio);
+          // circle.animate(progressRatio);
+          circle.set(progressRatio);
         }, 250);
       }
     };

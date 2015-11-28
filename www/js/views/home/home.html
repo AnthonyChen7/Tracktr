@@ -5,7 +5,7 @@
     </button>
   </ion-nav-buttons>
   <ion-content id="home-bg">
-    
+    <br>
     <div class="circle-container" ng-repeat="task in allTasks" ng-if="shouldDisplayInCurrent(task)">
       <task-icon></task-icon>   
       <div on-touch="clickCircleDiv(task)" on-release="releaseCircleDiv(task)">
@@ -20,7 +20,7 @@
         <div class="col text-center">
           <h4 class="home-circle-title" ><b>{{task.name}}</b></h4>
           <!--<div ng-if="$index != allTasks.length - 1">-->
-            <br><hr class="hr-viewall2">
+            <!--<br><hr class="hr-viewall2">-->
           <!--</div>-->
         </div>
       </div>   
