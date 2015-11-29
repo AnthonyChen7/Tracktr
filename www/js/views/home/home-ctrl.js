@@ -442,7 +442,6 @@ angular.module('tracktr.controllers', [])
       var current_time = new Date();
       var last_started = task.progress[task.progress.length - 1].timerLastStarted;
       task.progress[task.progress.length - 1].progress = current_time.getTime() - last_started.getTime();
-      // task.progress[task.progress.length - 1].progress = 12345;
       task.isTimerRunning = false;
       TaskService.updateTask(task);
 
@@ -455,7 +454,7 @@ angular.module('tracktr.controllers', [])
      * Triggered when the timer stops
      */
     $scope.$on('timer-stopped', function (event, remaining) {
-      console.log('You stopped!!');
+      console.log('Timer stopped');
     });
     
     /**
