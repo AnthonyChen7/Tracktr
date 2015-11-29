@@ -111,9 +111,7 @@ Task.prototype.countTime = function(format) {
     var aTask = this;
     var result = 0;
     if(aTask.isTime) {
-      // for(var i = 0; i < task.progress.length; i++) {
-      //   result += task.progress[i].progress;
-      // }
+      
       if(aTask.frequency === 0){
     //Daily
     var today = new Date();
@@ -136,8 +134,8 @@ Task.prototype.countTime = function(format) {
     
     var nextSunday = new Date(today);
     nextSunday.setDate(nextSunday.getDate() + 7 - nextSunday.getDay());
-    nextSunday.setHours(23,59,59,999);  
-    
+    nextSunday.setHours(23,59,59,999);
+      
     for(var i = 0; i < aTask.progress.length ; i++){
       if(lastSunday.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= nextSunday.getTime()){
       result += aTask.progress[i].progress;

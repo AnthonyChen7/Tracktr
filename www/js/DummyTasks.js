@@ -6,6 +6,7 @@ var someDate = new Date();
  prevSunday.setDate(prevSunday.getDate() - prevSunday.getDay());
  prevSunday.setHours(0,0,0,0);
 
+
 if(someDate.getDay()===0){
   //if today is Sunday. Must change previous Sunday to equate to previous SUnday
   prevSunday.setDate(prevSunday.getDate() - prevSunday.getDay()-7);
@@ -20,7 +21,7 @@ if(someDate.getDay()===0){
  var lastDayOfMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,0);
  lastDayOfMonth.setHours(23,59,59,999); 
  
- var someDayOfNextMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,5);
+ var someDayOfNextMonth = new Date(someDate.getFullYear(), someDate.getMonth()+1,10);
  
  var middleOfThisMonth = new Date(someDate.getFullYear(), someDate.getMonth(),10);
  
