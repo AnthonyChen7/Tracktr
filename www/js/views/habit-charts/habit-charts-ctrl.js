@@ -11,12 +11,6 @@ angular.module('tracktr.controllers')
 
   $scope.data = [[]];
   
-  // $scope.$on('$ionicView.enter', function () {
-  //     TaskService.getTaskById($scope.taskId, function(err, task) { 
-  //       $scope.task = task;
-  //       console.log("entered!!!!")
-  //     });
-  //   });
   
   /*
    * Load daily progress within the week
@@ -177,9 +171,7 @@ angular.module('tracktr.controllers')
   $scope.loadDailyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
-    });
-      // $scope.labels = ['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00',
-      //                  '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+    });      
       $scope.labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12',
                        '13','14','15','16','17','18','19','20','21','22','23'];                 
       $scope.data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
@@ -461,9 +453,7 @@ angular.module('tracktr.controllers')
             visited.push(completeDate);
             daysProgress[day] += 1; //+1 since there is a progress for this day
           }
-          // console.log("for day " + day + ", daysProgress is: " + daysProgress[day]);
         }
-        // console.log("daysProgress is: " + daysProgress);
         var d = daysProgress.indexOf(Math.max.apply(Math,daysProgress));
         var mostFrequentDay = daysOfWeek[d];
         // console.log("most frequent day is: " + mostFrequentDay);
@@ -471,6 +461,15 @@ angular.module('tracktr.controllers')
       }
     }
   };
+  
+  
+  /**
+   * Should the smart tip card be displayed,
+   * depending on if imported or not
+   */ 
+  $scope.shouldDisplayCard = function() {
+    return ($scope.task.isFromFB && $scope.task.isImported) || (!$scope.task.isFromFB && !$scope.isImported);
+  }
   
   
   /**

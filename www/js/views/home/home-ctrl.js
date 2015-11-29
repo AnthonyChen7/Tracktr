@@ -404,7 +404,11 @@ angular.module('tracktr.controllers', [])
       document.getElementById("icon-" + task.id).style.color = '#eee';
     }
 
-    var mytimeout = null; // the current timeoutID
+
+    /**
+     * Timeout function to call update to time elapsed on timer every second
+     */ 
+    var mytimeout = null; 
     $scope.onTimeout = function () {
       mytimeout = $timeout($scope.onTimeout, 1000);
     };
@@ -437,16 +441,14 @@ angular.module('tracktr.controllers', [])
     /*
      * Stop and reset the current timer
      */
-    $scope.counter = 0;
     $scope.stopTimer = function (task) {
       var current_time = new Date();
       var last_started = task.progress[task.progress.length - 1].timerLastStarted;
       task.progress[task.progress.length - 1].progress = current_time.getTime() - last_started.getTime();
-      // task.progress[task.progress.length - 1].progress = 12345;
       task.isTimerRunning = false;
       TaskService.updateTask(task);
 
-      $scope.$broadcast('timer-stopped', $scope.counter);
+      $scope.$broadcast('timer-stopped');
       $timeout.cancel(mytimeout);
     };
  
@@ -454,9 +456,10 @@ angular.module('tracktr.controllers', [])
     /*
      * Triggered when the timer stops
      */
-    $scope.$on('timer-stopped', function (event, remaining) {
-      console.log('You stopped!!');
+    $scope.$on('timer-stopped', function (event) {
+      console.log('Timer stopped');
     });
+    
     
     /**
      * days is an object
@@ -479,6 +482,7 @@ angular.module('tracktr.controllers', [])
       }
       return false;
     };
+    
     
     /**
      * Returns boolean to tell whether task should be displayed in current.
