@@ -10,7 +10,7 @@ angular.module('tracktr.controllers')
   $scope.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   $scope.data = [[]];
-  
+  $scope.shouldShowCard = false;
   
   /*
    * Load daily progress within the week
@@ -18,6 +18,7 @@ angular.module('tracktr.controllers')
   $scope.loadWeeklyProgress = function(option) {
     TaskService.getTaskById($scope.taskId, function(err, task) { 
       $scope.task = task;
+      $scope.shouldShowCard = $scope.shouldDisplayCard(task);
       $scope.labels = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thur.', 'Fri.', 'Sat.'];
       $scope.week = option;
       $scope.isWeekly = true;
@@ -467,8 +468,9 @@ angular.module('tracktr.controllers')
    * Should the smart tip card be displayed,
    * depending on if imported or not
    */ 
-  $scope.shouldDisplayCard = function() {
-    return ($scope.task.isFromFB && $scope.task.isImported) || (!$scope.task.isFromFB && !$scope.isImported);
+  $scope.shouldDisplayCard = function(task) {
+    console.log(task);
+    return (task.isFromFB && task.isImported) || (!task.isFromFB && !task.isImported);
   }
   
   
