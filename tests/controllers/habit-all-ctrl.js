@@ -252,6 +252,12 @@ describe("Habit All Controller Tests", function(){
     it("test weekly time task 1 progress not today", function(){
         var task = new Task(tasks[25]);
         
+         var seconds = task.countTime(1);
+        expect(seconds).toEqual(0);
+        
+        var minutes = task.countTime(2);
+        expect(minutes).toEqual(0);
+        
         var hours = task.countTime(3);
         expect(hours).toEqual(0);
     });
