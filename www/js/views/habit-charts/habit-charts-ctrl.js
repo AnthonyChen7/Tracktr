@@ -455,9 +455,7 @@ angular.module('tracktr.controllers')
             visited.push(completeDate);
             daysProgress[day] += 1; //+1 since there is a progress for this day
           }
-          // console.log("for day " + day + ", daysProgress is: " + daysProgress[day]);
         }
-        // console.log("daysProgress is: " + daysProgress);
         var d = daysProgress.indexOf(Math.max.apply(Math,daysProgress));
         var mostFrequentDay = daysOfWeek[d];
         // console.log("most frequent day is: " + mostFrequentDay);
