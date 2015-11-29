@@ -404,7 +404,11 @@ angular.module('tracktr.controllers', [])
       document.getElementById("icon-" + task.id).style.color = '#eee';
     }
 
-    var mytimeout = null; // the current timeoutID
+
+    /**
+     * Timeout function to call update to time elapsed on timer every second
+     */ 
+    var mytimeout = null; 
     $scope.onTimeout = function () {
       mytimeout = $timeout($scope.onTimeout, 1000);
     };
