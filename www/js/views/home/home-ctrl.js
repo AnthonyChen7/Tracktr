@@ -456,6 +456,7 @@ angular.module('tracktr.controllers', [])
       console.log('Timer stopped');
     });
     
+    
     /**
      * days is an object
      * Checks if the selected task is
@@ -477,6 +478,7 @@ angular.module('tracktr.controllers', [])
       }
       return false;
     };
+    
     
     /**
      * Returns boolean to tell whether task should be displayed in current.
