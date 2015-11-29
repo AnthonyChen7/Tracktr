@@ -437,7 +437,6 @@ angular.module('tracktr.controllers', [])
     /*
      * Stop and reset the current timer
      */
-    $scope.counter = 0;
     $scope.stopTimer = function (task) {
       var current_time = new Date();
       var last_started = task.progress[task.progress.length - 1].timerLastStarted;
@@ -445,7 +444,7 @@ angular.module('tracktr.controllers', [])
       task.isTimerRunning = false;
       TaskService.updateTask(task);
 
-      $scope.$broadcast('timer-stopped', $scope.counter);
+      $scope.$broadcast('timer-stopped');
       $timeout.cancel(mytimeout);
     };
  
@@ -453,7 +452,7 @@ angular.module('tracktr.controllers', [])
     /*
      * Triggered when the timer stops
      */
-    $scope.$on('timer-stopped', function (event, remaining) {
+    $scope.$on('timer-stopped', function (event) {
       console.log('Timer stopped');
     });
     
