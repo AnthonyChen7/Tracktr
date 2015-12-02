@@ -117,7 +117,8 @@ Task.prototype.countTime = function(format) {
     var today = new Date();
     today.setHours(0,0,0,0);
     var lastSecondOfToday = new Date();
-    lastSecondOfToday.setHours(23,59,59,999);   
+    lastSecondOfToday.setHours(23,59,59,999);
+       
     for(var i = 0; i < aTask.progress.length ; i++){
        if(today.getTime() <= aTask.progress[i].date.getTime() && aTask.progress[i].date.getTime() <= lastSecondOfToday.getTime()) {
          result += aTask.progress[i].progress;

@@ -1010,7 +1010,7 @@ var tasks = [
        {
          id: '1',
          task_id: '1',
-         date: firstDayOfMonth.getTime(),
+         date: someDayOfNextMonth.getTime(),
          progress: 3600000,
          timerLastStarted: someDate.getTime()
        }
