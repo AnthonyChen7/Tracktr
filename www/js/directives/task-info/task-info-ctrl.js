@@ -131,6 +131,12 @@ angular.module('tracktr.controllers')
    * to active/in-active
    */
     $scope.updateIsActive = function (task) {
+      if(task.isTime && task.isTimerRunning) {
+        var currentTime = new Date();
+        var progressLength = task.progress.length;
+        task.progress[progressLength - 1].progress = currentTime - task.progress[progressLength - 1].timerLastStarted;
+        task.isTimerRunning = false;
+      }
       TaskService.updateTask(task, function (err) { });
     };
 
