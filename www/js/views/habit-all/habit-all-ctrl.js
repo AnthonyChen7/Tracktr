@@ -1,6 +1,13 @@
 angular.module('tracktr.controllers')
   .controller("HabitAllController", function ($scope, $state, $ionicPopup, TaskService, SharingService) {
 
+/*
+each controller needs to have it's own scope
+which is where you save all your variables for your controller
+that way your HTML can access it
+$state is for the views, you don't need to worry about it
+*/
+
     /**
      * Constants  
      **/
@@ -30,6 +37,7 @@ angular.module('tracktr.controllers')
           //   });
           // }
         }
+        // Delete everything
         // for(var i = 0; i< $scope.tasks.length; i++){
         // TaskService.deleteTask($scope.tasks[i], function(err){});
         // }
@@ -56,6 +64,11 @@ angular.module('tracktr.controllers')
       return result;
     };
     
+    /**
+     * Properly format the time to display hh:mm:ss
+     * 
+     * timeString is a String
+     */
     $scope.properFormat = function(timeString) {
       var timeArray = timeString.split(":");
       var properTimeString = "";
@@ -66,8 +79,9 @@ angular.module('tracktr.controllers')
     };
   
     /**
-     * frequencyId is an integer
      * Returns the frequency of a task as a string
+     * 
+     * frequencyId is an integer
      */
     $scope.getFrequency = function (frequencyId) {
       if (frequencyId === 0) {
@@ -81,10 +95,10 @@ angular.module('tracktr.controllers')
     };
   
     /**
-     * days is an object
-     * 
      * Return the days of
      * occurence of a task as a string
+     * 
+     * days is an object
      */
     $scope.getDaysOfOccurence = function (days) {
       var result = "";
@@ -120,9 +134,10 @@ angular.module('tracktr.controllers')
     };
       
     /**
-     * days is an object
      * Checks if the selected task is
      * supposed to occur today.
+     * 
+     * days is an object
      */
     $scope.doesTaskOccurToday = function (days) {
       var today = new Date();
@@ -152,11 +167,9 @@ angular.module('tracktr.controllers')
     
       //If task is weekly or monthly, it should automatically be displayed in current
       if (aTask.frequency === 0) {
-        //daily
         var result = $scope.doesTaskOccurToday(aTask.days) && isActive;
         return result;
       } else {
-        //not daily
         return isActive;
       }
     };
