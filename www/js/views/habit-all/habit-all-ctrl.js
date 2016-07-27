@@ -27,7 +27,9 @@ $state is for the views, you don't need to worry about it
     //Get all tasks from DB everytime this view is entered
     $scope.$on("$ionicView.enter", function () {
       TaskService.getAll(function (err, tasks) {
+
         $scope.tasks = tasks;
+        
         // If nothing in the database.
         if ($scope.tasks.length == 0) {
           //Put in dummy data
@@ -43,6 +45,8 @@ $state is for the views, you don't need to worry about it
         // }
       });
     });
+    
+    
     
     /**
      * Retrieves the data of the task
@@ -142,8 +146,8 @@ $state is for the views, you don't need to worry about it
     $scope.doesTaskOccurToday = function (days) {
       var today = new Date();
       var dayIndex = today.getDay();
-
       var dayOfWeek = $scope.dayOfWeekAsString(dayIndex);
+      
       for (var field in days) {
         if (field === dayOfWeek) {
           if (days[field] === true) {
@@ -162,7 +166,6 @@ $state is for the views, you don't need to worry about it
      * aTask is a valid task object
      */
     $scope.shouldDisplayInCurrent = function (aTask) {
-
       var isActive = (aTask.isActive == 1);
     
       //If task is weekly or monthly, it should automatically be displayed in current

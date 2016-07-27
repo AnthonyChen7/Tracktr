@@ -11,6 +11,7 @@
       <!-- Current -->
       <div class="my-item my-item-divider">Current</div>
       <task-info ng-repeat="task in tasks | filter:searchText" ng-if="shouldDisplayInCurrent(task)"></task-info>
+      
 
       <!-- Other -->
       <div class="my-item my-item-divider">Other</div>
